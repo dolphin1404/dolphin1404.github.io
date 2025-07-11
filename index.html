@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>네이버 지도와 검색창</title>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=93gqruosnz"></script>
+    <style>
+        #mapContainer {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* 전체 화면 높이로 설정 */
+        }
+
+        #searchBox {
+            display: none; /* 초기에는 숨김 */
+            position: absolute;
+            top: 10px; /* 맵 상단에서 10px 아래에 위치 */
+            left: 50%; /* 가운데 정렬을 위해 왼쪽 여백 50% */
+            transform: translateX(-50%); /* 가운데 정렬 */
+            z-index: 1000; /* 검색창이 맵 위에 나타나도록 설정 */
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        #map {
+            width: 100%;
+            height: calc(100vh - 40px); /* 검색창 높이를 고려하여 맵의 높이 조정 */
+        }
+
+        #searchBtn {
+            position: absolute;
+            top: 10px; /* 검색창의 상단과 동일한 위치에 설정 */
+            left: calc(50% + 140px); /* 검색창의 오른쪽에 위치하도록 설정 */
+            z-index: 1000; /* 검색 버튼이 맵 위에 나타나도록 설정 */
+            background-color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="mapContainer">
+    <button id="searchBtn">&#128269;</button> <!-- 돋보기 아이콘 버튼 -->
+    <div id="searchBox">
+        <input type="text" id="searchInput" placeholder="장소를 검색하세요">
+    </div>
+    <div id="map"></div>
+</div>
+
+<script>
+    var mapOptions = {
+        center: new naver.maps.LatLng(37.5665, 126.9780),
+        zoom: 10
+    };
+
+    var map = new naver.maps.Map('map', mapOptions);
+
+    // 돋보기 버튼 클릭 시 검색 상자 토글
+    document.getElementById('searchBtn').addEventListener('click', function() {
+        var searchBox = document.getElementById('searchBox');
+        if (searchBox.style.display === 'none') {
+            searchBox.style.display = 'block';
+        } else {
+            searchBox.style.display = 'none';
+        }
+    });
+
+    // 검색 버튼 클릭 시 이벤트 핸들러
+    document.getElementById('searchBtn').addEventListener('click', function() {
+        var keyword = document.getElementById('searchInput').value;
+        search(keyword);
+    });
+
+    // 엔터 키 입력 시 검색 실행
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            var keyword = document.getElementById('searchInput').value;
+            search(keyword);
+        }
+    });
+
+    // 검색 함수 정의
+    function search(keyword) {
+        if (!keyword) return; // 키워드가 없으면 검색하지 않음
+
+        // 장소 검색 객체 생성
+        var searchService = new naver.maps.Service({
+            ajaxOptions: {
+                headers: { 'X-NCP-APIGW-API-KEY-ID': 'YOUR_CLIENT_ID', 'X-NCP-APIGW-API-KEY': 'YOUR_CLIENT_SECRET' }
+            }
+        });
+
+        // 검색 요청
+        searchService.keywordSearch({
+            query: keyword,
+            callback: function(data, status) {
+                if (status === naver.maps.Service.Status.ERROR) {
+                    return alert('검색 결과가 없습니다.');
+                }
+
+                if (data.length === 0) {
+                    return alert('검색 결과가 없습니다.');
+                }
+
+                var firstItem = data[0];
+                map.setCenter(new naver.maps.LatLng(firstItem.y, firstItem.x));
+                map.setZoom(15);
+            }
+        });
+    }
+</script>
+</body>
+</html>
