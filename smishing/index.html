@@ -1079,6 +1079,15 @@
             const grade = correctCount === quizData.length ? '완벽' : 
                          correctCount >= 5 ? '우수' : '보통';
 
+            // 각 문제별 정답 여부 (개별 필드로 전송)
+            const q1_correct = answers[0] === quizData[0].isPhishing ? 'O' : 'X';
+            const q2_correct = answers[1] === quizData[1].isPhishing ? 'O' : 'X';
+            const q3_correct = answers[2] === quizData[2].isPhishing ? 'O' : 'X';
+            const q4_correct = answers[3] === quizData[3].isPhishing ? 'O' : 'X';
+            const q5_correct = answers[4] === quizData[4].isPhishing ? 'O' : 'X';
+            const q6_correct = answers[5] === quizData[5].isPhishing ? 'O' : 'X';
+            const q7_correct = answers[6] === quizData[6].isPhishing ? 'O' : 'X';
+
             // 구글 폼의 entry ID들 (퀴즈 결과용)
             const formData = new FormData();
             formData.append('entry.3333333333', correctCount.toString());  // 정답 개수 entry ID
@@ -1086,13 +1095,30 @@
             formData.append('entry.5555555555', answerString);   // 상세 답안 entry ID
             formData.append('entry.6666666666', grade);         // 등급 entry ID
             formData.append('entry.7777777777', koreaTime);     // 완료 시간 entry ID
+            // 각 문제별 정답 여부 (분석용)
+            formData.append('entry.8888888888', q1_correct);    // 1번 문제 정답 여부
+            formData.append('entry.9999999999', q2_correct);    // 2번 문제 정답 여부
+            formData.append('entry.1111111111', q3_correct);    // 3번 문제 정답 여부
+            formData.append('entry.2222222222', q4_correct);    // 4번 문제 정답 여부
+            formData.append('entry.3333333334', q5_correct);    // 5번 문제 정답 여부
+            formData.append('entry.4444444445', q6_correct);    // 6번 문제 정답 여부
+            formData.append('entry.5555555556', q7_correct);    // 7번 문제 정답 여부
 
             console.log('퀴즈 결과 전송 데이터:', {
                 정답개수: correctCount,
                 점수: `${correctCount}/${quizData.length}`,
                 상세답안: answerString,
                 등급: grade,
-                완료시간: koreaTime
+                완료시간: koreaTime,
+                문제별정답: {
+                    '1번_카드발급사칭': q1_correct,
+                    '2번_쿠팡배송': q2_correct,
+                    '3번_법원사칭': q3_correct,
+                    '4번_신한은행': q4_correct,
+                    '5번_교통범칙금사칭': q5_correct,
+                    '6번_자녀사칭': q6_correct,
+                    '7번_청첩장사칭': q7_correct
+                }
             });
 
             // 구글 폼으로 퀴즈 결과 전송 (백그라운드에서 실행)
