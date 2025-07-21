@@ -1055,7 +1055,7 @@
         // 퀴즈 결과를 구글폼에 전송하는 함수
         function submitQuizResultToGoogleForm(correctCount, answers) {
             // 구글 폼즈 URL (퀴즈 결과용)
-            const QUIZ_RESULT_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd9LG6oOaQiDDX_xIi3e2wSIOlfEgo-_FvqGvmiBlSugPAoOQ/formResponse';
+            const QUIZ_RESULT_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeb5kP0SD0ZwclXBRFJmB0hzewPGEyZBlzdsvGNezJsw8THGw/formResponse';
             
             // 현재 시간을 한국 시간으로 포맷
             const now = new Date();
@@ -1090,19 +1090,19 @@
 
             // 구글 폼의 entry ID들 (퀴즈 결과용)
             const formData = new FormData();
-            formData.append('entry.3333333333', correctCount.toString());  // 정답 개수 entry ID
-            formData.append('entry.4444444444', `${correctCount}/${quizData.length}`); // 점수 entry ID
-            formData.append('entry.5555555555', answerString);   // 상세 답안 entry ID
-            formData.append('entry.6666666666', grade);         // 등급 entry ID
-            formData.append('entry.7777777777', koreaTime);     // 완료 시간 entry ID
+            formData.append('entry.2003845403', correctCount.toString());  // 정답 개수 entry ID
+            formData.append('entry.100037354', `${correctCount}/${quizData.length}`); // 점수 entry ID
+            formData.append('entry.543937702', answerString);   // 상세 답안 entry ID
+            formData.append('entry.797352681', grade);         // 등급 entry ID
+            formData.append('entry.860581520', koreaTime);     // 완료 시간 entry ID
             // 각 문제별 정답 여부 (분석용)
-            formData.append('entry.8888888888', q1_correct);    // 1번 문제 정답 여부
-            formData.append('entry.9999999999', q2_correct);    // 2번 문제 정답 여부
-            formData.append('entry.1111111111', q3_correct);    // 3번 문제 정답 여부
-            formData.append('entry.2222222222', q4_correct);    // 4번 문제 정답 여부
-            formData.append('entry.3333333334', q5_correct);    // 5번 문제 정답 여부
-            formData.append('entry.4444444445', q6_correct);    // 6번 문제 정답 여부
-            formData.append('entry.5555555556', q7_correct);    // 7번 문제 정답 여부
+            formData.append('entry.1705827725', q1_correct);    // 1번 문제 정답 여부
+            formData.append('entry.2002706913', q2_correct);    // 2번 문제 정답 여부
+            formData.append('entry.615492498', q3_correct);    // 3번 문제 정답 여부
+            formData.append('entry.616665634', q4_correct);    // 4번 문제 정답 여부
+            formData.append('entry.1207992116', q5_correct);    // 5번 문제 정답 여부
+            formData.append('entry.2099508387', q6_correct);    // 6번 문제 정답 여부
+            formData.append('entry.2050379907', q7_correct);    // 7번 문제 정답 여부
 
             console.log('퀴즈 결과 전송 데이터:', {
                 정답개수: correctCount,
