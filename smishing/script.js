@@ -23,7 +23,7 @@ const quizData = [
     {
         id: 2,
         type: '정상 쿠팡 배송',
-        message: '[쿠팡] 주문하신 상품이 배송 완료되었습니다. 배송조회: https://www.coupang.com/vp/orders',
+        message: '[쿠팡] 주문하신 상품이 배송 완료되었습니다. 배송조회: \n ',
         link: 'https://www.coupang.com/vp/orders',
         isPhishing: false,
         explanation: {
@@ -251,9 +251,6 @@ function updateQuizDisplay() {
                     </div>
                 </button>
             </div>
-            
-            <!-- 해설 영역 -->
-            <div id="instant-explanation" style="display: none;"></div>
         </div>
     `;
 
@@ -465,27 +462,14 @@ function updateNextButton() {
         nextBtn.disabled = !hasAnswer;
         if (hasAnswer) {
             nextBtn.onclick = () => {
-                const hasShownFeedback = document.getElementById('instant-explanation').style.display === 'block';
                 const userAnswer = userAnswers[currentQuestionIndex];
                 const isCorrect = userAnswer === quizData[currentQuestionIndex].isPhishing;
                 
-                if (!hasShownFeedback && !isCorrect) {
-                    // 틀린 답일 때만 피드백 표시
+                if (!isCorrect) {
+                    // 틀린 답일 때 팝업으로 피드백 표시
                     showQuestionFeedback();
-                    
-                    // 1.5초 후 버튼 상태 변경
-                    nextBtn.disabled = true;
-                    nextBtn.className = 'flex-1 bg-gray-400 text-gray-200 font-bold rounded cursor-not-allowed';
-                    nextBtn.textContent = '피드백 확인 중...';
-                    
-                    setTimeout(() => {
-                        nextBtn.disabled = false;
-                        nextBtn.className = 'flex-1 bg-green-500 text-white font-bold rounded hover:bg-green-600 transition-all';
-                        nextBtn.textContent = '결과 페이지로 →';
-                        nextBtn.onclick = () => goToPage('page-explanation');
-                    }, 1500);
                 } else {
-                    // 정답이거나 이미 피드백을 본 경우 바로 결과 페이지로
+                    // 정답이면 바로 결과 페이지로
                     goToPage('page-explanation');
                 }
             };
@@ -500,30 +484,14 @@ function updateNextButton() {
         nextBtn.disabled = !hasAnswer;
         if (hasAnswer) {
             nextBtn.onclick = () => {
-                const hasShownFeedback = document.getElementById('instant-explanation').style.display === 'block';
                 const userAnswer = userAnswers[currentQuestionIndex];
                 const isCorrect = userAnswer === quizData[currentQuestionIndex].isPhishing;
                 
-                if (!hasShownFeedback && !isCorrect) {
-                    // 틀린 답일 때만 피드백 표시
+                if (!isCorrect) {
+                    // 틀린 답일 때 팝업으로 피드백 표시
                     showQuestionFeedback();
-                    
-                    // 1.5초 후 버튼 상태 변경
-                    nextBtn.disabled = true;
-                    nextBtn.className = 'flex-1 bg-gray-400 text-gray-200 font-bold rounded cursor-not-allowed';
-                    nextBtn.textContent = '피드백 확인 중...';
-                    
-                    setTimeout(() => {
-                        nextBtn.disabled = false;
-                        nextBtn.className = 'flex-1 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 transition-all';
-                        nextBtn.textContent = '다음 문제로 →';
-                        nextBtn.onclick = () => {
-                            currentQuestionIndex++;
-                            updateQuizDisplay();
-                        };
-                    }, 1500);
                 } else {
-                    // 정답이거나 이미 피드백을 본 경우 바로 다음 문제로
+                    // 정답이면 바로 다음 문제로
                     currentQuestionIndex++;
                     updateQuizDisplay();
                 }
@@ -543,82 +511,23 @@ function selectAnswer(isPhishing) {
     updateQuizDisplay();
 }
 
-// 틀렸을 때 즉각적인 피드백 (진동 + 해설)
+// 틀렸을 때 즉각적인 피드백 (팝업으로 표시)
 function showInstantFeedback(question) {
     const messageArea = document.querySelector('.message-area');
-    const explanationDiv = document.getElementById('instant-explanation');
     
     // 정상 문자인지 스미싱인지 확인
     const isNormalMessage = !question.isPhishing;
     
-    if (isNormalMessage) {
-        // 정상 문자에 대한 피드백
-        explanationDiv.innerHTML = `
-            <div class="explanation-box">
-                <div class="flex items-center mb-3">
-                    <span class="text-2xl mr-2">✅</span>
-                    <h4 class="font-bold text-green-800">이것은 스미싱이 아닙니다!</h4>
-                </div>
-                
-                <div class="text-xs space-y-2">
-                    <div>
-                        <h5 class="font-bold mb-1 text-green-700">🔍 정상 신호:</h5>
-                        <ul class="text-green-600 space-y-1">
-                            ${question.explanation.features.map(feature => 
-                                `<li class="flex items-start"><span class="mr-1">•</span><span>${feature}</span></li>`
-                            ).join('')}
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-green-100 border border-green-300 rounded p-2">
-                        <p class="text-green-700">${question.explanation.warning}</p>
-                    </div>
-                </div>
-            </div>
-        `;
-    } else {
-        // 스미싱에 대한 기존 피드백
-        // 진동 효과 - 메시지 영역에 적용
-        if (messageArea) {
-            messageArea.classList.add('shake');
-            setTimeout(() => {
-                messageArea.classList.remove('shake');
-            }, 600);
-        }
-        
-        // 해설 표시
-        explanationDiv.innerHTML = `
-            <div class="explanation-box">
-                <div class="flex items-center mb-3">
-                    <span class="text-2xl mr-2">⚠️</span>
-                    <h4 class="font-bold text-red-800">이것은 스미싱입니다!</h4>
-                </div>
-                
-                <div class="text-xs space-y-2">
-                    <div>
-                        <h5 class="font-bold mb-1 text-red-700">🔍 위험 신호:</h5>
-                        <ul class="text-red-600 space-y-1">
-                            ${question.explanation.features.map(feature => 
-                                `<li class="flex items-start"><span class="mr-1">•</span><span>${feature}</span></li>`
-                            ).join('')}
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-red-100 border border-red-300 rounded p-2">
-                        <h5 class="font-bold mb-1 text-red-800">⚠️ 주의:</h5>
-                        <p class="text-red-700">${question.explanation.warning}</p>
-                    </div>
-                    
-                    <div class="bg-green-100 border border-green-300 rounded p-2">
-                        <h5 class="font-bold mb-1 text-green-800">✅ 올바른 대처:</h5>
-                        <p class="text-green-700">${question.explanation.action}</p>
-                    </div>
-                </div>
-            </div>
-        `;
+    // 진동 효과 - 메시지 영역에 적용 (스미싱일 때만)
+    if (!isNormalMessage && messageArea) {
+        messageArea.classList.add('shake');
+        setTimeout(() => {
+            messageArea.classList.remove('shake');
+        }, 600);
     }
     
-    explanationDiv.style.display = 'block';
+    // 팝업으로 해설 표시
+    showExplanationModal(question, isNormalMessage);
 }
 
 // 맞았을 때 간단한 피드백
@@ -663,14 +572,19 @@ function showQuestionFeedback() {
     } else {
         console.log('Correct answer - moving to next question immediately');
         // 정답일 경우 바로 다음 문제로 이동
-        if (currentQuestionIndex === quizData.length - 1) {
-            // 마지막 문제인 경우 결과 페이지로
-            goToPage('page-explanation');
-        } else {
-            // 다음 문제로 이동
-            currentQuestionIndex++;
-            updateQuizDisplay();
-        }
+        proceedToNext();
+    }
+}
+
+// 다음 단계로 진행 (문제 또는 결과 페이지)
+function proceedToNext() {
+    if (currentQuestionIndex === quizData.length - 1) {
+        // 마지막 문제인 경우 결과 페이지로
+        goToPage('page-explanation');
+    } else {
+        // 다음 문제로 이동
+        currentQuestionIndex++;
+        updateQuizDisplay();
     }
 }
 
@@ -688,24 +602,23 @@ function showExplanations() {
 }
 
 // 투표 선택
-function selectVote(vote) {
+function selectVote(vote, event) {
     selectedVote = vote;
     
     // 모든 투표 옵션 초기화
-    document.querySelectorAll('.vote-option').forEach(option => {
-        option.classList.remove('bg-green-100', 'bg-yellow-100', 'bg-red-100');
-        option.classList.remove('border-green-500', 'border-yellow-500', 'border-red-500');
+    document.querySelectorAll('.vote-option-card').forEach(option => {
+        option.classList.remove('selected-vote');
+        option.style.background = '';
+        option.style.border = '';
     });
     
     // 선택된 옵션 강조
-    event.target.closest('.vote-option').classList.add(
-        vote === 'confident' ? 'bg-green-100' : 
-        vote === 'moderate' ? 'bg-yellow-100' : 'bg-red-100'
-    );
-    event.target.closest('.vote-option').classList.add(
-        vote === 'confident' ? 'border-green-500' : 
-        vote === 'moderate' ? 'border-yellow-500' : 'border-red-500'
-    );
+    const selectedCard = event ? event.target.closest('.vote-option-card') : document.querySelector(`.vote-option-card.${vote}`);
+    if (selectedCard) {
+        selectedCard.classList.add('selected-vote');
+        selectedCard.style.background = 'rgba(255, 255, 255, 0.3)';
+        selectedCard.style.border = '2px solid rgba(255, 255, 255, 0.6)';
+    }
     
     // 잠시 후 완료 페이지로 이동 (만족도 조사는 기프티콘 신청 시에만 전송)
     setTimeout(() => {
@@ -801,10 +714,84 @@ function agreeAndSubmit() {
     }
 }
 
-// 모달 외부 클릭 시 닫기
+// 해설 팝업 모달 표시
+function showExplanationModal(question, isNormalMessage) {
+    const modal = document.getElementById('explanation-modal');
+    const title = document.getElementById('explanation-title');
+    const body = document.getElementById('explanation-modal-body');
+    
+    // 제목 설정
+    title.textContent = isNormalMessage ? '정상 문자입니다' : '스미싱입니다!';
+    title.className = isNormalMessage ? 'font-bold text-center text-lg normal' : 'font-bold text-center text-lg phishing';
+    
+    // 내용 생성
+    let explanationHtml = `
+        <div class="explanation-content">
+            <div class="explanation-title ${isNormalMessage ? 'normal' : 'phishing'}">
+                <span class="icon">${isNormalMessage ? '✅' : '⚠️'}</span>
+                <span>${question.explanation.title}</span>
+            </div>
+            
+            <div class="message-preview">
+                <p>${question.message}</p>
+                ${question.link ? `<span class="message-link">${question.link}</span>` : ''}
+            </div>
+            
+            <div class="explanation-section features">
+                <h5>${isNormalMessage ? '🔍 정상 신호:' : '🔍 위험 신호:'}</h5>
+                <ul class="explanation-list">
+                    ${question.explanation.features.map(feature => 
+                        `<li>${feature}</li>`
+                    ).join('')}
+                </ul>
+            </div>
+            
+            <div class="explanation-section warning">
+                <div class="${isNormalMessage ? 'action-box' : 'warning-box'}">
+                    ${question.explanation.warning}
+                </div>
+            </div>
+            
+            ${!isNormalMessage ? `
+            <div class="explanation-section action">
+                <h5>✅ 올바른 대처법:</h5>
+                <div class="action-box">
+                    ${question.explanation.action}
+                </div>
+            </div>
+            ` : ''}
+        </div>
+    `;
+    
+    body.innerHTML = explanationHtml;
+    
+    // 모달 표시
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+// 해설 팝업 모달 닫기
+function closeExplanationModal() {
+    const modal = document.getElementById('explanation-modal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    
+    // 모달 닫기 후 다음 단계로 진행
+    setTimeout(() => {
+        proceedToNext();
+    }, 200);
+}
+
+// 모달 외부 클릭 시 닫기 (해설 모달용)
 document.addEventListener('click', function(e) {
-    const modal = document.getElementById('privacy-modal');
-    if (e.target === modal) {
+    const explanationModal = document.getElementById('explanation-modal');
+    const privacyModal = document.getElementById('privacy-modal');
+    
+    if (e.target === explanationModal) {
+        closeExplanationModal();
+    }
+    
+    if (e.target === privacyModal) {
         closePrivacyModal();
     }
 });

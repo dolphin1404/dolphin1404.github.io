@@ -38,13 +38,13 @@
                                  onerror="this.style.display='none'">
                         </div>
                         <div class="foundation-info">
-                            <p class="foundation-name text-lg font-semibold mb-1">DB김준기문화재단</p>
-                            <p class="foundation-tagline text-sm opacity-90">안전한 디지털 세상을 위한 교육</p>
+                            <p class="foundation-name text-lg font-semibold mb-1">DB 드림리더 장학생 </p>
+                            <p class="foundation-tagline text-sm opacity-90">강원충청조 단체명 : 청원해드려유</p>
                         </div>
                     </div>
                     
                     <!-- 메인 타이틀 섹션 -->
-                    <div class="title-section mb-8">
+                    <div class="title-section mb-4">
                         <div class="icon-badge mb-4">
                             <span class="security-icon">🛡️</span>
                         </div>
@@ -102,54 +102,97 @@
 
         <!-- 2. 스미싱 안내 페이지 -->
         <div id="page-guide" class="page">
-            <div class="screen-fit">
-                <div class="content-section">
-                    <div class="text-center mb-4">
-                        <h2 class="font-bold text-gray-800 mb-2">스미싱이란?</h2>
-                        <div class="bg-red-50 border-2 border-red-200 rounded-lg p-compact mb-4">
-                            <p class="font-bold text-red-800 mb-1">SMS + 피싱 = 스미싱</p>
-                            <p class="text-red-600">문자메시지를 이용한 사기</p>
+            <div class="screen-fit bg-gradient-to-br from-green-600 via-green-500 to-emerald-500 text-white relative overflow-hidden">
+                <!-- 배경 장식 요소 -->
+                <div class="absolute inset-0 opacity-5">
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                    </div>
+                </div>
+                
+                <div class="content-section relative z-10">
+                    <div class="text-center mb-6">
+                        <div class="page-header mb-6">
+                            <div class="icon-badge mb-4">
+                                <span class="page-icon">🚨</span>
+                            </div>
+                            <h2 class="page-title font-bold mb-3">스미싱이란?</h2>
+                        </div>
+                        
+                        <div class="definition-card bg-white/15 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-6 mb-6">
+                            <div class="definition-content">
+                                <p class="definition-formula font-bold text-xl mb-3">
+                                    <span class="formula-part">SMS</span>
+                                    <span class="formula-plus">+</span>
+                                    <span class="formula-part">피싱</span>
+                                    <span class="formula-equals">=</span>
+                                    <span class="formula-result">스미싱</span>
+                                </p>
+                                <p class="definition-desc text-lg opacity-90">문자메시지를 이용한 사기</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 피해 흐름도 (간소화) -->
-                    <div class="mb-4">
-                        <h3 class="font-bold mb-2">📊 피해 과정</h3>
-                        <div class="compact-spacing">
-                            <div class="flex items-center bg-gray-50 p-2 rounded border">
-                                <span class="text-lg mr-2">1️⃣</span>
-                                <p class="text-sm">문자 메시지 수신</p>
+                    <!-- 피해 흐름도 -->
+                    <div class="mb-6">
+                        <h3 class="section-title font-bold mb-4">📊 피해 과정</h3>
+                        <div class="process-cards">
+                            <div class="process-card step-1">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <span class="step-icon">📱</span>
+                                    <p class="step-text">문자 메시지 수신</p>
+                                </div>
                             </div>
-                            <div class="flex items-center bg-gray-50 p-2 rounded border">
-                                <span class="text-lg mr-2">2️⃣</span>
-                                <p class="text-sm">링크 클릭 또는 앱 설치</p>
-                            </div>
-                            <div class="flex items-center bg-red-100 p-2 rounded border-red-300 border">
-                                <span class="text-lg mr-2">3️⃣</span>
-                                <p class="text-sm text-red-700">개인정보 도용 및 금전 피해</p>
+                            <div class="process-card step-2">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <span class="step-icon">👆</span>
+                                    <p class="step-text">링크 클릭 또는 앱 설치</p>
+                                </div>
+                            </div> 
+                            <div class="process-card step-3 danger">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <span class="step-icon">⚠️</span>
+                                    <p class="step-text">개인정보 도용 및 금전 피해</p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 피해 사례 (간소화) -->
+                    <!-- 피해 사례 -->
                     <div class="mb-4">
-                        <h3 class="font-bold mb-2">⚠️ 주요 사례</h3>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div class="bg-yellow-50 border border-yellow-200 p-2 rounded text-center">
-                                <p class="text-2xl mb-1">💌</p>
-                                <p class="text-sm font-bold">청첩장</p>
+                        <h3 class="section-title font-bold mb-4">🎯 주요 사례</h3>
+                        <div class="example-grid">
+                            <div class="example-card">
+                                <div class="example-icon">💌</div>
+                                <div class="example-label">청첩장 사칭</div>
                             </div>
-                            <div class="bg-yellow-50 border border-yellow-200 p-2 rounded text-center">
-                                <p class="text-2xl mb-1">💳</p>
-                                <p class="text-sm font-bold">은행사칭</p>
+                            <div class="example-card">
+                                <div class="example-icon">💳</div>
+                                <div class="example-label">은행 사칭</div>
+                            </div>
+                            <div class="example-card">
+                                <div class="example-icon">📦</div>
+                                <div class="example-label">택배 사칭</div>
+                            </div>
+                            <div class="example-card">
+                                <div class="example-icon">🏛️</div>
+                                <div class="example-label">정부 사칭</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="button-section">
-                    <button onclick="goToPage('page-quiz')" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold rounded transition-all">
-                        퀴즈로 실력 확인하기 📝
+                    <button onclick="goToPage('page-quiz')" class="start-button">
+                        <span class="button-content">
+                            <span class="button-text">퀴즈로 실력 확인하기</span>
+                            <span class="button-icon">📝</span>
+                        </span>
                     </button>
                 </div>
             </div>
@@ -178,23 +221,41 @@
 
         <!-- 4. 오답 풀이 페이지 (페이지 분할) -->
         <div id="page-explanation" class="page">
-            <div class="screen-fit">
-                <div class="content-section">
-                    <div class="text-center mb-4">
-                        <h2 class="font-bold text-gray-800 mb-2">📚 퀴즈 결과</h2>
-                        <div id="quiz-result-summary" class="bg-blue-50 border-2 border-blue-200 rounded-lg p-compact mb-4">
+            <div class="screen-fit bg-gradient-to-br from-green-600 via-green-500 to-emerald-500 text-white relative overflow-hidden">
+                <!-- 배경 장식 요소 -->
+                <div class="absolute inset-0 opacity-5">
+                    <div class="floating-shapes">
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-4"></div>
+                    </div>
+                </div>
+                
+                <div class="content-section relative z-10">
+                    <div class="text-center mb-6">
+                        <div class="page-header mb-6">
+                            <div class="icon-badge mb-4">
+                                <span class="page-icon">📚</span>
+                            </div>
+                            <h2 class="page-title font-bold mb-3">퀴즈 결과</h2>
+                        </div>
+                        
+                        <div id="quiz-result-summary" class="result-card bg-white/15 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-6 mb-6">
                             <!-- 결과 요약이 여기에 표시됩니다 -->
                         </div>
                     </div>
                     
                     <div class="text-center">
-                        <p class="text-gray-600 mb-4">각 문제별 상세 해설을 보시겠어요?</p>
-                        <div class="compact-spacing">
-                            <button onclick="goToPage('page-explanation-1')" class="w-full bg-purple-500 text-white font-bold rounded mb-2">
-                                📝 상세 해설 보기
+                        <p class="guide-text text-lg mb-6 opacity-90">각 문제별 상세 해설을 보시겠어요?</p>
+                        <div class="action-buttons">
+                            <button onclick="goToPage('page-explanation-1')" class="action-button primary mb-3">
+                                <span class="button-content">
+                                    <span class="button-text">📝 상세 해설 보기</span>
+                                </span>
                             </button>
-                            <button onclick="goToPage('page-prevention')" class="w-full bg-green-500 text-white font-bold rounded">
-                                🛡️ 예방법 바로 보기
+                            <button onclick="goToPage('page-prevention')" class="action-button secondary">
+                                <span class="button-content">
+                                    <span class="button-text">🛡️ 예방법 바로 보기</span>
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -204,18 +265,34 @@
 
         <!-- 4-1. 상세 해설 페이지 1 -->
         <div id="page-explanation-1" class="page">
-            <div class="screen-fit">
-                <div class="content-section">
-                    <div class="text-center mb-4">
-                        <h2 class="font-bold text-gray-800 mb-2">📝 상세 해설 (1~4번)</h2>
+            <div class="screen-fit bg-gradient-to-br from-green-600 via-green-500 to-emerald-500 text-white relative overflow-hidden">
+                <!-- 배경 장식 요소 -->
+                <div class="absolute inset-0 opacity-5">
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-3"></div>
                     </div>
-                    <div id="explanation-content-1" class="compact-spacing">
+                </div>
+                
+                <div class="content-section relative z-10">
+                    <div class="text-center mb-6">
+                        <div class="page-header mb-4">
+                            <div class="icon-badge mb-4">
+                                <span class="page-icon">📝</span>
+                            </div>
+                            <h2 class="page-title font-bold">상세 해설 (1~4번)</h2>
+                        </div>
+                    </div>
+                    <div id="explanation-content-1" class="explanation-container">
                         <!-- 1-4번 해설이 여기에 표시됩니다 -->
                     </div>
                 </div>
                 <div class="button-section">
-                    <button onclick="goToPage('page-explanation-2')" class="w-full bg-blue-500 text-white font-bold rounded">
-                        5~9번 해설 보기 →
+                    <button onclick="goToPage('page-explanation-2')" class="start-button">
+                        <span class="button-content">
+                            <span class="button-text">5~9번 해설 보기</span>
+                            <span class="button-icon">→</span>
+                        </span>
                     </button>
                 </div>
             </div>
@@ -223,18 +300,34 @@
 
         <!-- 4-2. 상세 해설 페이지 2 -->
         <div id="page-explanation-2" class="page">
-            <div class="screen-fit">
-                <div class="content-section">
-                    <div class="text-center mb-4">
-                        <h2 class="font-bold text-gray-800 mb-2">📝 상세 해설 (5~9번)</h2>
+            <div class="screen-fit bg-gradient-to-br from-green-600 via-green-500 to-emerald-500 text-white relative overflow-hidden">
+                <!-- 배경 장식 요소 -->
+                <div class="absolute inset-0 opacity-5">
+                    <div class="floating-shapes">
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-4"></div>
                     </div>
-                    <div id="explanation-content-2" class="compact-spacing">
+                </div>
+                
+                <div class="content-section relative z-10">
+                    <div class="text-center mb-6">
+                        <div class="page-header mb-4">
+                            <div class="icon-badge mb-4">
+                                <span class="page-icon">📝</span>
+                            </div>
+                            <h2 class="page-title font-bold">상세 해설 (5~9번)</h2>
+                        </div>
+                    </div>
+                    <div id="explanation-content-2" class="explanation-container">
                         <!-- 5-9번 해설이 여기에 표시됩니다 -->
                     </div>
                 </div>
                 <div class="button-section">
-                    <button onclick="goToPage('page-prevention')" class="w-full bg-green-500 text-white font-bold rounded">
-                        예방 및 대처법 알아보기 🛡️
+                    <button onclick="goToPage('page-prevention')" class="start-button">
+                        <span class="button-content">
+                            <span class="button-text">예방 및 대처법 알아보기</span>
+                            <span class="button-icon">🛡️</span>
+                        </span>
                     </button>
                 </div>
             </div>
@@ -242,69 +335,86 @@
 
         <!-- 5. 예방 및 대처법 페이지 -->
         <div id="page-prevention" class="page">
-            <div class="screen-fit">
-                <div class="content-section">
-                    <div class="text-center mb-4">
-                        <h2 class="font-bold text-gray-800 mb-2">🛡️ 예방 및 대처법</h2>
+            <div class="screen-fit bg-gradient-to-br from-green-600 via-green-500 to-emerald-500 text-white relative overflow-hidden">
+                <!-- 배경 장식 요소 -->
+                <div class="absolute inset-0 opacity-5">
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                    </div>
+                </div>
+                
+                <div class="content-section relative z-10">
+                    <div class="text-center mb-6">
+                        <div class="page-header mb-6">
+                            <div class="icon-badge mb-4">
+                                <span class="page-icon">🛡️</span>
+                            </div>
+                            <h2 class="page-title font-bold">예방 및 대처법</h2>
+                        </div>
                     </div>
 
-                    <!-- 예방 방법 (간소화) -->
-                    <div class="mb-4">
-                        <h3 class="font-bold text-green-700 mb-2">✅ 예방 방법</h3>
-                        <div class="bg-green-50 border-2 border-green-200 rounded-lg p-compact">
-                            <div class="compact-spacing text-sm">
-                                <div class="flex items-start">
-                                    <span class="text-green-500 mr-2 font-bold">1.</span>
-                                    <span><strong>의심스러운 링크 클릭 금지</strong></span>
+                    <!-- 예방 방법 -->
+                    <div class="info-section mb-6">
+                        <h3 class="section-title font-bold mb-4">✅ 예방 방법</h3>
+                        <div class="info-card prevention-card">
+                            <div class="info-list">
+                                <div class="info-item">
+                                    <span class="item-number">1</span>
+                                    <span class="item-text"><strong>의심스러운 링크 클릭 금지</strong></span>
                                 </div>
-                                <div class="flex items-start">
-                                    <span class="text-green-500 mr-2 font-bold">2.</span>
-                                    <span><strong>공식 앱에서만 확인</strong></span>
+                                <div class="info-item">
+                                    <span class="item-number">2</span>
+                                    <span class="item-text"><strong>공식 앱에서만 확인</strong></span>
                                 </div>
-                                <div class="flex items-start">
-                                    <span class="text-green-500 mr-2 font-bold">3.</span>
-                                    <span><strong>개인정보 입력 절대 금지</strong></span>
+                                <div class="info-item">
+                                    <span class="item-number">3</span>
+                                    <span class="item-text"><strong>개인정보 입력 절대 금지</strong></span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 피해 시 대응법 (간소화) -->
-                    <div class="mb-4">
-                        <h3 class="font-bold text-red-700 mb-2">🚨 피해 시 대응</h3>
-                        <div class="bg-red-50 border-2 border-red-200 rounded-lg p-compact">
-                            <div class="compact-spacing text-sm">
-                                <div class="flex items-start">
-                                    <span class="text-red-500 mr-2 font-bold">1.</span>
-                                    <span><strong>112 신고</strong> (경찰서)</span>
+                    <!-- 피해 시 대응법 -->
+                    <div class="info-section mb-6">
+                        <h3 class="section-title font-bold mb-4">🚨 피해 시 대응</h3>
+                        <div class="info-card response-card">
+                            <div class="info-list">
+                                <div class="info-item">
+                                    <span class="item-number">1</span>
+                                    <span class="item-text"><strong>112 신고</strong> (경찰서)</span>
                                 </div>
-                                <div class="flex items-start">
-                                    <span class="text-red-500 mr-2 font-bold">2.</span>
-                                    <span><strong>1332 신고</strong> (금감원)</span>
+                                <div class="info-item">
+                                    <span class="item-number">2</span>
+                                    <span class="item-text"><strong>1332 신고</strong> (금감원)</span>
                                 </div>
-                                <div class="flex items-start">
-                                    <span class="text-red-500 mr-2 font-bold">3.</span>
-                                    <span><strong>계좌 지급정지</strong> 요청</span>
+                                <div class="info-item">
+                                    <span class="item-number">3</span>
+                                    <span class="item-text"><strong>계좌 지급정지</strong> 요청</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- 소액결제 차단 -->
-                    <div class="mb-4">
-                        <h3 class="font-bold text-blue-700 mb-2">📵 소액결제 차단</h3>
-                        <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-compact">
-                            <div class="text-center text-sm">
-                                <p>통신사 앱에서 차단 설정</p>
-                                <p class="text-blue-600 font-bold">SK: T월드 / KT: 올레 / LG: U+</p>
+                    <div class="info-section mb-4">
+                        <h3 class="section-title font-bold mb-4">📵 소액결제 차단</h3>
+                        <div class="info-card block-card">
+                            <div class="block-content text-center">
+                                <p class="block-text mb-2">통신사 앱에서 차단 설정</p>
+                                <p class="carrier-info font-bold">SK: T월드 / KT: 올레 / LG: U+</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="button-section">
-                    <button onclick="goToPage('page-vote')" class="w-full bg-purple-500 text-white font-bold rounded">
-                        교육 효과 확인하기 📊
+                    <button onclick="goToPage('page-vote')" class="start-button">
+                        <span class="button-content">
+                            <span class="button-text">교육 효과 확인하기</span>
+                            <span class="button-icon">📊</span>
+                        </span>
                     </button>
                 </div>
             </div>
@@ -312,43 +422,59 @@
 
         <!-- 6. 투표 참여 페이지 -->
         <div id="page-vote" class="page">
-            <div class="screen-fit">
-                <div class="content-section">
-                    <div class="text-center mb-4">
-                        <h2 class="font-bold text-gray-800 mb-2">📊 교육 효과 확인</h2>
-                        <p class="text-gray-600 mb-4">스미싱 교육 후 자신의 대처 능력을 평가해주세요</p>
+            <div class="screen-fit bg-gradient-to-br from-green-600 via-green-500 to-emerald-500 text-white relative overflow-hidden">
+                <!-- 배경 장식 요소 -->
+                <div class="absolute inset-0 opacity-5">
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-4"></div>
+                    </div>
+                </div>
+                
+                <div class="content-section relative z-10">
+                    <div class="text-center mb-6">
+                        <div class="page-header mb-6">
+                            <div class="icon-badge mb-4">
+                                <span class="page-icon">📊</span>
+                            </div>
+                            <h2 class="page-title font-bold mb-3">교육 효과 확인</h2>
+                            <p class="guide-text text-lg opacity-90">스미싱 교육 후 자신의 대처 능력을 평가해주세요</p>
+                        </div>
                     </div>
 
-                    <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-compact">
-                        <h3 class="font-bold text-center mb-4">앞으로 스미싱 문자를 받게 된다면<br>속지 않고 대처할 수 있나요?</h3>
+                    <div class="survey-card bg-white/15 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-6">
+                        <h3 class="survey-question font-bold text-center text-xl mb-6">
+                            앞으로 스미싱 문자를 받게 된다면<br>
+                            <span class="question-highlight">속지 않고 대처할 수 있나요?</span>
+                        </h3>
                         
-                        <div class="compact-spacing">
-                            <button onclick="selectVote('confident')" class="vote-option w-full p-3 border-2 border-green-300 rounded hover:bg-green-50 transition-all">
-                                <div class="flex items-center">
-                                    <span class="text-2xl mr-3">😊</span>
-                                    <div class="text-left">
-                                        <p class="font-bold text-green-800">자신 있어요!</p>
-                                        <p class="text-green-600 text-sm">스미싱을 잘 구별할 수 있어요</p>
+                        <div class="vote-options">
+                            <button onclick="selectVote('confident', event)" class="vote-option-card confident">
+                                <div class="option-content">
+                                    <span class="option-emoji">😊</span>
+                                    <div class="option-text">
+                                        <p class="option-title">자신 있어요!</p>
+                                        <p class="option-desc">스미싱을 잘 구별할 수 있어요</p>
                                     </div>
                                 </div>
                             </button>
                             
-                            <button onclick="selectVote('moderate')" class="vote-option w-full p-3 border-2 border-yellow-300 rounded hover:bg-yellow-50 transition-all">
-                                <div class="flex items-center">
-                                    <span class="text-2xl mr-3">🤔</span>
-                                    <div class="text-left">
-                                        <p class="font-bold text-yellow-800">어느 정도 자신 있어요</p>
-                                        <p class="text-yellow-600 text-sm">조심스럽게 확인해볼게요</p>
+                            <button onclick="selectVote('moderate', event)" class="vote-option-card moderate">
+                                <div class="option-content">
+                                    <span class="option-emoji">🤔</span>
+                                    <div class="option-text">
+                                        <p class="option-title">어느 정도 자신 있어요</p>
+                                        <p class="option-desc">조심스럽게 확인해볼게요</p>
                                     </div>
                                 </div>
                             </button>
                             
-                            <button onclick="selectVote('unsure')" class="vote-option w-full p-3 border-2 border-red-300 rounded hover:bg-red-50 transition-all">
-                                <div class="flex items-center">
-                                    <span class="text-2xl mr-3">😰</span>
-                                    <div class="text-left">
-                                        <p class="font-bold text-red-800">아직 자신이 없어요</p>
-                                        <p class="text-red-600 text-sm">더 공부가 필요해요</p>
+                            <button onclick="selectVote('unsure', event)" class="vote-option-card unsure">
+                                <div class="option-content">
+                                    <span class="option-emoji">😰</span>
+                                    <div class="option-text">
+                                        <p class="option-title">아직 자신이 없어요</p>
+                                        <p class="option-desc">더 공부가 필요해요</p>
                                     </div>
                                 </div>
                             </button>
@@ -360,47 +486,65 @@
 
         <!-- 7. 기프티콘 수령 페이지 -->
         <div id="page-complete" class="page">
-            <div class="screen-fit">
-                <div class="content-section">
-                    <div class="text-center mb-4">
-                        <div class="text-6xl mb-4">🎉</div>
-                        <h2 class="font-bold text-gray-800 mb-4">교육 완료!</h2>
-                        <div id="completion-message" class="bg-green-50 border-2 border-green-200 rounded-lg p-compact mb-4">
-                            <!-- 투표 결과에 따른 메시지가 여기에 표시됩니다 -->
+            <div class="screen-fit bg-gradient-to-br from-green-600 via-green-500 to-emerald-500 text-white relative overflow-hidden">
+                <!-- 배경 장식 요소 -->
+                <div class="absolute inset-0 opacity-5">
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                        <div class="shape shape-4"></div>
+                    </div>
+                </div>
+                
+                <div class="content-section relative z-10">
+                    <div class="text-center mb-6">
+                        <div class="celebration-section mb-6">
+                            <div class="celebration-icon mb-4">🎉</div>
+                            <h2 class="page-title font-bold mb-4">교육 완료!</h2>
+                            <div id="completion-message" class="completion-card bg-white/15 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-6 mb-6">
+                                <!-- 투표 결과에 따른 메시지가 여기에 표시됩니다 -->
+                            </div>
                         </div>
                     </div>
 
-                    <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-compact mb-4">
-                        <h3 class="font-bold text-center mb-3">🎁 기프티콘 수령</h3>
-                        <p class="text-gray-600 text-center mb-4 text-sm">교육 참여 감사 선물을 받아보세요!</p>
+                    <div class="gift-section bg-white/15 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-6 mb-4">
+                        <h3 class="gift-title font-bold text-center text-xl mb-3">🎁 기프티콘 수령</h3>
+                        <p class="gift-desc text-center mb-6 opacity-90">교육 참여 감사 선물을 받아보세요!</p>
                         
                         <!-- 개인정보 동의서 -->
-                        <form id="gifticon-form" class="compact-spacing">
-                            <div>
-                                <label class="block font-bold mb-2">이름 *</label>
-                                <input type="text" id="name" required placeholder="김디비" class="w-full border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                        <form id="gifticon-form" class="gift-form">
+                            <div class="form-group">
+                                <label class="form-label">이름 *</label>
+                                <input type="text" id="name" required placeholder="김디비" class="form-input">
                             </div>
                             
-                            <div>
-                                <label class="block font-bold mb-2">휴대폰 번호 *</label>
-                                <input type="tel" id="phone" required placeholder="010-1234-5678" class="w-full border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                            <div class="form-group">
+                                <label class="form-label">휴대폰 번호 *</label>
+                                <input type="tel" id="phone" required placeholder="010-1234-5678" class="form-input">
                             </div>
                             
-                            <div class="text-gray-500 text-xs p-2 bg-gray-50 rounded border">
-                                <p class="font-bold mb-1">📋 개인정보 수집·이용 안내</p>
-                                <p>기프티콘 발송을 위해 개인정보 수집이 필요합니다. 아래 버튼 클릭 시 개인정보 동의서를 확인하실 수 있습니다.</p>
+                            <div class="privacy-notice">
+                                <p class="notice-title">📋 개인정보 수집·이용 안내</p>
+                                <p class="notice-text">기프티콘 발송을 위해 개인정보 수집이 필요합니다. 아래 버튼 클릭 시 개인정보 동의서를 확인하실 수 있습니다.</p>
                             </div>
                             
-                            <button type="button" onclick="showPrivacyModal()" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded hover:from-blue-600 hover:to-purple-700 transition-all">
-                                개인정보 동의 후 신청하기 🎁
+                            <button type="button" onclick="showPrivacyModal()" class="gift-submit-button">
+                                <span class="button-content">
+                                    <span class="button-text">개인정보 동의 후 신청하기</span>
+                                    <span class="button-icon">🎁</span>
+                                </span>
                             </button>
                         </form>
                     </div>
                 </div>
                 
                 <div class="button-section">
-                    <button onclick="goToPage('page-intro')" class="w-full bg-gray-500 text-white font-bold rounded">
-                        처음부터 다시 체험하기
+                    <button onclick="goToPage('page-intro')" class="restart-button">
+                        <span class="button-content">
+                            <span class="button-text">처음부터 다시 체험하기</span>
+                            <span class="button-icon">🔄</span>
+                        </span>
                     </button>
                 </div>
             </div>
@@ -482,6 +626,26 @@
                         동의하고 신청하기 🎁
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 퀴즈 해설 팝업 모달 -->
+    <div id="explanation-modal" class="explanation-modal" style="display: none;">
+        <div class="explanation-modal-content">
+            <div class="explanation-modal-header">
+                <h4 class="font-bold text-center text-lg" id="explanation-title">문제 해설</h4>
+                <button onclick="closeExplanationModal()" class="close-button">✕</button>
+            </div>
+            
+            <div class="explanation-modal-body" id="explanation-modal-body">
+                <!-- 해설 내용이 여기에 동적으로 삽입됩니다 -->
+            </div>
+            
+            <div class="explanation-modal-footer">
+                <button onclick="closeExplanationModal()" class="explanation-close-btn">
+                    확인했어요
+                </button>
             </div>
         </div>
     </div>
