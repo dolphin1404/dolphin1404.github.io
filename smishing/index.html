@@ -17,22 +17,84 @@
         
         <!-- 1. 인트로 페이지 -->
         <div id="page-intro" class="page active">
-            <div class="screen-fit bg-gradient-to-br from-blue-500 to-purple-600 text-white text-center">
-                <div class="content-section">
-                    <h1 class="font-bold mb-compact">🛡️ 스미싱 체험관</h1>
-                    <div class="mb-compact">
-                        <p class="mb-2">어르신 여러분,</p>
-                        <p class="mb-2">스미싱을 얼마나</p>
-                        <p class="mb-4">잘 알고 계신가요?</p>
-                    </div>
-                    <div class="bg-white/20 backdrop-blur-sm rounded-lg p-compact mb-4">
-                        <p class="mb-2">📱 문자 속 함정을 찾아내고</p>
-                        <p>🔍 안전한 디지털 생활을 배워보세요!</p>
+            <div class="screen-fit bg-gradient-to-br from-green-600 via-green-500 to-emerald-500 text-white relative overflow-hidden">
+                <!-- 배경 장식 요소 -->
+                <div class="absolute inset-0 opacity-10">
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                        <div class="shape shape-4"></div>
                     </div>
                 </div>
+                
+                <div class="content-section relative z-10">
+                    <!-- 장학재단 로고 섹션 -->
+                    <div class="foundation-section mb-6">
+                        <div class="logo-container mb-4">
+                            <img src="https://www.dbfoundation.or.kr/resources/images/common/logo.png" 
+                                 alt="DB김준기문화재단" 
+                                 class="foundation-logo mx-auto mb-3"
+                                 onerror="this.style.display='none'">
+                        </div>
+                        <div class="foundation-info">
+                            <p class="foundation-name text-lg font-semibold mb-1">DB김준기문화재단</p>
+                            <p class="foundation-tagline text-sm opacity-90">안전한 디지털 세상을 위한 교육</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 메인 타이틀 섹션 -->
+                    <div class="title-section mb-8">
+                        <div class="icon-badge mb-4">
+                            <span class="security-icon">🛡️</span>
+                        </div>
+                        <h1 class="main-title font-bold mb-3">스미싱 체험관</h1>
+                        <div class="subtitle-container">
+                            <p class="subtitle-line">어르신 여러분을 위한</p>
+                            <p class="subtitle-emphasis">맞춤형 보안 교육</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 기능 소개 카드 -->
+                    <div class="feature-cards mb-6">
+                        <div class="feature-card primary-card">
+                            <div class="card-icon-group">
+                                <span class="card-icon">📱</span>
+                                <span class="card-icon">🔍</span>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">실제 사례 학습</h3>
+                                <p class="card-description">문자 속 함정을 찾아내고<br>안전한 대처법을 익혀보세요</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card secondary-card">
+                            <div class="card-icon-group">
+                                <span class="card-icon">🎯</span>
+                                <span class="card-icon">📚</span>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">단계별 맞춤 교육</h3>
+                                <p class="card-description">퀴즈부터 예방법까지<br>체계적인 보안 교육</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 시작 안내 -->
+                    <div class="start-info">
+                        <div class="info-badge">
+                            <span class="badge-icon">✨</span>
+                            <span class="badge-text">5분이면 완료되는 간편 교육</span>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="button-section">
-                    <button onclick="goToPage('page-guide')" class="w-full bg-white text-blue-600 font-bold rounded-full hover:bg-gray-100 transition-all">
-                        체험 시작하기 🚀
+                    <button onclick="goToPage('page-guide')" class="start-button">
+                        <span class="button-content">
+                            <span class="button-text">체험 시작하기</span>
+                            <span class="button-icon">🚀</span>
+                        </span>
                     </button>
                 </div>
             </div>
