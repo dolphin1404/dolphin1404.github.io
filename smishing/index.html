@@ -813,7 +813,7 @@
             {
                 id: 2,
                 type: '정상 쿠팡 배송',
-                message: '[쿠팡] 주문하신 상품이 배송 완료되었습니다. 배송조회: https://www.coupang.com/vp/orders',
+                message: '[쿠팡] 주문하신 상품이 배송 완료되었습니다. 배송조회: ',
                 link: 'https://www.coupang.com/vp/orders',
                 isPhishing: false,
                 explanation: {
@@ -1202,6 +1202,7 @@
                 const userAnswer = userAnswers[i];
                 const isCorrect = userAnswer === question.isPhishing;
                 const explanation = question.explanation;
+                const isNormalMessage = !question.isPhishing;
 
                 explanationHtml += `
                     <div class="border-2 rounded p-compact mb-compact ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}">
@@ -1217,21 +1218,22 @@
 
                         <div class="text-xs space-y-1">
                             <div>
-                                <h4 class="font-bold mb-1">🔍 특징</h4>
-                                <ul class="text-gray-700 space-y-1">
+                                <h4 class="font-bold mb-1">${isNormalMessage ? '🔍 정상 신호' : '🔍 특징'}</h4>
+                                <ul class="${isNormalMessage ? 'text-green-700' : 'text-gray-700'} space-y-1">
                                     ${explanation.features.map(feature => `<li class="flex items-start"><span class="mr-1">•</span><span>${feature}</span></li>`).join('')}
                                 </ul>
                             </div>
                             
                             <div>
-                                <h4 class="font-bold mb-1">⚠️ 주의점</h4>
-                                <p class="text-red-700">${explanation.warning}</p>
+                                <p class="${isNormalMessage ? 'text-green-700' : 'text-red-700'}">${explanation.warning}</p>
                             </div>
                             
+                            ${!isNormalMessage ? `
                             <div>
                                 <h4 class="font-bold mb-1">✅ 대처법</h4>
                                 <p class="text-green-700">${explanation.action}</p>
                             </div>
+                            ` : ''}
                         </div>
                     </div>
                 `;
@@ -1336,44 +1338,75 @@
             const messageArea = document.querySelector('.message-area');
             const explanationDiv = document.getElementById('instant-explanation');
             
-            // 진동 효과 - 메시지 영역에 적용
-            if (messageArea) {
-                messageArea.classList.add('shake');
-                setTimeout(() => {
-                    messageArea.classList.remove('shake');
-                }, 600);
-            }
+            // 정상 문자인지 스미싱인지 확인
+            const isNormalMessage = !question.isPhishing;
             
-            // 해설 표시
-            explanationDiv.innerHTML = `
-                <div class="explanation-box">
-                    <div class="flex items-center mb-3">
-                        <span class="text-2xl mr-2">⚠️</span>
-                        <h4 class="font-bold text-red-800">이것은 스미싱입니다!</h4>
-                    </div>
-                    
-                    <div class="text-xs space-y-2">
-                        <div>
-                            <h5 class="font-bold mb-1 text-red-700">🔍 위험 신호:</h5>
-                            <ul class="text-red-600 space-y-1">
-                                ${question.explanation.features.map(feature => 
-                                    `<li class="flex items-start"><span class="mr-1">•</span><span>${feature}</span></li>`
-                                ).join('')}
-                            </ul>
+            if (isNormalMessage) {
+                // 정상 문자에 대한 피드백
+                explanationDiv.innerHTML = `
+                    <div class="explanation-box">
+                        <div class="flex items-center mb-3">
+                            <span class="text-2xl mr-2">✅</span>
+                            <h4 class="font-bold text-green-800">이것은 스미싱이 아닙니다!</h4>
                         </div>
                         
-                        <div class="bg-red-100 border border-red-300 rounded p-2">
-                            <h5 class="font-bold mb-1 text-red-800">⚠️ 주의:</h5>
-                            <p class="text-red-700">${question.explanation.warning}</p>
-                        </div>
-                        
-                        <div class="bg-green-100 border border-green-300 rounded p-2">
-                            <h5 class="font-bold mb-1 text-green-800">✅ 올바른 대처:</h5>
-                            <p class="text-green-700">${question.explanation.action}</p>
+                        <div class="text-xs space-y-2">
+                            <div>
+                                <h5 class="font-bold mb-1 text-green-700">🔍 정상 신호:</h5>
+                                <ul class="text-green-600 space-y-1">
+                                    ${question.explanation.features.map(feature => 
+                                        `<li class="flex items-start"><span class="mr-1">•</span><span>${feature}</span></li>`
+                                    ).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-green-100 border border-green-300 rounded p-2">
+                                <p class="text-green-700">${question.explanation.warning}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
+                `;
+            } else {
+                // 스미싱에 대한 기존 피드백
+                // 진동 효과 - 메시지 영역에 적용
+                if (messageArea) {
+                    messageArea.classList.add('shake');
+                    setTimeout(() => {
+                        messageArea.classList.remove('shake');
+                    }, 600);
+                }
+                
+                // 해설 표시
+                explanationDiv.innerHTML = `
+                    <div class="explanation-box">
+                        <div class="flex items-center mb-3">
+                            <span class="text-2xl mr-2">⚠️</span>
+                            <h4 class="font-bold text-red-800">이것은 스미싱입니다!</h4>
+                        </div>
+                        
+                        <div class="text-xs space-y-2">
+                            <div>
+                                <h5 class="font-bold mb-1 text-red-700">🔍 위험 신호:</h5>
+                                <ul class="text-red-600 space-y-1">
+                                    ${question.explanation.features.map(feature => 
+                                        `<li class="flex items-start"><span class="mr-1">•</span><span>${feature}</span></li>`
+                                    ).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-red-100 border border-red-300 rounded p-2">
+                                <h5 class="font-bold mb-1 text-red-800">⚠️ 주의:</h5>
+                                <p class="text-red-700">${question.explanation.warning}</p>
+                            </div>
+                            
+                            <div class="bg-green-100 border border-green-300 rounded p-2">
+                                <h5 class="font-bold mb-1 text-green-800">✅ 올바른 대처:</h5>
+                                <p class="text-green-700">${question.explanation.action}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
             
             explanationDiv.style.display = 'block';
         }
