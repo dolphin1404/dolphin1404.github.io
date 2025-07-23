@@ -351,6 +351,44 @@ body {
     overflow: hidden;
 }
 
+/* 인트로 페이지 전용 버튼 섹션 */
+#page-intro .button-section {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px 25px 0 0;
+    margin: 0 15px 0 15px;
+    width: calc(100% - 30px);
+    padding: 25px;
+}
+
+/* 스미싱 안내 페이지와 기프티콘 페이지도 같은 스타일 적용 */
+#page-guide .button-section,
+#page-complete .button-section {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px 25px 0 0;
+    margin: 0 15px 0 15px;
+    width: calc(100% - 30px);
+    padding: 25px;
+}
+
+/* 다른 페이지는 기본 스타일 유지 */
+#page-quiz .button-section,
+#page-explanation .button-section,
+#page-explanation-1 .button-section,
+#page-explanation-2 .button-section,
+#page-prevention .button-section,
+#page-vote .button-section {
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    border-radius: 0;
+    margin: 0;
+    width: 100%;
+    padding: 17px;
+}
+
 .start-button::before {
     content: '';
     position: absolute;
@@ -1657,6 +1695,15 @@ input[type="text"]:focus, input[type="tel"]:focus {
     
     .button-section {
         padding: 12px;
+    }
+    
+    /* 인트로 페이지 모바일 버튼 섹션 */
+    #page-intro .button-section,
+    #page-guide .button-section,
+    #page-complete .button-section {
+        margin: 0 10px 0 10px;
+        width: calc(100% - 20px);
+        padding: 20px;
     }
 }
 
