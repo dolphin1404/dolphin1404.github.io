@@ -23,7 +23,7 @@ const quizData = [
     {
         id: 2,
         type: '정상 쿠팡 배송',
-        message: '[쿠팡] 주문하신 상품이 배송 완료되었습니다. 배송조회: ',
+        message: '[쿠팡] 주문하신 상품이 배송 완료되었습니다. 배송조회: https://www.coupang.com/vp/orders',
         link: 'https://www.coupang.com/vp/orders',
         isPhishing: false,
         explanation: {
@@ -183,7 +183,7 @@ function getContactNumber(type) {
     return numbers[type] || '010-0000-0000';
 }
 
-// 퀴즈 화면 업데이트
+// 퀴즈 화면 업데이트 (간소화)
 function updateQuizDisplay() {
     const question = quizData[currentQuestionIndex];
     const container = document.getElementById('quiz-container');
@@ -821,6 +821,7 @@ function submitToGoogleForm(name, phone) {
     }
 
     // 구글 폼즈 URL (실제 구글 폼 생성 후 여기에 입력)
+    // 예시: 'https://docs.google.com/forms/d/e/1FAIpQLSe_ABC123DEF456_GHI789JKL/formResponse'
     const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd9LG6oOaQiDDX_xIi3e2wSIOlfEgo-_FvqGvmiBlSugPAoOQ/formResponse';
     
     // 현재 시간을 한국 시간으로 포맷

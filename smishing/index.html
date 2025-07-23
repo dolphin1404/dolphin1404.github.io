@@ -3,723 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스미싱 체험관</title>
+    <title>스미싱 체험관 - 안전한 디지털 생활을 위한 교육</title>
+    <meta name="description" content="어르신을 위한 스미싱 예방 교육 체험관. 실제 문자 사례로 스미싱을 구별하는 방법을 배워보세요.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS 파일 링크 -->
     <link rel="stylesheet" href="style.css">
 </head>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 18px;
-            margin: 0;
-            padding: 0;
-        }
+<body class="bg-white">
+    <div class="container">
         
-        .page {
-            display: none;
-            min-height: 100vh;
-            background: white;
-            overflow-y: auto;
-        }
-        .page.active {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* 어르신용 큰 글자 크기 */
-        h1 { font-size: 28px !important; line-height: 1.2; }
-        h2 { font-size: 24px !important; line-height: 1.2; }
-        h3 { font-size: 22px !important; line-height: 1.2; }
-        h4 { font-size: 20px !important; line-height: 1.2; }
-        p { font-size: 16px !important; line-height: 1.4; }
-        .text-sm { font-size: 14px !important; }
-        .text-xs { font-size: 12px !important; }
-        .text-lg { font-size: 18px !important; }
-        .text-xl { font-size: 20px !important; }
-        .text-2xl { font-size: 24px !important; }
-        .text-3xl { font-size: 28px !important; }
-        
-        /* 버튼 크기 */
-        button {
-            min-height: 50px !important;
-            font-size: 16px !important;
-            font-weight: 600 !important;
-            border-radius: 8px !important;
-            padding: 12px 16px !important;
-        }
-        
-        /* 입력 필드 크기 */
-        input {
-            min-height: 50px !important;
-            font-size: 16px !important;
-            padding: 12px !important;
-        }
-        
-        /* 퀴즈 옵션 스타일 */
-        .quiz-option {
-            transition: all 0.3s ease;
-            min-height: 60px !important;
-            border-width: 2px !important;
-        }
-        .quiz-option:hover {
-            background-color: #f3f4f6;
-            transform: scale(1.02);
-        }
-        .quiz-option.selected {
-            background-color: #dbeafe;
-            border-color: #3b82f6;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-        
-        /* 투표 옵션 스타일 */
-        .vote-option {
-            min-height: 70px !important;
-            border-width: 2px !important;
-        }
-        .vote-option:hover {
-            transform: scale(1.02);
-        }
-        
-        /* 컨테이너 */
-        .container {
-            max-width: 100%;
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* 화면 최적화 */
-        .screen-fit {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 20px;
-        }
-        
-        .content-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .button-section {
-            margin-top: auto;
-            padding-top: 20px;
-        }
-        
-        /* 간격 조정 */
-        .compact-spacing > * + * { margin-top: 12px !important; }
-        .mb-compact { margin-bottom: 12px !important; }
-        .p-compact { padding: 16px !important; }
-        
-        /* 갤럭시 문자 앱 스타일 - 완전 복제 */
-        .message-app {
-            background: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .message-header {
-            background: #ffffff;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #e0e0e0;
-            min-height: 60px;
-            color: #333;
-        }
-        
-        .back-arrow {
-            font-size: 20px;
-            margin-right: 16px;
-            color: #333;
-            cursor: pointer;
-        }
-        
-        .contact-info {
-            flex: 1;
-        }
-        
-        .contact-name {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            margin: 0;
-            line-height: 1.2;
-        }
-        
-        .contact-number {
-            font-size: 13px;
-            color: #666;
-            margin: 0;
-            line-height: 1.2;
-        }
-        
-        .header-icons {
-            display: flex;
-            gap: 16px;
-            font-size: 18px;
-            color: #666;
-        }
-        
-        .message-area {
-            flex: 1;
-            background: #f8f9fa;
-            padding: 16px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-height: 45vh;
-        }
-        
-        .received-message {
-            align-self: flex-start;
-            max-width: 75%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .sent-message {
-            align-self: flex-end;
-            max-width: 75%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .message-bubble {
-            padding: 12px 16px;
-            border-radius: 18px;
-            position: relative;
-            word-wrap: break-word;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-        
-        .received-bubble {
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-bottom-left-radius: 4px;
-        }
-        
-        .sent-bubble {
-            background: #007AFF;
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-        
-        .sent-message .message-link {
-            color: #a8d1ff;
-        }
-        
-        .message-text {
-            margin: 0;
-        }
-        
-        .message-link {
-            display: block;
-            color: #007AFF;
-            text-decoration: underline;
-            margin-top: 8px;
-            font-size: 13px;
-        }
-        
-        .message-time {
-            font-size: 11px;
-            color: #999;
-            margin-top: 4px;
-            align-self: flex-start;
-        }
-        
-        .sent-message .message-time {
-            align-self: flex-end;
-            color: rgba(255,255,255,0.7);
-        }
-        
-        .input-area {
-            background: white;
-            border-top: 1px solid #e0e0e0;
-            padding: 12px;
-        }
-        
-        .quiz-option {
-            margin-bottom: 8px;
-            transition: all 0.2s ease;
-            font-size: 14px !important;
-        }
-        
-        .quiz-option:last-child {
-            margin-bottom: 0;
-        }
-        
-        .quiz-option.selected {
-            transform: scale(0.98);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .quiz-header {
-            background: #f8f9fa;
-            padding: 6px 16px;
-            text-align: center;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: 12px;
-            color: #666;
-            font-weight: 500;
-            min-height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .input-area {
-            background: #ffffff;
-            padding: 12px 16px;
-            border-top: 1px solid #e0e0e0;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        /* 진동 효과 */
-        .shake {
-            animation: shake 0.6s ease-in-out;
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-        
-        /* 해설 박스 애니메이션 */
-        .explanation-box {
-            animation: slideDown 0.5s ease-out;
-            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
-            border: 2px solid #fc8181;
-            border-radius: 12px;
-            margin-top: 16px;
-            padding: 16px;
-            box-shadow: 0 4px 12px rgba(252, 129, 129, 0.3);
-        }
-        @keyframes slideDown {
-            from { 
-                opacity: 0; 
-                transform: translateY(-20px); 
-                max-height: 0;
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-                max-height: 500px;
-            }
-        }
-        
-        /* 개인정보 동의 팝업 스타일 */
-        .privacy-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-        
-        .privacy-modal-content {
-            background: white;
-            border-radius: 12px;
-            max-width: 90%;
-            max-height: 80%;
-            overflow-y: auto;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            animation: modalFadeIn 0.3s ease-out;
-        }
-        
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-        
-        .privacy-modal-header {
-            padding: 20px 20px 0 20px;
-            border-bottom: 1px solid #e0e0e0;
-            position: sticky;
-            top: 0;
-            background: white;
-            border-radius: 12px 12px 0 0;
-        }
-        
-        .privacy-modal-body {
-            padding: 20px;
-            font-size: 12px;
-            line-height: 1.4;
-        }
-        
-        .privacy-modal-footer {
-            padding: 0 20px 20px 20px;
-            border-top: 1px solid #e0e0e0;
-            position: sticky;
-            bottom: 0;
-            background: white;
-            border-radius: 0 0 12px 12px;
-<body>
-    <!-- 시작 페이지 -->
-    <div id="page-intro" class="page active">
-        <div class="container">
-            <div class="header">
-                <h1>🛡️ 스미싱 체험관</h1>
-                <p>실제 사례로 배우는 스미싱 예방 교육</p>
+        <!-- 1. 인트로 페이지 -->
+        <div id="page-intro" class="page active">
+            <div class="screen-fit bg-gradient-to-br from-blue-500 to-purple-600 text-white text-center">
+                <div class="content-section">
+                    <h1 class="font-bold mb-compact">🛡️ 스미싱 체험관</h1>
+                    <div class="mb-compact">
+                        <p class="mb-2">어르신 여러분,</p>
+                        <p class="mb-2">스미싱을 얼마나</p>
+                        <p class="mb-4">잘 알고 계신가요?</p>
+                    </div>
+                    <div class="bg-white/20 backdrop-blur-sm rounded-lg p-compact mb-4">
+                        <p class="mb-2">📱 문자 속 함정을 찾아내고</p>
+                        <p>🔍 안전한 디지털 생활을 배워보세요!</p>
+                    </div>
+                </div>
+                <div class="button-section">
+                    <button onclick="goToPage('page-guide')" class="w-full bg-white text-blue-600 font-bold rounded-full hover:bg-gray-100 transition-all">
+                        체험 시작하기 🚀
+                    </button>
+                </div>
             </div>
-            
-            <div class="intro-content">
-                <div class="intro-box">
-                    <h2>📱 체험관 안내</h2>
-                    <div class="intro-features">
-                        <div class="feature-item">
-                            <span class="icon">🔍</span>
-                            <div>
-                                <h3>실제 문자 분석</h3>
-                                <p>진짜 스미싱 문자와 정상 문자를 비교해보세요</p>
+        </div>
+
+        <!-- 2. 스미싱 안내 페이지 -->
+        <div id="page-guide" class="page">
+            <div class="screen-fit">
+                <div class="content-section">
+                    <div class="text-center mb-4">
+                        <h2 class="font-bold text-gray-800 mb-2">스미싱이란?</h2>
+                        <div class="bg-red-50 border-2 border-red-200 rounded-lg p-compact mb-4">
+                            <p class="font-bold text-red-800 mb-1">SMS + 피싱 = 스미싱</p>
+                            <p class="text-red-600">문자메시지를 이용한 사기</p>
+                        </div>
+                    </div>
+
+                    <!-- 피해 흐름도 (간소화) -->
+                    <div class="mb-4">
+                        <h3 class="font-bold mb-2">📊 피해 과정</h3>
+                        <div class="compact-spacing">
+                            <div class="flex items-center bg-gray-50 p-2 rounded border">
+                                <span class="text-lg mr-2">1️⃣</span>
+                                <p class="text-sm">문자 메시지 수신</p>
+                            </div>
+                            <div class="flex items-center bg-gray-50 p-2 rounded border">
+                                <span class="text-lg mr-2">2️⃣</span>
+                                <p class="text-sm">링크 클릭 또는 앱 설치</p>
+                            </div>
+                            <div class="flex items-center bg-red-100 p-2 rounded border-red-300 border">
+                                <span class="text-lg mr-2">3️⃣</span>
+                                <p class="text-sm text-red-700">개인정보 도용 및 금전 피해</p>
                             </div>
                         </div>
-                        <div class="feature-item">
-                            <span class="icon">🎯</span>
-                            <div>
-                                <h3>체험형 퀴즈</h3>
-                                <p>Galaxy 메시지 앱과 똑같은 화면에서 직접 판단해보세요</p>
+                    </div>
+
+                    <!-- 피해 사례 (간소화) -->
+                    <div class="mb-4">
+                        <h3 class="font-bold mb-2">⚠️ 주요 사례</h3>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="bg-yellow-50 border border-yellow-200 p-2 rounded text-center">
+                                <p class="text-2xl mb-1">💌</p>
+                                <p class="text-sm font-bold">청첩장</p>
                             </div>
-                        </div>
-                        <div class="feature-item">
-                            <span class="icon">📚</span>
-                            <div>
-                                <h3>상세 해설</h3>
-                                <p>각 문자의 위험 신호와 대처법을 자세히 설명합니다</p>
+                            <div class="bg-yellow-50 border border-yellow-200 p-2 rounded text-center">
+                                <p class="text-2xl mb-1">💳</p>
+                                <p class="text-sm font-bold">은행사칭</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="quiz-info">
-                    <h3>📋 퀴즈 구성</h3>
-                    <div class="quiz-stats">
-                        <div class="stat-item">
-                            <span class="number">9</span>
-                            <span class="label">문제</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="number">7</span>
-                            <span class="label">스미싱</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="number">2</span>
-                            <span class="label">정상 문자</span>
-                        </div>
-                    </div>
+                <div class="button-section">
+                    <button onclick="goToPage('page-quiz')" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold rounded transition-all">
+                        퀴즈로 실력 확인하기 📝
+                    </button>
                 </div>
-            </div>
-            
-            <div class="start-button-container">
-                <button onclick="goToPage('page-quiz')" class="start-button">
-                    체험 시작하기 🚀
-                </button>
             </div>
         </div>
-    </div>
 
-    <!-- 퀴즈 페이지 -->
-    <div id="page-quiz" class="page">
-        <div class="container">
-            <div class="quiz-header">
-                <div class="progress-info">
-                    <span class="progress-text">
-                        <span id="current-question">1</span> / 9
-                    </span>
-                </div>
-                <h2>이 문자가 의심스러운가요?</h2>
-            </div>
-            
-            <!-- 메시지 앱 UI -->
+        <!-- 3. 스미싱 퀴즈 페이지 -->
+        <div id="page-quiz" class="page">
             <div class="message-app">
-                <div id="quiz-container">
-                    <!-- JavaScript로 동적 생성 -->
+                <!-- 퀴즈 진행 상황 -->
+                <div class="quiz-header">
+                    스미싱 탐지 퀴즈 - 문제 <span id="current-question">1</span> / 9
                 </div>
-            </div>
-            
-            <!-- 네비게이션 버튼 -->
-            <div class="navigation-buttons">
-                <button id="prev-btn" onclick="previousQuestion()" class="flex-1 bg-gray-300 text-gray-500 font-bold rounded cursor-not-allowed" disabled>
-                    ← 이전
-                </button>
-                <button id="next-btn" class="flex-1 bg-gray-400 text-gray-200 font-bold rounded cursor-not-allowed" disabled>
-                    다음 →
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 결과 요약 페이지 -->
-    <div id="page-explanation" class="page">
-        <div class="container">
-            <div class="result-header">
-                <h2>🎯 퀴즈 완료!</h2>
-                <div id="quiz-result-summary" class="result-summary">
-                    <!-- JavaScript로 동적 생성 -->
-                </div>
-            </div>
-            
-            <div class="explanation-navigation">
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="goToPage('page-explanation-1')" class="explanation-nav-btn">
-                        <div class="btn-content">
-                            <span class="btn-icon">📝</span>
-                            <div>
-                                <div class="btn-title">상세 해설 1부</div>
-                                <div class="btn-subtitle">1~4번 문제</div>
-                            </div>
-                        </div>
-                    </button>
-                    
-                    <button onclick="goToPage('page-explanation-2')" class="explanation-nav-btn">
-                        <div class="btn-content">
-                            <span class="btn-icon">📖</span>
-                            <div>
-                                <div class="btn-title">상세 해설 2부</div>
-                                <div class="btn-subtitle">5~9번 문제</div>
-                            </div>
-                        </div>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="action-buttons">
-                <button onclick="goToPage('page-survey')" class="primary-button">
-                    만족도 조사 참여 📊
-                </button>
-                <button onclick="location.reload()" class="secondary-button">
-                    다시 체험하기 🔄
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 상세 해설 1부 페이지 (1~4번) -->
-    <div id="page-explanation-1" class="page">
-        <div class="container">
-            <div class="explanation-header">
-                <button onclick="goToPage('page-explanation')" class="back-button">
-                    ← 결과 페이지로
-                </button>
-                <h2>📝 상세 해설 1부 (1~4번)</h2>
-            </div>
-            
-            <div id="explanation-content-1" class="explanation-content">
-                <!-- JavaScript로 동적 생성 -->
-            </div>
-            
-            <div class="explanation-footer">
-                <button onclick="goToPage('page-explanation-2')" class="primary-button">
-                    2부 해설 보기 →
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 상세 해설 2부 페이지 (5~9번) -->
-    <div id="page-explanation-2" class="page">
-        <div class="container">
-            <div class="explanation-header">
-                <button onclick="goToPage('page-explanation-1')" class="back-button">
-                    ← 1부 해설로
-                </button>
-                <h2>📖 상세 해설 2부 (5~9번)</h2>
-            </div>
-            
-            <div id="explanation-content-2" class="explanation-content">
-                <!-- JavaScript로 동적 생성 -->
-            </div>
-            
-            <div class="explanation-footer">
-                <button onclick="goToPage('page-survey')" class="primary-button">
-                    만족도 조사 →
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 만족도 조사 페이지 -->
-    <div id="page-survey" class="page">
-        <div class="container">
-            <div class="survey-header">
-                <h2>📊 만족도 조사</h2>
-                <p>스미싱 체험관 이용은 어떠셨나요?</p>
-            </div>
-            
-            <div class="survey-content">
-                <h3>🛡️ 이제 스미싱을 구별할 자신이 있나요?</h3>
                 
-                <div class="vote-options">
-                    <div class="vote-option" onclick="selectVote('confident')">
-                        <div class="vote-content">
-                            <span class="vote-icon">😎</span>
-                            <div>
-                                <h4>자신 있어요!</h4>
-                                <p>스미싱을 충분히 구별할 수 있을 것 같아요</p>
-                            </div>
+                <div id="quiz-container">
+                    <!-- 퀴즈 문제들이 동적으로 삽입됩니다 -->
+                </div>
+                
+                <div class="button-section" style="padding: 12px 16px; background: white; border-top: 1px solid #e0e0e0;">
+                    <div class="flex gap-2">
+                        <button id="prev-btn" onclick="previousQuestion()" class="flex-1 bg-gray-300 text-gray-700 font-bold rounded" disabled>← 이전</button>
+                        <button id="next-btn" onclick="nextQuestion()" class="flex-1 bg-blue-500 text-white font-bold rounded">다음 →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 오답 풀이 페이지 (페이지 분할) -->
+        <div id="page-explanation" class="page">
+            <div class="screen-fit">
+                <div class="content-section">
+                    <div class="text-center mb-4">
+                        <h2 class="font-bold text-gray-800 mb-2">📚 퀴즈 결과</h2>
+                        <div id="quiz-result-summary" class="bg-blue-50 border-2 border-blue-200 rounded-lg p-compact mb-4">
+                            <!-- 결과 요약이 여기에 표시됩니다 -->
                         </div>
                     </div>
                     
-                    <div class="vote-option" onclick="selectVote('moderate')">
-                        <div class="vote-content">
-                            <span class="vote-icon">🤔</span>
-                            <div>
-                                <h4>어느 정도 자신 있어요</h4>
-                                <p>조심스럽게 확인하면서 판단할 수 있을 것 같아요</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="vote-option" onclick="selectVote('unsure')">
-                        <div class="vote-content">
-                            <span class="vote-icon">😅</span>
-                            <div>
-                                <h4>아직 자신이 없어요</h4>
-                                <p>더 공부하고 주의깊게 살펴봐야겠어요</p>
-                            </div>
+                    <div class="text-center">
+                        <p class="text-gray-600 mb-4">각 문제별 상세 해설을 보시겠어요?</p>
+                        <div class="compact-spacing">
+                            <button onclick="goToPage('page-explanation-1')" class="w-full bg-purple-500 text-white font-bold rounded mb-2">
+                                📝 상세 해설 보기
+                            </button>
+                            <button onclick="goToPage('page-prevention')" class="w-full bg-green-500 text-white font-bold rounded">
+                                🛡️ 예방법 바로 보기
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- 4-1. 상세 해설 페이지 1 -->
+        <div id="page-explanation-1" class="page">
+            <div class="screen-fit">
+                <div class="content-section">
+                    <div class="text-center mb-4">
+                        <h2 class="font-bold text-gray-800 mb-2">📝 상세 해설 (1~4번)</h2>
+                    </div>
+                    <div id="explanation-content-1" class="compact-spacing">
+                        <!-- 1-4번 해설이 여기에 표시됩니다 -->
+                    </div>
+                </div>
+                <div class="button-section">
+                    <button onclick="goToPage('page-explanation-2')" class="w-full bg-blue-500 text-white font-bold rounded">
+                        5~9번 해설 보기 →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4-2. 상세 해설 페이지 2 -->
+        <div id="page-explanation-2" class="page">
+            <div class="screen-fit">
+                <div class="content-section">
+                    <div class="text-center mb-4">
+                        <h2 class="font-bold text-gray-800 mb-2">📝 상세 해설 (5~9번)</h2>
+                    </div>
+                    <div id="explanation-content-2" class="compact-spacing">
+                        <!-- 5-9번 해설이 여기에 표시됩니다 -->
+                    </div>
+                </div>
+                <div class="button-section">
+                    <button onclick="goToPage('page-prevention')" class="w-full bg-green-500 text-white font-bold rounded">
+                        예방 및 대처법 알아보기 🛡️
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 예방 및 대처법 페이지 -->
+        <div id="page-prevention" class="page">
+            <div class="screen-fit">
+                <div class="content-section">
+                    <div class="text-center mb-4">
+                        <h2 class="font-bold text-gray-800 mb-2">🛡️ 예방 및 대처법</h2>
+                    </div>
+
+                    <!-- 예방 방법 (간소화) -->
+                    <div class="mb-4">
+                        <h3 class="font-bold text-green-700 mb-2">✅ 예방 방법</h3>
+                        <div class="bg-green-50 border-2 border-green-200 rounded-lg p-compact">
+                            <div class="compact-spacing text-sm">
+                                <div class="flex items-start">
+                                    <span class="text-green-500 mr-2 font-bold">1.</span>
+                                    <span><strong>의심스러운 링크 클릭 금지</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="text-green-500 mr-2 font-bold">2.</span>
+                                    <span><strong>공식 앱에서만 확인</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="text-green-500 mr-2 font-bold">3.</span>
+                                    <span><strong>개인정보 입력 절대 금지</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 피해 시 대응법 (간소화) -->
+                    <div class="mb-4">
+                        <h3 class="font-bold text-red-700 mb-2">🚨 피해 시 대응</h3>
+                        <div class="bg-red-50 border-2 border-red-200 rounded-lg p-compact">
+                            <div class="compact-spacing text-sm">
+                                <div class="flex items-start">
+                                    <span class="text-red-500 mr-2 font-bold">1.</span>
+                                    <span><strong>112 신고</strong> (경찰서)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="text-red-500 mr-2 font-bold">2.</span>
+                                    <span><strong>1332 신고</strong> (금감원)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="text-red-500 mr-2 font-bold">3.</span>
+                                    <span><strong>계좌 지급정지</strong> 요청</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 소액결제 차단 -->
+                    <div class="mb-4">
+                        <h3 class="font-bold text-blue-700 mb-2">📵 소액결제 차단</h3>
+                        <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-compact">
+                            <div class="text-center text-sm">
+                                <p>통신사 앱에서 차단 설정</p>
+                                <p class="text-blue-600 font-bold">SK: T월드 / KT: 올레 / LG: U+</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="button-section">
+                    <button onclick="goToPage('page-vote')" class="w-full bg-purple-500 text-white font-bold rounded">
+                        교육 효과 확인하기 📊
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. 투표 참여 페이지 -->
+        <div id="page-vote" class="page">
+            <div class="screen-fit">
+                <div class="content-section">
+                    <div class="text-center mb-4">
+                        <h2 class="font-bold text-gray-800 mb-2">📊 교육 효과 확인</h2>
+                        <p class="text-gray-600 mb-4">스미싱 교육 후 자신의 대처 능력을 평가해주세요</p>
+                    </div>
+
+                    <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-compact">
+                        <h3 class="font-bold text-center mb-4">앞으로 스미싱 문자를 받게 된다면<br>속지 않고 대처할 수 있나요?</h3>
+                        
+                        <div class="compact-spacing">
+                            <button onclick="selectVote('confident')" class="vote-option w-full p-3 border-2 border-green-300 rounded hover:bg-green-50 transition-all">
+                                <div class="flex items-center">
+                                    <span class="text-2xl mr-3">😊</span>
+                                    <div class="text-left">
+                                        <p class="font-bold text-green-800">자신 있어요!</p>
+                                        <p class="text-green-600 text-sm">스미싱을 잘 구별할 수 있어요</p>
+                                    </div>
+                                </div>
+                            </button>
+                            
+                            <button onclick="selectVote('moderate')" class="vote-option w-full p-3 border-2 border-yellow-300 rounded hover:bg-yellow-50 transition-all">
+                                <div class="flex items-center">
+                                    <span class="text-2xl mr-3">🤔</span>
+                                    <div class="text-left">
+                                        <p class="font-bold text-yellow-800">어느 정도 자신 있어요</p>
+                                        <p class="text-yellow-600 text-sm">조심스럽게 확인해볼게요</p>
+                                    </div>
+                                </div>
+                            </button>
+                            
+                            <button onclick="selectVote('unsure')" class="vote-option w-full p-3 border-2 border-red-300 rounded hover:bg-red-50 transition-all">
+                                <div class="flex items-center">
+                                    <span class="text-2xl mr-3">😰</span>
+                                    <div class="text-left">
+                                        <p class="font-bold text-red-800">아직 자신이 없어요</p>
+                                        <p class="text-red-600 text-sm">더 공부가 필요해요</p>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. 기프티콘 수령 페이지 -->
+        <div id="page-complete" class="page">
+            <div class="screen-fit">
+                <div class="content-section">
+                    <div class="text-center mb-4">
+                        <div class="text-6xl mb-4">🎉</div>
+                        <h2 class="font-bold text-gray-800 mb-4">교육 완료!</h2>
+                        <div id="completion-message" class="bg-green-50 border-2 border-green-200 rounded-lg p-compact mb-4">
+                            <!-- 투표 결과에 따른 메시지가 여기에 표시됩니다 -->
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-compact mb-4">
+                        <h3 class="font-bold text-center mb-3">🎁 기프티콘 수령</h3>
+                        <p class="text-gray-600 text-center mb-4 text-sm">교육 참여 감사 선물을 받아보세요!</p>
+                        
+                        <!-- 개인정보 동의서 -->
+                        <form id="gifticon-form" class="compact-spacing">
+                            <div>
+                                <label class="block font-bold mb-2">이름 *</label>
+                                <input type="text" id="name" required placeholder="김디비" class="w-full border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block font-bold mb-2">휴대폰 번호 *</label>
+                                <input type="tel" id="phone" required placeholder="010-1234-5678" class="w-full border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                            </div>
+                            
+                            <div class="text-gray-500 text-xs p-2 bg-gray-50 rounded border">
+                                <p class="font-bold mb-1">📋 개인정보 수집·이용 안내</p>
+                                <p>기프티콘 발송을 위해 개인정보 수집이 필요합니다. 아래 버튼 클릭 시 개인정보 동의서를 확인하실 수 있습니다.</p>
+                            </div>
+                            
+                            <button type="button" onclick="showPrivacyModal()" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded hover:from-blue-600 hover:to-purple-700 transition-all">
+                                개인정보 동의 후 신청하기 🎁
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="button-section">
+                    <button onclick="goToPage('page-intro')" class="w-full bg-gray-500 text-white font-bold rounded">
+                        처음부터 다시 체험하기
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- 완료 페이지 -->
-    <div id="page-complete" class="page">
-        <div class="container">
-            <div class="complete-header">
-                <h2>🎉 체험 완료!</h2>
-                <div id="completion-message" class="completion-message">
-                    <!-- JavaScript로 동적 생성 -->
-                </div>
+    <!-- 개인정보 동의서 팝업 모달 -->
+    <div id="privacy-modal" class="privacy-modal" style="display: none;">
+        <div class="privacy-modal-content">
+            <div class="privacy-modal-header">
+                <h4 class="font-bold text-center text-lg text-gray-800">개인정보 수집·이용 동의서</h4>
+                <p class="text-center text-gray-600 text-sm">(이벤트 경품 발송용)</p>
             </div>
             
-            <div class="tips-section">
-                <h3>💡 마지막 팁!</h3>
-                <div class="tip-cards">
-                    <div class="tip-card">
-                        <span class="tip-icon">🔗</span>
-                        <div>
-                            <h4>링크 클릭 금지</h4>
-                            <p>의심스러운 링크는 절대 클릭하지 마세요</p>
-                        </div>
-                    </div>
-                    
-                    <div class="tip-card">
-                        <span class="tip-icon">📞</span>
-                        <div>
-                            <h4>직접 확인</h4>
-                            <p>공식 번호로 직접 전화해서 확인하세요</p>
-                        </div>
-                    </div>
-                    
-                    <div class="tip-card">
-                        <span class="tip-icon">🔒</span>
-                        <div>
-                            <h4>개인정보 보호</h4>
-                            <p>문자로 개인정보를 요구하면 100% 사기입니다</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="gifticon-section">
-                <h3>🎁 기프티콘 신청</h3>
-                <p class="gifticon-desc">
-                    체험에 참여해주셔서 감사합니다!<br>
-                    간단한 정보를 입력하시면 소정의 기프티콘을 드립니다.
+            <div class="privacy-modal-body">
+                <p class="mb-4 text-gray-700">
+                    <strong>스미싱 예방 교육 체험관</strong>에 참여해주셔서 감사합니다. 이벤트 경품(기프티콘) 발송을 위해 아래와 같이 개인정보를 수집 및 이용하고자 합니다. 내용을 자세히 읽어보신 후 동의 여부를 결정해주시기 바랍니다.
                 </p>
                 
-                <form id="gifticon-form" class="gifticon-form">
-                    <div class="form-group">
-                        <label for="name">이름</label>
-                        <input type="text" id="name" name="name" required placeholder="실명을 입력해주세요">
+                <div class="mb-4">
+                    <h5 class="font-bold mb-2 text-gray-800">1. 개인정보 수집 및 이용 동의 (필수)</h5>
+                    <div class="bg-gray-50 border rounded p-2 space-y-1">
+                        <div class="flex">
+                            <span class="font-bold w-20 text-gray-700">목적:</span>
+                            <span class="text-gray-600">이벤트 경품(기프티콘) 발송 및 관련 문의 응대</span>
+                        </div>
+                        <div class="flex">
+                            <span class="font-bold w-20 text-gray-700">항목:</span>
+                            <span class="text-gray-600">이름, 휴대폰 번호</span>
+                        </div>
+                        <div class="flex">
+                            <span class="font-bold w-20 text-gray-700">기간:</span>
+                            <span class="text-gray-600">수집일로부터 1일 (경품 발송 완료 후 즉시 파기)</span>
+                        </div>
+                        <div class="flex">
+                            <span class="font-bold w-20 text-gray-700">거부권:</span>
+                            <span class="text-gray-600">동의 거부 시 이벤트 참여 및 경품 수령 불가</span>
+                        </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">휴대폰 번호</label>
-                        <input type="tel" id="phone" name="phone" required placeholder="010-0000-0000">
-                    </div>
-                    
-                    <button type="button" onclick="showPrivacyModal()" class="gifticon-button">
-                        기프티콘 신청하기 🎁
-                    </button>
-                </form>
+                </div>
                 
-                <div class="action-buttons">
-                    <button onclick="location.reload()" class="secondary-button">
-                        다시 체험하기 🔄
+                <div class="mb-4">
+                    <h5 class="font-bold mb-2 text-gray-800">2. 개인정보의 제3자 제공 동의 (필수)</h5>
+                    <p class="mb-2 text-gray-700">원활한 경품 발송을 위해 다음과 같이 개인정보 처리 업무를 외부 전문 업체에 위탁하여 처리할 수 있습니다.</p>
+                    <div class="bg-gray-50 border rounded p-2 space-y-1">
+                        <div class="flex">
+                            <span class="font-bold w-20 text-gray-700">제공자:</span>
+                            <span class="text-gray-600">기프티콘 발송 위탁 업체 (예: KT알파, 카카오선물하기 등)</span>
+                        </div>
+                        <div class="flex">
+                            <span class="font-bold w-20 text-gray-700">목적:</span>
+                            <span class="text-gray-600">이벤트 경품(기프티콘) 발송 대행</span>
+                        </div>
+                        <div class="flex">
+                            <span class="font-bold w-20 text-gray-700">항목:</span>
+                            <span class="text-gray-600">이름, 휴대폰 번호</span>
+                        </div>
+                        <div class="flex">
+                            <span class="font-bold w-20 text-gray-700">기간:</span>
+                            <span class="text-gray-600">경품 발송 완료 또는 위탁 계약 종료 시까지</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border-t pt-3 text-center mb-4">
+                    <p class="font-bold text-gray-800 mb-2">동의 안내</p>
+                    <p class="text-gray-700 leading-relaxed">
+                        본인은 위 내용을 모두 숙지하였으며, 이에 따라 개인정보를 수집, 이용 및 제3자에게 제공하는 것에 동의합니다.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="privacy-modal-footer">
+                <div class="flex gap-2 pt-3">
+                    <button onclick="closePrivacyModal()" class="flex-1 bg-gray-300 text-gray-700 font-bold rounded py-3 hover:bg-gray-400 transition-all">
+                        취소
+                    </button>
+                    <button onclick="agreeAndSubmit()" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded py-3 hover:from-blue-600 hover:to-purple-700 transition-all">
+                        동의하고 신청하기 🎁
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 개인정보 수집 동의 모달 -->
-    <div id="privacy-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>📋 개인정보 수집·이용 동의</h3>
-                <button onclick="closePrivacyModal()" class="close-button">×</button>
-            </div>
-            
-            <div class="modal-body">
-                <div class="privacy-content">
-                    <div class="privacy-section">
-                        <h4>수집하는 개인정보</h4>
-                        <p>이름, 휴대폰 번호</p>
-                    </div>
-                    
-                    <div class="privacy-section">
-                        <h4>수집 목적</h4>
-                        <p>기프티콘 발송을 위한 본인확인 및 연락</p>
-                    </div>
-                    
-                    <div class="privacy-section">
-                        <h4>보유기간</h4>
-                        <p>기프티콘 발송 완료 후 7일 이내 자동 삭제</p>
-                    </div>
-                    
-                    <div class="privacy-section">
-                        <h4>제3자 제공</h4>
-                        <p>수집된 정보는 제3자에게 제공되지 않습니다</p>
-                    </div>
-                    
-                    <div class="privacy-notice">
-                        <p>※ 위 개인정보 수집·이용에 동의하지 않을 권리가 있으나, 동의를 거부할 경우 기프티콘 발송 서비스를 이용할 수 없습니다.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button onclick="closePrivacyModal()" class="cancel-button">
-                    취소
-                </button>
-                <button onclick="agreeAndSubmit()" class="agree-button">
-                    동의하고 신청하기 🎁
-                </button>
-            </div>
-        </div>
-    </div>
-<script src="script.js"></script>
+    <!-- JavaScript 파일 링크 -->
+    <script src="script.js"></script>
 </body>
 </html>
