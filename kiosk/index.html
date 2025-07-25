@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>키오스크 체험관 - 어르신을 위한 주문 연습</title>
+    <meta name="description" content="어르신을 위한 키오스크 주문 체험 교육. 실제 키오스크와 같은 환경에서 안전하게 연습해보세요.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS 파일 링크 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100">
+    <div class="kiosk-container">
+        
+        <!-- 1. 홈 화면 -->
+        <div id="page-home" class="page active">
+            <div class="screen-fit bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 text-white relative overflow-hidden">
+                <!-- 배경 장식 요소 -->
+                <div class="absolute inset-0 opacity-10">
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                        <div class="shape shape-4"></div>
+                    </div>
+                </div>
+                
+                <div class="content-section relative z-10">
+                    <!-- 장학재단 로고 섹션 -->
+                    <div class="foundation-section mb-6">
+                        <div class="logo-container mb-4">
+                            <img src="https://www.dbfoundation.or.kr/resources/images/common/logo.png" 
+                                 alt="DB김준기문화재단" 
+                                 class="foundation-logo mx-auto mb-3"
+                                 onerror="this.style.display='none'">
+                        </div>
+                        <div class="foundation-info">
+                            <p class="foundation-name text-lg font-semibold mb-1">DB 드림리더 장학생 </p>
+                            <p class="foundation-tagline text-sm opacity-90">강원충청조 단체명 : 청원해드려유</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 메인 타이틀 섹션 -->
+                    <div class="title-section mb-4">
+                        <div class="icon-badge mb-4">
+                            <span class="security-icon">🏪</span>
+                        </div>
+                        <h1 class="main-title font-bold mb-3">키오스크 체험관</h1>
+                        <div class="subtitle-container">
+                            <p class="subtitle-line">어르신 여러분을 위한</p>
+                            <p class="subtitle-emphasis">맞춤형 키오스크 교육</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 기능 소개 카드 -->
+                    <div class="feature-cards mb-6">
+                        <div class="feature-card primary-card">
+                            <div class="card-icon-group">
+                                <span class="card-icon">🎯</span>
+                                <span class="card-icon">🎲</span>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">랜덤 미션 체험</h3>
+                                <p class="card-description">5가지 키오스크 중 하나를<br>랜덤으로 체험해보세요</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card secondary-card">
+                            <div class="card-icon-group">
+                                <span class="card-icon">🖥️</span>
+                                <span class="card-icon">🆘</span>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">실제 키오스크 연습</h3>
+                                <p class="card-description">실제 사이트에서 안전하게<br>키오스크 사용법을 익혀보세요</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 시작 안내 -->
+                    <div class="start-info">
+                        <div class="info-badge">
+                            <span class="badge-icon">✨</span>
+                            <span class="badge-text">실제 결제 없는 안전한 체험</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="button-section">
+                    <button onclick="handleStartClick()" class="start-button">
+                        <span class="button-content">
+                            <span class="button-text">체험 시작하기</span>
+                            <span class="button-icon">🚀</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 랜덤 미션 뽑기 화면 -->
+        <div id="page-mission" class="page">
+            <div class="kiosk-screen">
+                <div class="mission-header">
+                    <h2>🎲 미션을 뽑아주세요!</h2>
+                    <p>5가지 키오스크 중 하나가 랜덤으로 선택됩니다</p>
+                </div>
+                
+                <div class="mission-draw-area">
+                    <div id="mission-card" class="mission-card">
+                        <div class="card-face card-front">
+                            <div class="card-question">?</div>
+                            <p>어떤 키오스크가<br>나올까요?</p>
+                        </div>
+                        <div class="card-face card-back">
+                            <div id="mission-content" class="mission-result">
+                                <!-- 미션 내용이 여기에 표시됩니다 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mission-controls">
+                    <button id="draw-btn" onclick="drawRandomMission()" class="draw-btn">
+                        🎰 키오스크 뽑기
+                    </button>
+                    <button id="start-mission-btn" onclick="startSelectedMission()" class="start-mission-btn" style="display: none;">
+                        🚀 체험 시작하기
+                    </button>
+                </div>
+                
+                <div class="back-section">
+                    <button onclick="goToPage('page-home')" class="back-btn">
+                        ← 홈으로 돌아가기
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 외부 키오스크 체험 화면 -->
+        <div id="page-kiosk-experience" class="page">
+            <div class="kiosk-experience-container">
+                <!-- 상단 컨트롤 바 -->
+                <div class="control-bar">
+                    <div class="control-left">
+                        <button onclick="goToPage('page-mission')" class="control-btn back-btn">
+                            ← 다른 키오스크 체험
+                        </button>
+                        <span id="current-kiosk-name" class="kiosk-name">키오스크 체험 중</span>
+                    </div>
+                    <div class="control-right">
+                        <button onclick="showMissionHelp()" class="control-btn help-btn">
+                            🆘 도움말
+                        </button>
+                        <button onclick="goToPage('page-home')" class="control-btn home-btn">
+                            🏠 메인메뉴
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- iframe 영역 -->
+                <div class="experience-content">
+                    <div class="kiosk-preview-card">
+                        <div class="preview-icon" id="preview-icon">🏪</div>
+                        <h3 id="preview-kiosk-name">키오스크 체험</h3>
+                        <p id="preview-mission-text">키오스크 미션을 수행해보세요</p>
+                        
+                        <div class="experience-instructions">
+                            <h4>📋 체험 방법</h4>
+                            <ol class="instruction-list">
+                                <li><strong>키오스크 열기</strong> 버튼을 클릭하세요</li>
+                                <li>새 창에서 키오스크가 열립니다</li>
+                                <li>키오스크에서 자유롭게 체험해보세요</li>
+                                <li>체험 완료 후 이 창으로 돌아와 완료 버튼을 누르세요</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="experience-actions">
+                            <button id="open-kiosk-btn" onclick="openKioskInNewWindow()" class="open-kiosk-btn">
+                                🚀 키오스크 열기
+                            </button>
+                            <button id="complete-btn" onclick="completeMissionExperience()" class="complete-btn" style="display: none;">
+                                ✅ 체험 완료
+                            </button>
+                        </div>
+                        
+                        <div class="experience-tips">
+                            <h4>💡 체험 팁</h4>
+                            <ul class="tip-list">
+                                <li>실제 결제는 이루어지지 않습니다</li>
+                                <li>천천히 단계별로 진행해보세요</li>
+                                <li>궁금한 점이 있으면 도움말을 확인하세요</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 하단 미션 정보 -->
+                <div class="mission-info-bar">
+                    <div class="mission-current">
+                        <span class="mission-label">현재 미션:</span>
+                        <span id="current-mission-text">키오스크 체험하기</span>
+                    </div>
+                    <button onclick="completeMissionExperience()" class="complete-experience-btn">
+                        ✅ 체험 완료
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 완료 화면 -->
+        <div id="page-complete" class="page">
+            <div class="kiosk-screen">
+                <div class="complete-header">
+                    <div class="success-icon">🎉</div>
+                    <h2>키오스크 체험 완료!</h2>
+                    <p>수고하셨습니다 😊</p>
+                </div>
+                
+                <div class="complete-content">
+                    <div id="experience-result" class="result-card">
+                        <h3 id="completed-kiosk-name">키오스크 체험</h3>
+                        <p>성공적으로 체험을 완료하셨습니다!</p>
+                        <div class="achievement-badge">
+                            <div class="badge">�</div>
+                            <p>체험 완료 뱃지 획득!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="complete-controls">
+                    <div class="choice-grid">
+                        <button onclick="goToPage('page-mission')" class="choice-btn next-mission">
+                            <span class="choice-icon">🎯</span>
+                            <span class="choice-text">다른 키오스크 체험</span>
+                        </button>
+                        <button onclick="goToPage('page-home')" class="choice-btn finish">
+                            <span class="choice-icon">🏠</span>
+                            <span class="choice-text">홈으로 돌아가기</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 도움말 모달 -->
+        <div id="help-modal" class="modal" style="display: none;">
+            <div class="modal-content help-content">
+                <div class="modal-header">
+                    <h3>🆘 키오스크 체험 도움말</h3>
+                    <button onclick="closeHelpModal()" class="close-btn">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="help-section">
+                        <h4>현재 체험 중인 키오스크</h4>
+                        <p id="help-current-kiosk">키오스크 체험 진행 중</p>
+                    </div>
+                    <div class="help-section">
+                        <h4>키오스크 사용 팁</h4>
+                        <ul class="help-tips">
+                            <li>화면을 터치하여 메뉴를 선택하세요</li>
+                            <li>차근차근 단계별로 진행하세요</li>
+                            <li>실제 결제는 이루어지지 않습니다</li>
+                            <li>언제든 메인메뉴 버튼으로 돌아올 수 있습니다</li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h4>문제가 생겼나요?</h4>
+                        <p>키오스크가 제대로 동작하지 않으면 새로고침하거나 다른 키오스크를 체험해보세요.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="closeHelpModal()" class="close-help-btn">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 파일 링크 -->
+    <script src="script.js"></script>
+</body>
+</html>
