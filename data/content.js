@@ -21,7 +21,7 @@ window.CONTENT = {
     },
     location: { ko: "대한민국 경기도", en: "Gyeonggi-do, South Korea" },
     email: "kyumin1404@gmail.com",
-    github: "http://github.com/dolphin1404",
+    github: "https://github.com/dolphin1404",
     scholar: "",
     resumeFile: "../assets/Kyumin_Lee_CV.pdf",
     adsense: { enabled: false, client: "", slot: "" },

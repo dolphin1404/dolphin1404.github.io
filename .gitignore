@@ -1,0 +1,33 @@
+# ─── OS ───
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+desktop.ini
+
+# ─── Editor / IDE ───
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+*.swo
+*~
+
+# ─── Node (only if you add build tooling later) ───
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# ─── Secrets / local only — NEVER commit ───
+# (GitHub 토큰은 파일이 아니라 브라우저 localStorage 에만 저장됩니다.)
+.env
+.env.*
+*.local
+secrets*.json
+*.key
+*.pem
+
+# ─── Logs / temp ───
+*.log
+.cache/
+tmp/
