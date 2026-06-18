@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이규민 · Kyumin Lee</title>
+  <meta name="description" content="이규민 (Kyumin Lee) — AI · 백엔드 개발자 포트폴리오" />
+  <!-- 브라우저 언어에 따라 /ko 또는 /en 으로 이동 -->
+  <script>
+    (function () {
+      var lang = (navigator.language || "ko").toLowerCase();
+      var dest = lang.indexOf("ko") === 0 ? "./ko/" : "./en/";
+      location.replace(dest);
+    })();
+  </script>
+  <style>
+    html, body { margin: 0; height: 100%; background: #0d1117; color: #e6edf3;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Noto Sans KR", sans-serif; }
+    .center { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.2rem; }
+    .center a { color: #3fb950; border: 1px solid #283039; padding: 0.6rem 1.4rem; border-radius: 8px; text-decoration: none; }
+    .center a:hover { background: #161b22; }
+    .row { display: flex; gap: 1rem; }
+    .muted { color: #6e7681; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <!-- JS가 꺼져 있을 때를 위한 수동 선택 -->
+  <div class="center">
+    <div class="muted">$ select language</div>
+    <div class="row">
+      <a href="./ko/">한국어</a>
+      <a href="./en/">English</a>
+    </div>
+  </div>
+</body>
+</html>
