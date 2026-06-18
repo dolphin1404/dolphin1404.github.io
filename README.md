@@ -1,182 +1,41 @@
-# 이규민 포트폴리오 (Kyumin Lee — Portfolio)
+# Portfolio — Kyumin Lee · 이규민
 
-한국어/영어 2개 언어, **빌드 없이** github.io에 바로 올라가는 정적 포트폴리오입니다.
-콘텐츠는 **`data/content.js` 한 파일**에서만 관리하면 `/ko`, `/en` 양쪽에 자동 반영됩니다.
+빌드 없이 GitHub Pages에 바로 올라가는 **한국어 / 영어 2개 언어** 개발자 포트폴리오.
+A build-free, bilingual (KO / EN) developer portfolio for GitHub Pages.
 
----
-
-## 폴더 구조
-
-```
-portfolio/
-├── index.html          # 진입점 — 브라우저 언어에 따라 /ko 또는 /en 으로 이동
-├── 404.html            # 없는 주소 처리
-├── ads.txt             # 애드센스용 (승인 후 게시자 ID 기입)
-├── .nojekyll           # GitHub Pages가 Jekyll로 가공하지 않도록 하는 표시
-├── ko/
-│   ├── index.html      # 한국어 메인 (얇은 껍데기)
-│   └── blog.html       # 한국어 블로그 (목록 + ?slug= 상세)
-├── en/
-│   ├── index.html      # 영어 메인
-│   └── blog.html       # 영어 블로그
-├── admin/
-│   └── index.html      # ★ 관리자 편집기 (브라우저에서 폼으로 편집)
-├── data/
-│   ├── content.js      # ★ 이력서 내용(학력·경력·프로젝트·기술·수상) 한 곳에
-│   └── posts.js        # ★ 블로그 글 (글 1개 = 객체 1개)
-└── assets/
-    ├── style.css       # 디자인 (색·폰트는 맨 위 :root 변수만 바꾸면 전체 적용)
-    ├── common.js       # 공통 유틸(언어·네비·마크다운·애드센스) — 보통 손댈 일 없음
-    ├── app.js          # 메인 페이지 렌더
-    ├── blog.js         # 블로그 렌더
-    ├── admin.js / admin.css  # 관리자 편집기 로직·스타일
-    └── Kyumin_Lee_CV.pdf     # '이력서 PDF' 버튼이 받는 파일
-```
-
-핵심 설계: **내용(content.js) · 디자인(style.css) · 화면틀(ko·en) 을 분리**했습니다.
-그래서 글은 한 곳에서 고치고, 라우트(`/ko`·`/en`)와 디자인은 자동으로 따라옵니다.
-→ 네가 걱정한 "언어별 페이지 따로 관리" 문제가 생기지 않습니다.
+**🔗 Live:** `https://<your-username>.github.io/`
 
 ---
 
-## 1. 내용 수정하기 (가장 자주 하는 일)
+## ✨ Features
+- **이중 언어 / Bilingual** — `/ko`, `/en` 라우트. 콘텐츠는 데이터 파일 한 곳에서 관리해 양쪽에 자동 반영.
+- **다크 · 라이트 테마 / Theme toggle** — 버튼 전환 + OS 설정 자동 감지, 선택 기억.
+- **블로그 / Blog** — 마크다운 작성, 글별 OG 공유 미리보기.
+- **관리자 편집기 / Admin editor** (`/admin`) — 브라우저 폼으로 편집, 파일 내보내기 또는 GitHub로 바로 커밋.
+- **무빌드 정적 / No build** — HTML · CSS · Vanilla JS. 프레임워크·의존성·빌드 단계 없음.
 
-`data/content.js`를 열어 텍스트만 고치면 됩니다. 모든 문장은 이렇게 생겼습니다:
-
-```js
-tagline: {
-  ko: "아이디어를 '실제로 도는 서비스'까지 만드는 개발자",
-  en: "I turn ideas into services that actually ship."
-}
+## 🗂 Structure
+```
+index.html     # 방문자 언어에 따라 /ko · /en 분기
+ko/ · en/      # 메인 + 블로그 (얇은 껍데기)
+admin/         # 관리자 편집기 (noindex)
+data/          # content.js(이력서) · posts.js(블로그)  ← 콘텐츠는 여기서 관리
+assets/        # style.css · 렌더 스크립트 · 이력서 PDF
 ```
 
-- 한국어는 `ko:`, 영어는 `en:` 뒤만 고치세요.
-- 영어를 비워두면(`en: ""`) 영어 페이지에서도 한국어가 대신 보입니다. (천천히 번역해도 됨)
-- **프로젝트/수상 추가**: 해당 배열에서 `{ ... }` 블록 하나를 복사해 붙여넣고 내용만 바꾸세요.
-- **GitHub 링크 넣기**: 맨 위 `meta.github: ""` 에 주소를 채우면 버튼이 자동으로 나타납니다.
-
-> 저장 후 브라우저에서 새로고침하면 바로 반영됩니다.
-
----
-
-## 2. 로컬에서 미리 보기
-
-`index.html`을 더블클릭해도 열리지만, 일부 브라우저는 보안상 로컬 파일을 막습니다.
-가장 확실한 방법은 작은 로컬 서버를 띄우는 것입니다 (파이썬 기준):
-
+## 🚀 Run locally
 ```bash
-cd portfolio
-python -m http.server 8000
-# 브라우저에서 http://localhost:8000/ 접속
+python -m http.server 8000   # → http://localhost:8000
 ```
 
----
+## ☁ Deploy (GitHub Pages)
+`<your-username>.github.io` 저장소에 **이 폴더의 내용**을 올린 뒤,
+**Settings → Pages** 에서 `main` 브랜치를 소스로 지정하면 끝.
 
-## 3. GitHub Pages(github.io)에 올리기
+## 🛠 Manage content
+모든 내용은 `data/content.js`(이력서)와 `data/posts.js`(블로그)에서 관리합니다.
+코드 없이 편집하려면 `/admin` 편집기를 사용하세요.
+👉 편집·블로그·애드센스·배포 등 자세한 방법: **[MANAGE.md](MANAGE.md)**
 
-1. GitHub에서 **`사용자명.github.io`** 라는 이름으로 새 저장소를 만듭니다.
-   (예: 아이디가 `kyumin`이면 `kyumin.github.io`)
-2. 이 `portfolio/` 폴더 **안의 내용물**을 저장소 최상위로 올립니다.
-
-   ```bash
-   cd portfolio
-   git init
-   git add .
-   git commit -m "portfolio: 초기 버전"
-   git branch -M main
-   git remote add origin https://github.com/사용자명/사용자명.github.io.git
-   git push -u origin main
-   ```
-3. 저장소 **Settings → Pages → Build and deployment**에서 Source를 `main` 브랜치로 설정.
-4. 1~2분 뒤 `https://사용자명.github.io/` 로 접속하면 자동으로 `/ko/` 또는 `/en/`이 열립니다.
-
-> 이후 수정은 `content.js`를 고치고 `git add . && git commit -m "내용 수정" && git push` 만 하면 됩니다.
-
----
-
-## 4. 디자인 톤 바꾸기
-
-`assets/style.css` 맨 위 `:root`의 변수만 바꾸면 전체 색이 따라옵니다.
-
-```css
---bg:     #0d1117;   /* 배경 */
---accent: #3fb950;   /* 포인트 색 (지금은 터미널 그린) */
---link:   #58a6ff;   /* 링크 색 */
-```
-
-예) 포인트를 시안으로: `--accent: #38bdf8;`
-
----
-
-## 5. 관리자 편집기 (`/admin`) — 코드 안 건드리고 편집
-
-로컬 서버를 띄운 뒤 `http://localhost:8000/admin/` 으로 들어가세요.
-
-1. **편집**: 탭(기본정보·학력·경력·프로젝트·기술·수상·블로그)에서 폼으로 고칩니다.
-   입력하는 즉시 **브라우저에 자동 저장**되어 작업이 날아가지 않습니다.
-2. **미리보기**: `▷ 미리보기 KO/EN` 버튼 — 저장 전 임시 내용으로 실제 사이트를 새 탭에서 엽니다.
-   (블로그 탭에서 누르면 블로그 미리보기로 열립니다.)
-3. **반영(배포)**: `⤓ content.js` / `⤓ posts.js` 버튼으로 파일을 내려받아
-   `data/` 안의 같은 이름 파일을 **덮어쓰고 커밋**하면 사이트에 반영됩니다.
-4. `↥ 불러오기` 로 기존 `content.js`/`posts.js` 를 가져와 이어 편집할 수 있고,
-   `↺ 원본 복원` 으로 파일 원본 상태로 되돌립니다.
-
-> 관리자 페이지는 깃허브 토큰 없이 동작합니다(가장 안전). "저장 버튼 한 번에 깃허브로 커밋"이
-> 필요하면 토큰 방식으로 확장할 수 있습니다.
-
----
-
-## 6. 블로그 글 쓰기
-
-가장 쉬운 방법은 위 **관리자 편집기 → 블로그 탭**에서 `+ 새 항목 추가` 입니다.
-직접 파일로 쓰려면 `data/posts.js` 의 배열에 객체 하나를 추가하세요.
-
-- `slug`: 글 주소(영문·하이픈). 주소는 `ko/blog.html?slug=글주소` 형태가 됩니다.
-- `draft: true` 면 목록에 안 보입니다(작성 중).
-- `body` 는 간단한 **마크다운** 지원: `## 소제목`, `**굵게**`, `` `코드` ``, `[링크](주소)`,
-  `- 목록`, `> 인용`, ```` ``` ```` 코드블록, `---` 구분선.
-
----
-
-## 7. Google AdSense 켜기
-
-1. AdSense 승인을 먼저 받습니다(사이트가 실제 배포돼 있어야 함).
-2. `data/content.js` 의 `meta.adsense` 를 수정:
-
-   ```js
-   adsense: { enabled: true, client: "ca-pub-1234567890123456", slot: "" }
-   ```
-   `enabled: true` 로 바꾸고 `client` 에 본인 게시자 ID를 넣으면, 모든 페이지에
-   광고 스크립트가 자동으로 들어가고 **블로그 글 하단에 광고 칸**이 나타납니다.
-3. 루트 `ads.txt` 파일의 `pub-...` 도 본인 ID로 바꿔 커밋하세요.
-
----
-
-## 메모
-- '이력서 PDF' 버튼은 `assets/Kyumin_Lee_CV.pdf`를 가리킵니다. 이력서를 갱신하면 같은 이름으로 덮어쓰면 됩니다.
-- 연락처 이메일은 `content.js`의 `meta.email`에 있습니다 (현재 `kyumin1404@gmail.com`).
-- 관리자 편집기 미리보기는 같은 브라우저의 저장 공간을 쓰므로, 배포 사이트의 방문자에게는 보이지 않습니다.
-
----
-
-## 8. 테마 · 공유 미리보기(OG) · 조회수 · GitHub 커밋
-
-### 다크 / 라이트 테마
-네비 오른쪽 `☀ / ☾` 버튼으로 전환되고, 선택은 브라우저에 기억됩니다.
-처음 방문자는 OS 설정(라이트/다크)을 자동으로 따릅니다.
-
-### 블로그 글 공유 미리보기(OG)
-관리자 **블로그 탭 → "대표 이미지 URL"** 을 채우면, 그 글을 공유할 때 제목·요약·이미지가 표시됩니다.
-주의: 이 사이트는 화면을 자바스크립트로 그리므로 **자바스크립트를 실행하지 않는 일부 미리보기(예: 카카오톡)**
-에는 이미지가 안 잡힐 수 있습니다. 꼭 필요하면 글마다 정적 HTML을 만드는 방식이 추가로 필요합니다(추후 옵션).
-
-### 조회수
-`content.js`의 `meta.views`(또는 관리자 **기본정보 탭**)에서 `enabled: true` 로 켜고
-`namespace`(예: 도메인)를 정하면, 무료 카운터(Abacus)로 글 조회수가 표시됩니다.
-카운터 서비스에 장애가 나면 숫자는 **조용히 사라집니다**(사이트는 멀쩡).
-
-### GitHub로 바로 커밋 (토큰)
-관리자 상단 **`⬆ GitHub`** 버튼 → owner·repo·branch·토큰을 넣고 **`둘 다 커밋`** 을 누르면
-`content.js`·`posts.js` 가 깃허브에 바로 반영됩니다(내려받아 덮어쓰는 과정 불필요).
-**보안:** 토큰은 이 브라우저에만 저장됩니다. 반드시 **"이 저장소 하나"에 Contents 읽기/쓰기 권한만 준
-fine-grained Personal Access Token**을 쓰고, 공용 PC에서는 사용 후 토큰을 지우세요.
+## 🧰 Built with
+Vanilla JavaScript · CSS custom properties · GitHub Pages — no framework, no build, no dependencies.
