@@ -1,193 +1,435 @@
 /* =============================================================================
- * common.js — 모든 페이지(메인·블로그·관리자 미리보기)가 공유하는 유틸
- * window.PF 네임스페이스로 노출됩니다. 다른 스크립트보다 먼저 로드하세요.
+ * common.js — 공개 페이지가 공유하는 번역, 상태, 네비게이션, 마크다운 유틸
+ * 사용자 이벤트 → STATE 변경 → render 함수 호출 흐름을 한 곳에서 관리합니다.
  * ========================================================================== */
-(function () {
+(() => {
   "use strict";
 
-  var LANG = window.SITE_LANG === "en" ? "en" : "ko";
-  var OTHER = LANG === "ko" ? "en" : "ko";
+  const LANG = window.SITE_LANG === "en" || document.documentElement.lang === "en" ? "en" : "ko";
+  const OTHER = LANG === "ko" ? "en" : "ko";
 
-  function t(v) {
-    if (v == null) return "";
-    if (typeof v === "string") return v;
-    var val = v[LANG];
-    if (val == null || val === "" || (Array.isArray(val) && !val.length)) val = v[OTHER];
-    return val == null ? "" : val;
-  }
-  function esc(s) {
-    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
-    });
-  }
-  function qsHas(k) { return location.search.indexOf(k) > -1; }
+  const storageGet = (key) => {
+    try {
+      return localStorage.getItem(key);
+    } catch (_error) {
+      return null;
+    }
+  };
 
-  // ?preview=1 이면 localStorage 의 관리자 드래프트를 대신 사용 (미저장 미리보기)
-  function getContent() {
+  const systemTheme = () => {
+    try {
+      return matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    } catch (_error) {
+      return "dark";
+    }
+  };
+
+  const STATE = {
+    theme: storageGet("pf_theme") || systemTheme(),
+    menuOpen: false,
+    projects: {
+      status: "idle",
+      items: [],
+      filter: "all",
+      error: null
+    },
+    form: {
+      values: { name: "", email: "", message: "" },
+      errors: {},
+      submitted: false
+    },
+    scroll: {
+      navActive: false,
+      showTopButton: false
+    }
+  };
+
+  const t = (value) => {
+    if (value == null) return "";
+    if (typeof value === "string") return value;
+    const selected = value[LANG];
+    if (selected == null || selected === "" || (Array.isArray(selected) && !selected.length)) {
+      return value[OTHER] == null ? "" : value[OTHER];
+    }
+    return selected;
+  };
+
+  const esc = (value) => String(value == null ? "" : value).replace(
+    /[&<>"']/g,
+    (character) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[character]
+  );
+
+  const qsHas = (key) => location.search.includes(key);
+
+  const getContent = () => {
     if (qsHas("preview=1")) {
-      try { var d = localStorage.getItem("pf_draft_content"); if (d) return JSON.parse(d); } catch (e) {}
+      try {
+        const draft = storageGet("pf_draft_content");
+        if (draft) return JSON.parse(draft);
+      } catch (_error) {
+        // 잘못된 임시 데이터는 배포된 원본 데이터로 대체합니다.
+      }
     }
     return window.CONTENT;
-  }
-  function getPosts() {
+  };
+
+  const getPosts = () => {
     if (qsHas("preview=1")) {
-      try { var d = localStorage.getItem("pf_draft_posts"); if (d) return JSON.parse(d); } catch (e) {}
+      try {
+        const draft = storageGet("pf_draft_posts");
+        if (draft) return JSON.parse(draft);
+      } catch (_error) {
+        // 잘못된 임시 데이터는 배포된 원본 데이터로 대체합니다.
+      }
     }
     return window.POSTS || [];
-  }
+  };
 
-  var STR = {
-    ko: { email: "이메일", github: "GitHub", resume: "이력서 PDF", live: "바로가기",
-          backTop: "맨 위로", builtWith: "Kyumin Lee",
-          blogList: "글 목록", readMore: "읽기", backToList: "← 목록으로", noPosts: "아직 글이 없습니다.",
-          minRead: "분", draft: "초안", previewing: "미리보기 모드 (저장 전 임시 데이터)" },
-    en: { email: "Email", github: "GitHub", resume: "Resume PDF", live: "Live",
-          backTop: "Back to top", builtWith: "Kyumin Lee",
-          blogList: "Posts", readMore: "Read", backToList: "← Back to list", noPosts: "No posts yet.",
-          minRead: "min", draft: "Draft", previewing: "Preview mode (unsaved draft data)" }
+  const STR = {
+    ko: {
+      email: "이메일",
+      github: "GitHub",
+      resume: "이력서 PDF",
+      live: "바로가기",
+      backTop: "맨 위로",
+      builtWith: "Vanilla JavaScript · GitHub Pages",
+      blogList: "글 목록",
+      readMore: "읽기",
+      backToList: "← 목록으로",
+      noPosts: "아직 글이 없습니다.",
+      minRead: "분",
+      draft: "초안",
+      previewing: "미리보기 모드 (저장 전 임시 데이터)",
+      menu: "메뉴",
+      navigation: "주요 메뉴",
+      contact: "연락"
+    },
+    en: {
+      email: "Email",
+      github: "GitHub",
+      resume: "Resume PDF",
+      live: "Live",
+      backTop: "Back to top",
+      builtWith: "Vanilla JavaScript · GitHub Pages",
+      blogList: "Posts",
+      readMore: "Read",
+      backToList: "← Back to list",
+      noPosts: "No posts yet.",
+      minRead: "min",
+      draft: "Draft",
+      previewing: "Preview mode (unsaved draft data)",
+      menu: "Menu",
+      navigation: "Primary navigation",
+      contact: "Contact"
+    }
   }[LANG];
 
-  /* ---- 공통 네비게이션 -------------------------------------------------
-   * opts.page : "home" | "blog"
-   *  - home: 섹션 링크는 같은 페이지(#about), 블로그 링크는 blog.html
-   *  - blog: 섹션 링크는 메인 페이지(index.html#about), 블로그가 활성
-   * 언어 토글은 형제 언어 폴더의 같은 종류 페이지로 이동합니다. */
-  function buildNav(navEl, content, opts) {
-    opts = opts || {};
-    var page = opts.page || "home";
-    var nav = content.nav || {};
-    var sectionKeys = ["about", "education", "experience", "projects", "skills", "awards"];
-    var pre = page === "home" ? "#" : "index.html#";
+  const focusableMenuItems = (menu) => Array.from(menu.querySelectorAll("a[href]"));
 
-    var links = sectionKeys.map(function (k) {
-      return '<a href="' + pre + k + '">' + esc(t(nav[k])) + "</a>";
+  const renderMenu = (navElement) => {
+    if (!navElement) return;
+    const toggle = navElement.querySelector(".nav-toggle");
+    const menu = navElement.querySelector(".nav-links");
+    if (!toggle || !menu) return;
+
+    menu.classList.toggle("open", STATE.menuOpen);
+    toggle.setAttribute("aria-expanded", String(STATE.menuOpen));
+    toggle.setAttribute(
+      "aria-label",
+      STATE.menuOpen
+        ? (LANG === "ko" ? "메뉴 닫기" : "Close menu")
+        : (LANG === "ko" ? "메뉴 열기" : "Open menu")
+    );
+  };
+
+  const setMenuOpen = (navElement, open, { focusFirst = false, returnFocus = false } = {}) => {
+    STATE.menuOpen = open;
+    renderMenu(navElement);
+
+    const toggle = navElement.querySelector(".nav-toggle");
+    const menu = navElement.querySelector(".nav-links");
+    if (open && focusFirst) {
+      requestAnimationFrame(() => focusableMenuItems(menu)[0]?.focus());
+    }
+    if (!open && returnFocus) toggle?.focus();
+  };
+
+  const focusSection = (target) => {
+    if (!target) return;
+    const hadTabIndex = target.hasAttribute("tabindex");
+    if (!hadTabIndex) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+    if (!hadTabIndex) {
+      target.addEventListener("blur", () => target.removeAttribute("tabindex"), { once: true });
+    }
+  };
+
+  const bindNavigation = (navElement) => {
+    const toggle = navElement.querySelector(".nav-toggle");
+    const menu = navElement.querySelector(".nav-links");
+    if (!toggle || !menu) return;
+
+    toggle.addEventListener("click", () => {
+      setMenuOpen(navElement, !STATE.menuOpen, { focusFirst: !STATE.menuOpen });
+    });
+
+    menu.addEventListener("click", (event) => {
+      const link = event.target.closest("a[href]");
+      if (!link) return;
+
+      const href = link.getAttribute("href");
+      if (href?.startsWith("#")) {
+        const target = document.querySelector(href);
+        if (target) {
+          event.preventDefault();
+          setMenuOpen(navElement, false);
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          history.replaceState(null, "", href);
+          window.setTimeout(() => focusSection(target), 450);
+        }
+      } else {
+        setMenuOpen(navElement, false);
+      }
+    });
+
+    navElement.addEventListener("keydown", (event) => {
+      if (!STATE.menuOpen) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMenuOpen(navElement, false, { returnFocus: true });
+        return;
+      }
+      if (event.key !== "Tab" || !matchMedia("(max-width: 767px)").matches) return;
+
+      const items = focusableMenuItems(menu);
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (innerWidth >= 768 && STATE.menuOpen) setMenuOpen(navElement, false);
+    });
+  };
+
+  const buildNav = (navElement, content, options = {}) => {
+    const page = options.page || "home";
+    const nav = content.nav || {};
+    const sectionKeys = ["about", "education", "experience", "projects", "skills", "awards", "contact"];
+    const prefix = page === "home" ? "#" : "index.html#";
+
+    const links = sectionKeys.map((key) => {
+      const label = key === "contact" ? (t(nav[key]) || STR.contact) : t(nav[key]);
+      return `<a href="${prefix}${key}">${esc(label)}</a>`;
     });
     if (nav.blog) {
-      links.push('<a href="blog.html"' + (page === "blog" ? ' class="active"' : "") + ">" + esc(t(nav.blog)) + "</a>");
+      links.push(
+        `<a href="blog.html"${page === "blog" ? ' class="active" aria-current="page"' : ""}>${esc(t(nav.blog))}</a>`
+      );
     }
 
-    var koHref = page === "blog" ? "../ko/blog.html" : "../ko/";
-    var enHref = page === "blog" ? "../en/blog.html" : "../en/";
-    if (page === "home" && location.hash) { koHref += location.hash; enHref += location.hash; }
+    let koHref = page === "blog" ? "../ko/blog.html" : "../ko/";
+    let enHref = page === "blog" ? "../en/blog.html" : "../en/";
+    if (page === "home" && location.hash) {
+      koHref += location.hash;
+      enHref += location.hash;
+    }
 
-    navEl.innerHTML =
-      '<div class="nav-inner">' +
-        '<a class="nav-brand" href="' + (page === "home" ? "#" : "index.html") + '"><span class="prompt">~/</span>' +
-          esc(content.meta.handle || "me") + "</a>" +
-        '<button class="nav-toggle" aria-label="menu">▤</button>' +
-        '<nav class="nav-links" id="navLinks">' + links.join("") + "</nav>" +
-        '<span class="lang-toggle">' +
-          '<a href="' + koHref + '" class="' + (LANG === "ko" ? "active" : "") + '">KO</a>' +
-          '<a href="' + enHref + '" class="' + (LANG === "en" ? "active" : "") + '">EN</a>' +
-        "</span>" +
-      "</div>";
+    navElement.innerHTML = `
+      <div class="nav-inner">
+        <a class="nav-brand" href="${page === "home" ? "#" : "index.html"}">
+          <span class="prompt">~/</span>${esc(content.meta.handle || "me")}
+        </a>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-controls="navLinks"
+          aria-expanded="false"
+          aria-label="${esc(STR.menu)}"
+        >☰</button>
+        <nav class="nav-links" id="navLinks" aria-label="${esc(STR.navigation)}">
+          ${links.join("")}
+        </nav>
+        <button class="theme-toggle" type="button" aria-pressed="false"></button>
+        <span class="lang-toggle" aria-label="Language">
+          <a href="${koHref}" class="${LANG === "ko" ? "active" : ""}" lang="ko">KO</a>
+          <a href="${enHref}" class="${LANG === "en" ? "active" : ""}" lang="en">EN</a>
+        </span>
+      </div>
+    `;
 
-    var toggle = navEl.querySelector(".nav-toggle");
-    var menu = navEl.querySelector("#navLinks");
-    toggle.addEventListener("click", function () { menu.classList.toggle("open"); });
-    menu.addEventListener("click", function (e) { if (e.target.tagName === "A") menu.classList.remove("open"); });
-  }
+    renderMenu(navElement);
+    bindNavigation(navElement);
+  };
 
-  /* ---- 안전한 마크다운 렌더러 (의존성 없음) ----------------------------
-   * 지원: # 제목  **굵게** *기울임* `코드` [링크](url)  - / 1. 목록
-   *      > 인용  ``` 코드블록 ```  --- 구분선
-   * 모든 텍스트를 먼저 이스케이프하므로 XSS에 안전합니다. */
-  function safeUrl(u) {
-    u = String(u || "").trim();
-    if (/^(https?:|mailto:|#|\.\/|\.\.\/|\/)/i.test(u)) return u;
-    return "";
-  }
-  function inline(s) {
-    s = esc(s);
-    s = s.replace(/`([^`]+)`/g, function (_, c) { return "<code>" + c + "</code>"; });
-    s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (_, txt, url) {
-      var u = safeUrl(url.replace(/&amp;/g, "&"));
-      if (!u) return txt;
-      var ext = /^https?:/i.test(u) ? ' target="_blank" rel="noopener"' : "";
-      return '<a href="' + esc(u) + '"' + ext + ">" + txt + "</a>";
+  const safeUrl = (url) => {
+    const clean = String(url || "").trim();
+    return /^(https?:|mailto:|#|\.\/|\.\.\/|\/)/i.test(clean) ? clean : "";
+  };
+
+  const inline = (source) => {
+    let result = esc(source);
+    result = result.replace(/`([^`]+)`/g, (_match, code) => `<code>${code}</code>`);
+    result = result.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_match, text, url) => {
+      const cleanUrl = safeUrl(url.replace(/&amp;/g, "&"));
+      if (!cleanUrl) return text;
+      const external = /^https?:/i.test(cleanUrl) ? ' target="_blank" rel="noopener"' : "";
+      return `<a href="${esc(cleanUrl)}"${external}>${text}</a>`;
     });
-    s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-    s = s.replace(/\*([^*]+)\*/g, "<em>$1</em>");
-    return s;
-  }
-  function markdown(src) {
-    var lines = String(src || "").replace(/\r\n/g, "\n").split("\n");
-    var out = [], i = 0;
-    while (i < lines.length) {
-      var line = lines[i];
+    result = result.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    result = result.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+    return result;
+  };
 
-      if (/^```/.test(line)) {                       // 코드블록
-        var buf = []; i++;
-        while (i < lines.length && !/^```/.test(lines[i])) { buf.push(esc(lines[i])); i++; }
-        i++; out.push("<pre><code>" + buf.join("\n") + "</code></pre>"); continue;
+  const markdown = (source) => {
+    const lines = String(source || "").replace(/\r\n/g, "\n").split("\n");
+    const output = [];
+    let index = 0;
+
+    while (index < lines.length) {
+      const line = lines[index];
+      if (/^```/.test(line)) {
+        const buffer = [];
+        index += 1;
+        while (index < lines.length && !/^```/.test(lines[index])) {
+          buffer.push(esc(lines[index]));
+          index += 1;
+        }
+        index += 1;
+        output.push(`<pre><code>${buffer.join("\n")}</code></pre>`);
+        continue;
       }
-      if (/^\s*---+\s*$/.test(line)) { out.push("<hr>"); i++; continue; }   // 구분선
-      var h = line.match(/^(#{1,4})\s+(.*)$/);                              // 제목
-      if (h) { var n = h[1].length; out.push("<h" + n + ">" + inline(h[2]) + "</h" + n + ">"); i++; continue; }
-      if (/^\s*>\s?/.test(line)) {                                         // 인용
-        var q = [];
-        while (i < lines.length && /^\s*>\s?/.test(lines[i])) { q.push(inline(lines[i].replace(/^\s*>\s?/, ""))); i++; }
-        out.push("<blockquote>" + q.join("<br>") + "</blockquote>"); continue;
+      if (/^\s*---+\s*$/.test(line)) {
+        output.push("<hr>");
+        index += 1;
+        continue;
       }
-      if (/^\s*-\s+/.test(line)) {                                         // 글머리 목록
-        var ul = [];
-        while (i < lines.length && /^\s*-\s+/.test(lines[i])) { ul.push("<li>" + inline(lines[i].replace(/^\s*-\s+/, "")) + "</li>"); i++; }
-        out.push("<ul>" + ul.join("") + "</ul>"); continue;
+      const heading = line.match(/^(#{1,4})\s+(.*)$/);
+      if (heading) {
+        const level = heading[1].length;
+        output.push(`<h${level}>${inline(heading[2])}</h${level}>`);
+        index += 1;
+        continue;
       }
-      if (/^\s*\d+\.\s+/.test(line)) {                                     // 번호 목록
-        var ol = [];
-        while (i < lines.length && /^\s*\d+\.\s+/.test(lines[i])) { ol.push("<li>" + inline(lines[i].replace(/^\s*\d+\.\s+/, "")) + "</li>"); i++; }
-        out.push("<ol>" + ol.join("") + "</ol>"); continue;
+      if (/^\s*>\s?/.test(line)) {
+        const quotes = [];
+        while (index < lines.length && /^\s*>\s?/.test(lines[index])) {
+          quotes.push(inline(lines[index].replace(/^\s*>\s?/, "")));
+          index += 1;
+        }
+        output.push(`<blockquote>${quotes.join("<br>")}</blockquote>`);
+        continue;
       }
-      if (/^\s*$/.test(line)) { i++; continue; }                          // 빈 줄
-      var para = [inline(line)]; i++;                                      // 문단
-      while (i < lines.length && !/^\s*$/.test(lines[i]) && !/^(#{1,4}\s|```|\s*>|\s*-\s|\s*\d+\.\s|\s*---+\s*$)/.test(lines[i])) {
-        para.push(inline(lines[i])); i++;
+      if (/^\s*-\s+/.test(line)) {
+        const items = [];
+        while (index < lines.length && /^\s*-\s+/.test(lines[index])) {
+          items.push(`<li>${inline(lines[index].replace(/^\s*-\s+/, ""))}</li>`);
+          index += 1;
+        }
+        output.push(`<ul>${items.join("")}</ul>`);
+        continue;
       }
-      out.push("<p>" + para.join("<br>") + "</p>");
+      if (/^\s*\d+\.\s+/.test(line)) {
+        const items = [];
+        while (index < lines.length && /^\s*\d+\.\s+/.test(lines[index])) {
+          items.push(`<li>${inline(lines[index].replace(/^\s*\d+\.\s+/, ""))}</li>`);
+          index += 1;
+        }
+        output.push(`<ol>${items.join("")}</ol>`);
+        continue;
+      }
+      if (/^\s*$/.test(line)) {
+        index += 1;
+        continue;
+      }
+
+      const paragraph = [inline(line)];
+      index += 1;
+      while (
+        index < lines.length
+        && !/^\s*$/.test(lines[index])
+        && !/^(#{1,4}\s|```|\s*>|\s*-\s|\s*\d+\.\s|\s*---+\s*$)/.test(lines[index])
+      ) {
+        paragraph.push(inline(lines[index]));
+        index += 1;
+      }
+      output.push(`<p>${paragraph.join("<br>")}</p>`);
     }
-    return out.join("\n");
-  }
+    return output.join("\n");
+  };
 
-  /* ---- Google AdSense (설정으로 on/off) -------------------------------- */
-  function initAdsense(content) {
-    var a = (content.meta && content.meta.adsense) || {};
-    if (!a.enabled || !a.client) return;
-    if (document.querySelector("script[data-adsense]")) return;
-    var s = document.createElement("script");
-    s.async = true;
-    s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + encodeURIComponent(a.client);
-    s.crossOrigin = "anonymous";
-    s.setAttribute("data-adsense", "1");
-    document.head.appendChild(s);
-  }
-  function adUnit(content) {                  // 광고 한 칸의 HTML (꺼져 있으면 "")
-    var a = (content.meta && content.meta.adsense) || {};
-    if (!a.enabled || !a.client) return "";
-    return '<ins class="adsbygoogle" style="display:block" data-ad-client="' + esc(a.client) +
-      '" data-ad-slot="' + esc(a.slot || "") + '" data-ad-format="auto" data-full-width-responsive="true"></ins>';
-  }
-  function pushAds() {
-    try { var ads = document.querySelectorAll(".adsbygoogle"); for (var k = 0; k < ads.length; k++) (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
-  }
+  const initAdsense = (content) => {
+    const adsense = content.meta?.adsense || {};
+    if (!adsense.enabled || !adsense.client || document.querySelector("script[data-adsense]")) return;
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(adsense.client)}`;
+    script.crossOrigin = "anonymous";
+    script.dataset.adsense = "1";
+    document.head.appendChild(script);
+  };
 
-  function reveal() {
-    if ("IntersectionObserver" in window) {
-      var io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-      }, { threshold: 0.08 });
-      document.querySelectorAll(".reveal").forEach(function (n) { io.observe(n); });
-    } else {
-      document.querySelectorAll(".reveal").forEach(function (n) { n.classList.add("in"); });
+  const adUnit = (content) => {
+    const adsense = content.meta?.adsense || {};
+    if (!adsense.enabled || !adsense.client) return "";
+    return `<ins class="adsbygoogle" data-ad-client="${esc(adsense.client)}" data-ad-slot="${esc(adsense.slot || "")}" data-ad-format="auto" data-full-width-responsive="true"></ins>`;
+  };
+
+  const pushAds = () => {
+    try {
+      document.querySelectorAll(".adsbygoogle").forEach(() => {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      });
+    } catch (_error) {
+      // 광고 차단기나 외부 서비스 오류가 사이트 렌더링을 막지 않게 합니다.
     }
-  }
+  };
+
+  const reveal = () => {
+    const elements = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      elements.forEach((element) => element.classList.add("in"));
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("in");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.2 });
+    elements.forEach((element) => observer.observe(element));
+  };
 
   window.PF = {
-    LANG: LANG, OTHER: OTHER, STR: STR,
-    t: t, esc: esc, qsHas: qsHas,
-    getContent: getContent, getPosts: getPosts,
-    buildNav: buildNav, markdown: markdown,
-    initAdsense: initAdsense, adUnit: adUnit, pushAds: pushAds,
-    reveal: reveal
+    LANG,
+    OTHER,
+    STR,
+    STATE,
+    t,
+    esc,
+    qsHas,
+    getContent,
+    getPosts,
+    buildNav,
+    renderMenu,
+    markdown,
+    initAdsense,
+    adUnit,
+    pushAds,
+    reveal
   };
 })();
