@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>(function(){try{var t=localStorage.getItem("pf_theme")||((window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)?"light":"dark");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <script>
+    (() => {
+      try {
+        const theme = localStorage.getItem("pf_theme")
+          || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (_error) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
   <title>이규민 — 포트폴리오</title>
   <meta name="description" content="충북대 소프트웨어학부 · AI Lab 학부연구생. LLM 에이전트와 온디바이스 AI, 실시간 백엔드 개발자 포트폴리오." />
   <meta name="author" content="이규민 (Kyumin Lee)" />
@@ -30,10 +40,9 @@
   <main id="main"></main>
   <footer id="footer" class="footer"></footer>
 
-  <script>window.SITE_LANG = "ko";</script>
-  <script src="../assets/common.js"></script>
-  <script src="../data/content.js"></script>
-  <script src="../assets/app.js"></script>
-  <script src="../assets/features.js"></script>
+  <script src="../assets/common.js" defer></script>
+  <script src="../data/content.js" defer></script>
+  <script src="../assets/app.js" defer></script>
+  <script src="../assets/features.js" defer></script>
 </body>
 </html>

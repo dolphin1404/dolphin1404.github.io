@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>(function(){try{var t=localStorage.getItem("pf_theme")||((window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)?"light":"dark");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <script>
+    (() => {
+      try {
+        const theme = localStorage.getItem("pf_theme")
+          || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (_error) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
   <title>Kyumin Lee — Portfolio</title>
   <meta name="description" content="B.S. in Software, Chungbuk National University · AI Lab undergraduate researcher. Portfolio of an AI & backend developer working on LLM agents and on-device AI." />
   <meta name="author" content="Kyumin Lee (이규민)" />
@@ -30,10 +40,9 @@
   <main id="main"></main>
   <footer id="footer" class="footer"></footer>
 
-  <script>window.SITE_LANG = "en";</script>
-  <script src="../assets/common.js"></script>
-  <script src="../data/content.js"></script>
-  <script src="../assets/app.js"></script>
-  <script src="../assets/features.js"></script>
+  <script src="../assets/common.js" defer></script>
+  <script src="../data/content.js" defer></script>
+  <script src="../assets/app.js" defer></script>
+  <script src="../assets/features.js" defer></script>
 </body>
 </html>

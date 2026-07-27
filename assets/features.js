@@ -1,70 +1,116 @@
 /* =============================================================================
- * features.js — 공개 페이지(메인·블로그)에 얹는 추가 기능 (순수 부가 기능)
- *  1) 다크/라이트 테마 토글
- *  2) 블로그 글별 OG/Twitter 메타 + 대표 이미지
- *  3) 조회수 (설정으로 on/off, 장애 시 조용히 숨김)
- * common.js 와 app.js/blog.js 뒤에 로드하세요. 기존 파일은 건드리지 않습니다.
+ * features.js — 테마, 블로그 공유 메타데이터, 선택적 조회수
+ * 테마 이벤트는 STATE를 변경한 뒤 renderTheme으로 화면을 갱신합니다.
  * ========================================================================== */
-(function () {
+(() => {
   "use strict";
-  var PF = window.PF || (window.PF = {});
-  var LANG = (window.SITE_LANG === "en") ? "en" : "ko";
-  function t(v) { return PF.t ? PF.t(v) : (v == null ? "" : (typeof v === "string" ? v : (v[LANG] || v.ko || v.en || ""))); }
-  function getContent() { return PF.getContent ? PF.getContent() : (window.CONTENT || {}); }
-  function getPosts() { return PF.getPosts ? PF.getPosts() : (window.POSTS || []); }
 
-  /* ---- 1) 테마 ----------------------------------------------------- */
-  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
-  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
-  function systemTheme() { try { return matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"; } catch (e) { return "dark"; } }
-  function currentTheme() { return document.documentElement.getAttribute("data-theme") || lsGet("pf_theme") || systemTheme(); }
-  function applyTheme(th) { document.documentElement.setAttribute("data-theme", th); }
-  function initTheme() { applyTheme(currentTheme()); }
+  const PF = window.PF || (window.PF = {});
+  const LANG = PF.LANG || (document.documentElement.lang === "en" ? "en" : "ko");
+  const STATE = PF.STATE || { theme: "dark" };
+  const ABACUS = "https://abacus.jasoncameron.dev";
+  const t = (value) => PF.t
+    ? PF.t(value)
+    : (value == null ? "" : (typeof value === "string" ? value : (value[LANG] || value.ko || value.en || "")));
+  const getContent = () => PF.getContent ? PF.getContent() : (window.CONTENT || {});
+  const getPosts = () => PF.getPosts ? PF.getPosts() : (window.POSTS || []);
 
-  function injectThemeToggle() {
-    var lt = document.querySelector(".lang-toggle");
-    if (!lt || document.querySelector(".theme-toggle")) return;
-    var btn = document.createElement("button");
-    btn.className = "theme-toggle";
-    btn.setAttribute("aria-label", "테마 전환 / toggle theme");
-    function icon() { btn.textContent = currentTheme() === "light" ? "☾" : "☀"; }
-    icon();
-    btn.addEventListener("click", function () {
-      var nt = currentTheme() === "light" ? "dark" : "light";
-      applyTheme(nt); lsSet("pf_theme", nt); icon();
+  const storageSet = (key, value) => {
+    try {
+      localStorage.setItem(key, value);
+    } catch (_error) {
+      // 저장이 차단돼도 현재 페이지의 테마 전환은 유지합니다.
+    }
+  };
+
+  const renderTheme = () => {
+    document.documentElement.setAttribute("data-theme", STATE.theme);
+    const button = document.querySelector(".theme-toggle");
+    if (!button) return;
+    const isDark = STATE.theme === "dark";
+    button.textContent = isDark ? "☀" : "☾";
+    button.setAttribute("aria-pressed", String(isDark));
+    button.setAttribute(
+      "aria-label",
+      isDark
+        ? (LANG === "ko" ? "라이트 모드로 전환" : "Switch to light mode")
+        : (LANG === "ko" ? "다크 모드로 전환" : "Switch to dark mode")
+    );
+    button.title = button.getAttribute("aria-label");
+  };
+
+  const bindTheme = () => {
+    const button = document.querySelector(".theme-toggle");
+    if (!button || button.dataset.bound === "true") return;
+    button.dataset.bound = "true";
+    button.addEventListener("click", () => {
+      STATE.theme = STATE.theme === "dark" ? "light" : "dark";
+      storageSet("pf_theme", STATE.theme);
+      renderTheme();
     });
-    lt.parentNode.insertBefore(btn, lt);
-  }
+  };
 
-  /* ---- 2) OG / Twitter 메타 --------------------------------------- */
-  function setMeta(attr, key, val) {
-    if (val == null || val === "") return;
-    var m = document.head.querySelector("meta[" + attr + '="' + key + '"]');
-    if (!m) { m = document.createElement("meta"); m.setAttribute(attr, key); document.head.appendChild(m); }
-    m.setAttribute("content", val);
-  }
-  function slugFromHref(href) { var m = /[?&]slug=([^&]+)/.exec(href || ""); return m ? decodeURIComponent(m[1]) : ""; }
+  const setMeta = (attribute, key, value) => {
+    if (value == null || value === "") return;
+    let meta = document.head.querySelector(`meta[${attribute}="${key}"]`);
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute(attribute, key);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute("content", value);
+  };
 
-  /* ---- 3) 조회수 (Abacus 무료 카운터, CORS 허용, 장애 시 숨김) ----- */
-  var ABACUS = "https://abacus.jasoncameron.dev";
-  function fmtNum(n) { try { return Number(n).toLocaleString(); } catch (e) { return "" + n; } }
-  function viewsCfg() { var c = getContent(); return (c.meta && c.meta.views) || {}; }
-  function callCounter(kind, ns, key, cb) {
-    var url = ABACUS + "/" + kind + "/" + encodeURIComponent(ns) + "/" + encodeURIComponent(key);
-    fetch(url).then(function (r) { return r.json(); }).then(function (d) { cb(d && (d.value != null ? d.value : null)); }).catch(function () { cb(null); });
-  }
-  function viewsLabel(v) { return v == null ? "" : (LANG === "en" ? ("· " + fmtNum(v) + " views") : ("· 조회 " + fmtNum(v))); }
+  const slugFromHref = (href) => {
+    const match = /[?&]slug=([^&]+)/.exec(href || "");
+    return match ? decodeURIComponent(match[1]) : "";
+  };
 
-  function enhanceBlog() {
-    var main = document.getElementById("blogmain");
+  const formatNumber = (number) => {
+    try {
+      return Number(number).toLocaleString();
+    } catch (_error) {
+      return String(number);
+    }
+  };
+
+  const viewsConfig = () => getContent().meta?.views || {};
+  const viewsLabel = (views) => {
+    if (views == null) return "";
+    return LANG === "en" ? `· ${formatNumber(views)} views` : `· 조회 ${formatNumber(views)}`;
+  };
+
+  const callCounter = async (kind, namespace, key) => {
+    const url = `${ABACUS}/${kind}/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Counter request failed");
+      const data = await response.json();
+      return data?.value ?? null;
+    } catch (_error) {
+      return null;
+    }
+  };
+
+  const addViewCount = async (meta, kind, namespace, slug) => {
+    const span = document.createElement("span");
+    span.className = "post-views";
+    meta.appendChild(span);
+    const value = await callCounter(kind, namespace, slug);
+    span.textContent = viewsLabel(value);
+  };
+
+  const enhanceBlog = () => {
+    const main = document.getElementById("blogmain");
     if (!main) return;
-    var cfg = viewsCfg(), viewsOn = !!(cfg.enabled && cfg.namespace);
-    var slug = slugFromHref(location.search);
+    const config = viewsConfig();
+    const viewsEnabled = Boolean(config.enabled && config.namespace);
+    const slug = slugFromHref(location.search);
 
-    if (slug) {                                   // 글 상세
-      var post = getPosts().filter(function (p) { return p.slug === slug; })[0];
+    if (slug) {
+      const post = getPosts().find(({ slug: postSlug }) => postSlug === slug);
       if (!post) return;
-      var url = location.href.split("#")[0];
+      const url = location.href.split("#")[0];
       setMeta("property", "og:type", "article");
       setMeta("property", "og:title", t(post.title));
       setMeta("property", "og:description", t(post.summary));
@@ -72,39 +118,69 @@
       setMeta("name", "twitter:card", post.cover ? "summary_large_image" : "summary");
       setMeta("name", "twitter:title", t(post.title));
       setMeta("name", "twitter:description", t(post.summary));
+
       if (post.cover) {
         setMeta("property", "og:image", post.cover);
         setMeta("name", "twitter:image", post.cover);
-        var title = main.querySelector(".article-title");
+        const title = main.querySelector(".article-title");
         if (title && !main.querySelector(".article-cover")) {
-          var img = document.createElement("img");
-          img.className = "article-cover"; img.src = post.cover; img.alt = t(post.title); img.loading = "lazy";
-          title.parentNode.insertBefore(img, title);
+          const image = document.createElement("img");
+          image.className = "article-cover";
+          image.src = post.cover;
+          image.alt = t(post.title);
+          image.loading = "lazy";
+          title.parentNode.insertBefore(image, title);
         }
       }
-      if (viewsOn) {
-        var meta = main.querySelector(".post-meta");
-        if (meta) {
-          var span = document.createElement("span"); span.className = "post-views"; meta.appendChild(span);
-          var seen = false; try { seen = sessionStorage.getItem("pf_seen_" + slug) === "1"; } catch (e) {}
-          var show = function (v) { span.textContent = viewsLabel(v); };
-          if (seen) callCounter("get", cfg.namespace, slug, show);
-          else callCounter("hit", cfg.namespace, slug, function (v) { try { sessionStorage.setItem("pf_seen_" + slug, "1"); } catch (e) {} show(v); });
+
+      if (viewsEnabled) {
+        const meta = main.querySelector(".post-meta");
+        if (!meta) return;
+        let seen = false;
+        try {
+          seen = sessionStorage.getItem(`pf_seen_${slug}`) === "1";
+        } catch (_error) {
+          // 세션 저장소가 차단되면 매 요청을 조회로 처리합니다.
         }
+        const kind = seen ? "get" : "hit";
+        if (!seen) {
+          try {
+            sessionStorage.setItem(`pf_seen_${slug}`, "1");
+          } catch (_error) {
+            // 조회수 기능은 선택 기능이므로 저장 실패를 무시합니다.
+          }
+        }
+        addViewCount(meta, kind, config.namespace, slug);
       }
-    } else if (viewsOn) {                          // 목록: 카드별 조회수(증가 안 함)
-      main.querySelectorAll(".post-card").forEach(function (card) {
-        var s = slugFromHref(card.getAttribute("href")); if (!s) return;
-        var meta = card.querySelector(".post-meta"); if (!meta) return;
-        var span = document.createElement("span"); span.className = "post-views"; meta.appendChild(span);
-        callCounter("get", cfg.namespace, s, function (v) { span.textContent = viewsLabel(v); });
+      return;
+    }
+
+    if (viewsEnabled) {
+      main.querySelectorAll(".post-card").forEach((card) => {
+        const cardSlug = slugFromHref(card.getAttribute("href"));
+        const meta = card.querySelector(".post-meta");
+        if (cardSlug && meta) addViewCount(meta, "get", config.namespace, cardSlug);
       });
     }
+  };
+
+  const run = () => {
+    renderTheme();
+    bindTheme();
+    enhanceBlog();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else {
+    run();
   }
 
-  function run() { initTheme(); injectThemeToggle(); enhanceBlog(); }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
-  else run();
-
-  PF.applyTheme = applyTheme; PF.currentTheme = currentTheme; PF.setMeta = setMeta;
+  PF.applyTheme = (theme) => {
+    STATE.theme = theme;
+    renderTheme();
+  };
+  PF.currentTheme = () => STATE.theme;
+  PF.renderTheme = renderTheme;
+  PF.setMeta = setMeta;
 })();
