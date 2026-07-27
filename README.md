@@ -3,9 +3,6 @@
 개인 이력과 프로젝트를 정리한 GitHub Pages 포트폴리오입니다. 예전에 만들었던 사이트를 바탕으로, Vanilla JavaScript 과제에서 요구한 API 연동과 폼 검증, 반응형 화면을 추가했습니다.
 
 - 사이트: https://dolphin1404.github.io/
-- 작업 브랜치: `feat/vanilla-portfolio-assignment`
-
-> 새 기능은 아직 `main`에 병합하지 않았습니다. 위 배포 사이트에는 병합 후 반영됩니다.
 
 ## 실행 방법
 
