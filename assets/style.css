@@ -132,6 +132,8 @@ button, input, textarea { font: inherit; }
 
 /* ----- 히어로 ------------------------------------------------------- */
 .hero { padding: 3.5rem 0 2.5rem; border-bottom: 1px solid var(--border-soft); }
+.hero-layout { display: grid; gap: 2rem; align-items: center; }
+.hero-content { min-width: 0; }
 .hero-term {
   font-family: var(--mono); font-size: 0.85rem; color: var(--faint);
   margin-bottom: 1.4rem;
@@ -158,6 +160,19 @@ button, input, textarea { font: inherit; }
   font-family: var(--mono); font-size: 0.84rem; color: var(--muted); }
 .hero-meta span { display: inline-flex; align-items: center; gap: 0.4rem; }
 .hero-meta .ic { color: var(--accent); }
+.hero-profile {
+  width: min(78vw, 320px);
+  margin: 0 auto;
+}
+.hero-profile img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  box-shadow: 0 18px 45px rgba(0,0,0,.3);
+}
 
 .btn-row { display: flex; flex-wrap: wrap; gap: 0.7rem; }
 .btn {
@@ -230,25 +245,6 @@ section { padding: 3.2rem 0; border-bottom: 1px solid var(--border-soft); }
 }
 .proj-link { font-family: var(--mono); font-size: 0.78rem; color: var(--link); margin-left: auto; }
 .proj-link::before { content: "↗ "; }
-
-/* ----- 소개 --------------------------------------------------------- */
-.about-grid { display: grid; gap: 1.5rem; align-items: center; }
-.profile-image {
-  width: min(100%, 260px);
-  aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: 18px;
-  border: 1px solid var(--border);
-  box-shadow: 0 14px 36px rgba(0,0,0,.24);
-}
-.about-copy {
-  color: var(--text);
-  font-size: 1.02rem;
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius);
-  padding: 1.2rem 1.3rem;
-}
 
 /* ----- GitHub API 프로젝트 ----------------------------------------- */
 .project-group + .project-group { margin-top: 3rem; }
@@ -371,6 +367,8 @@ section { padding: 3.2rem 0; border-bottom: 1px solid var(--border-soft); }
 .field-error { min-height: 1.15rem; color: var(--danger); font-size: .78rem; }
 .form-status { min-height: 1.4rem; color: var(--muted); }
 .form-status.success { color: var(--success); }
+.form-status.error { color: var(--danger); }
+.contact-form button:disabled { cursor: wait; opacity: .7; transform: none; }
 
 /* ----- 스크롤 탑 ---------------------------------------------------- */
 .back-to-top {
@@ -486,7 +484,8 @@ section { padding: 3.2rem 0; border-bottom: 1px solid var(--border-soft); }
   }
   .nav-links a { padding: 0; border: 0; }
   .hero { padding: 5rem 0 3.5rem; }
-  .about-grid { grid-template-columns: minmax(190px, 260px) 1fr; gap: 2rem; }
+  .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(220px, 280px); gap: 2rem; }
+  .hero-profile { width: 100%; margin: 0; }
   .contact-layout { grid-template-columns: minmax(220px, .75fr) minmax(0, 1.25fr); gap: 2rem; }
   .github-heading { flex-direction: row; justify-content: space-between; align-items: end; }
   .tl-period, .award-date { margin-left: auto; }
@@ -497,6 +496,7 @@ section { padding: 3.2rem 0; border-bottom: 1px solid var(--border-soft); }
   :root { --maxw: 1080px; }
   .wrap, .nav-inner { padding-left: 2rem; padding-right: 2rem; }
   section { padding: 4rem 0; }
+  .hero-layout { grid-template-columns: minmax(0, 1fr) 340px; gap: 4rem; }
   .repo-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 }
 

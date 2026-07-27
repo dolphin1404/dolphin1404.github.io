@@ -36,7 +36,8 @@
     form: {
       values: { name: "", email: "", message: "" },
       errors: {},
-      submitted: false
+      status: "idle",
+      error: null
     },
     scroll: {
       navActive: false,
@@ -228,7 +229,7 @@
   const buildNav = (navElement, content, options = {}) => {
     const page = options.page || "home";
     const nav = content.nav || {};
-    const sectionKeys = ["about", "education", "experience", "projects", "skills", "awards", "contact"];
+    const sectionKeys = ["education", "experience", "projects", "skills", "awards", "contact"];
     const prefix = page === "home" ? "#" : "index.html#";
 
     const links = sectionKeys.map((key) => {
