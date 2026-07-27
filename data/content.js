@@ -12,12 +12,12 @@ window.CONTENT = {
     handle: "kyumin",
     role: { ko: "AI · 백엔드 개발자", en: "AI · Backend Developer" },
     tagline: {
-      ko: "아이디어를 '실제로 도는 서비스'까지 만드는 개발자",
-      en: "I turn ideas into services that actually ship."
+      ko: "문제를 발견하면 직접 만들고, 배포해서 확인해 보는 개발자",
+      en: "I like solving problems by building, shipping, and learning from the result."
     },
     summary: {
-      ko: "충북대 소프트웨어학부 4학년, AI Lab 학부연구생입니다. LLM 에이전트와 온디바이스 AI를 연구하고, 실시간 백엔드(FastAPI·WebSocket)와 DB 설계로 아이디어를 실제 서비스까지 만든다. 피싱방지 키보드로 전국 ICT 융합 공모전 우수상, 졸업작품 CLIP-IT 실배포.",
-      en: "4th-year B.S. in Software at Chungbuk National University and an undergraduate researcher at the AI Lab. I work on LLM agents and on-device AI, and connect research to real products with real-time backends (FastAPI/WebSocket) and database design. My anti-phishing keyboard won an Excellence Award at the National ICT Convergence Contest, and my capstone CLIP-IT is live in production."
+      ko: "충북대학교 소프트웨어학부 4학년이며 AI Lab에서 학부연구생으로 활동하고 있습니다. LLM 에이전트와 온디바이스 AI를 공부하고, FastAPI와 WebSocket을 활용한 백엔드 개발을 주로 합니다. 만든 기능은 직접 배포하고 사용해 보면서 개선하는 과정을 좋아합니다.",
+      en: "I am a fourth-year Software student at Chungbuk National University and an undergraduate researcher in the AI Lab. I study LLM agents and on-device AI, and mainly build backends with FastAPI and WebSocket. I enjoy deploying what I make, trying it myself, and improving it from there."
     },
     location: { ko: "대한민국 경기도", en: "Gyeonggi-do, South Korea" },
     email: "kyumin1404@gmail.com",
@@ -54,8 +54,8 @@ window.CONTENT = {
       degree: { ko: "신뢰할 수 있는 LLM 기반 에이전트 연구", en: "Toward Reliable LLM-Based Agents" },
       period: { ko: "이건명 교수 지도 · AI Lab", en: "Advised by Prof. Keon-Myung Lee · AI Lab" },
       detail: {
-        ko: "사용자 입력과 환경 제약을 구조적 사전정보로 반영해 LLM 에이전트의 신뢰성을 높이는 주제. 에이전트 하니스 내부 분석과 시계열 모델링 경험에서 발전시켰습니다.",
-        en: "Incorporating user-input and environmental constraints as structural priors to make LLM agents more reliable — developed from hands-on analysis of agent-harness internals and time-series modeling."
+        ko: "사용자 입력이나 실행 환경의 제약을 에이전트가 놓치지 않도록 하는 방법을 연구하고 있습니다. 오픈소스 에이전트의 동작을 분석하면서 발견한 문제에서 시작한 주제입니다.",
+        en: "I study ways to help agents account for user input and constraints in their execution environment. The topic grew out of issues I found while examining how an open-source agent works."
       }
     }
   ],
@@ -67,12 +67,12 @@ window.CONTENT = {
       period: { ko: "2025.09 – 2026.08", en: "Sep 2025 – Aug 2026" },
       bullets: {
         ko: [
-          "시계열 방향: SOTA 예측 모델 TimeXer를 분석하고 금융 시계열 데이터에 직접 적용.",
-          "LLM 에이전트 방향: 오픈소스 AI 에이전트 내부 구조를 분석하고 멀티에이전트 시스템으로 확장 (아래 프로젝트 참고)."
+          "시계열 예측 모델 TimeXer를 공부하고 금융 시계열 데이터에 적용했습니다.",
+          "오픈소스 AI 에이전트의 동작 구조를 분석하고 멀티에이전트 형태로 확장하고 있습니다."
         ],
         en: [
-          "Time-series: studied the SOTA forecasting model TimeXer and ran it on financial time-series data.",
-          "LLM agents: analyzed the internals of an open-source AI agent and extended it into a multi-agent system (see Projects)."
+          "Studied the TimeXer forecasting model and applied it to financial time-series data.",
+          "Reviewed how an open-source AI agent works and began extending it into a multi-agent system."
         ]
       }
     },
@@ -83,13 +83,13 @@ window.CONTENT = {
       bullets: {
         ko: [
           "'Beyond X-verse' 과제에서 모션캡처 3사(Xsens 수트·OptiTrack 광학·Manus 장갑) SDK를 통합한 단일 뷰어 모듈을 Python으로 개발.",
-          "서로 다른 벤더의 센서 좌표·시간축을 통일하고 실시간 영상과 동기화, 이후 동작을 기록·예측.",
-          "건당 30분 이상 걸리던 수작업 변환을 자동화해 연구실 워크플로의 핵심 병목을 제거."
+          "서로 다른 장비의 좌표계와 시간축을 맞추고 실시간 영상과 동기화해 동작을 기록할 수 있도록 했습니다.",
+          "건당 30분 이상 걸리던 수작업 변환을 자동화해 반복 작업 시간을 줄였습니다."
         ],
         en: [
           "Built a unified viewer module in Python integrating motion-capture SDKs from three vendors — Xsens (suit), OptiTrack (optical), Manus (gloves).",
-          "Unified coordinate systems and timelines across vendors, synchronized with real-time video, and recorded/predicted subsequent motion.",
-          "Automated a manual conversion that took 30+ minutes per case, removing a key bottleneck in the lab's workflow."
+          "Aligned coordinate systems and timelines across devices and synchronized the data with real-time video.",
+          "Automated a manual conversion that took more than 30 minutes per case."
         ]
       }
     },
@@ -112,15 +112,15 @@ window.CONTENT = {
       badge: { ko: "전국 ICT 융합 공모전 우수상", en: "Excellence Award · National ICT Contest" },
       featured: true,
       summary: {
-        ko: "타이핑하는 순간 1초 안에 금융사기 위험을 경고하는 키보드. 개인정보를 외부로 보내지 않는 온프레미스 로컬 LLM 구조.",
-        en: "A keyboard that warns of financial-fraud risk within 1 second as you type — on-premise local LLM, no personal data sent out."
+        ko: "입력 중인 문장에서 금융사기 위험을 감지해 사용자와 가족에게 알려 주는 키보드입니다. 개인정보가 외부 모델로 전송되지 않도록 로컬 LLM을 사용했습니다.",
+        en: "A keyboard that detects signs of financial fraud in typed messages and alerts the user and their family. It uses a local LLM so personal text is not sent to an external model."
       },
       bullets: {
         ko: [
-          "커스텀 키보드 → WebSocket → FastAPI로 입력을 실시간 분석하고 단계별 위험도를 산출, 사용자·가족에게 경고.",
-          "로컬 LLM(Gemma 3) 온프레미스 추론 + KIWI 형태소 분석기 게이팅으로 문장 종결·기호 신호에서만 LLM 호출.",
-          "경량 호출 로직과 금융사기 데이터셋 프롬프트 튜닝으로 응답을 약 4초 → 1초 미만(≈4배)으로 단축.",
-          "현재 서버 파이프라인을 온디바이스 AI로 재설계하며 사업화 준비 중."
+          "커스텀 키보드의 입력을 WebSocket과 FastAPI로 전달해 위험도를 분석하고 사용자와 가족에게 알림을 보냈습니다.",
+          "Gemma 3와 KIWI 형태소 분석기를 함께 사용해 문장이 끝나는 시점에만 모델을 호출하도록 구성했습니다.",
+          "호출 횟수와 프롬프트를 조정해 응답 시간을 약 4초에서 1초 미만으로 줄였습니다.",
+          "현재는 서버에서 처리하던 기능을 기기 안에서 실행하는 방식으로 바꾸고 있습니다."
         ],
         en: [
           "Custom keyboard → WebSocket → FastAPI for real-time analysis; stages fraud risk and alerts the user and family.",
@@ -135,28 +135,28 @@ window.CONTENT = {
     {
       name: { ko: "CLIP-IT · 영상 독서 플랫폼", en: "CLIP-IT · Video Reading Platform" },
       year: "2026",
-      role: { ko: "팀장 · 웹 풀스택 전담", en: "Team Lead · Full-stack Web" },
-      badge: { ko: "졸업작품 · 실배포 운영 중", en: "Capstone · Live in production" },
+      role: { ko: "팀장 · 웹 개발", en: "Team Lead · Web Development" },
+      badge: { ko: "졸업작품 · 배포 운영 중", en: "Capstone · Deployed" },
       featured: true,
       summary: {
-        ko: "고전문학 원문을 장면 단위로 AI 영상과 동기화해 읽는 플랫폼. Claude Code와 협업하는 AI-Native 방식으로 한 학기 만에 풀스택 실배포.",
-        en: "Reads classic literature synced scene-by-scene with AI-generated video. Built full-stack and shipped in one semester via an AI-Native workflow with Claude Code."
+        ko: "고전문학 원문과 장면별 영상을 함께 볼 수 있는 졸업작품입니다. 팀장을 맡아 웹 화면, API, 데이터베이스와 배포를 담당했습니다.",
+        en: "A capstone project for reading classic literature alongside scene-based video. As team lead, I handled the web UI, API, database, and deployment."
       },
       bullets: {
         ko: [
-          "Next.js(App Router) 단일 코드베이스로 화면+API 구성, Vercel 서버리스 배포, GitHub 형상관리.",
-          "초기 Supabase(Auth+DB)로 구축 후 AWS(Cognito · RDS PostgreSQL · S3 presigned URL)로 마이그레이션.",
-          "JWT 미들웨어 인증, 책/북마크/노트/형광펜 CRUD API, DB 설계, 끊김 없는 연속 재생 플레이어(더블 버퍼링) 구현.",
-          "기획서·백로그·발표자료까지 직접 작성하며 3.5인분 분량을 한 학기에 완성."
+          "Next.js App Router로 화면과 API를 구성하고 Vercel에 배포했습니다.",
+          "처음에는 Supabase로 시작했지만, 이후 인증과 데이터 저장소를 AWS Cognito·RDS PostgreSQL·S3로 옮겼습니다.",
+          "책, 북마크, 노트, 형광펜 API와 데이터베이스를 설계하고 영상이 끊기지 않도록 더블 버퍼링 플레이어를 구현했습니다.",
+          "개발뿐 아니라 기획서, 백로그와 발표 자료도 정리하며 팀 진행을 맡았습니다."
         ],
         en: [
-          "Single Next.js (App Router) codebase for UI + API, deployed serverless on Vercel with GitHub version control.",
-          "Built on Supabase (Auth+DB) first, then migrated to AWS (Cognito · RDS PostgreSQL · S3 presigned URLs).",
-          "JWT-middleware auth, CRUD APIs for books/bookmarks/notes/highlights, DB design, and a seamless double-buffered video player.",
-          "Wrote the proposal, backlog, and presentation myself — shipping ~3.5 people's worth of work in one semester."
+          "Built the UI and API with Next.js App Router and deployed the project on Vercel.",
+          "Started with Supabase, then moved authentication and storage to AWS Cognito, RDS PostgreSQL, and S3.",
+          "Designed the database and APIs for books, bookmarks, notes, and highlights, and built a double-buffered video player.",
+          "Managed the team schedule and also prepared the proposal, backlog, and presentation."
         ]
       },
-      tags: ["Next.js", "Vercel", "AWS", "PostgreSQL", "S3", "AI-Native"],
+      tags: ["Next.js", "Vercel", "AWS", "PostgreSQL", "S3", "GitHub"],
       link: "https://cbnu-clip-it.vercel.app/"
     },
     {
@@ -166,21 +166,21 @@ window.CONTENT = {
       badge: { ko: "", en: "" },
       featured: false,
       summary: {
-        ko: "오픈소스 AI 에이전트의 내부를 코드 수준에서 해부하고, 역할 특화 멀티에이전트로 확장하며 신뢰성을 연구.",
-        en: "Dissecting an open-source AI agent at the code level and extending it into role-specialized multi-agents to study reliability."
+        ko: "오픈소스 AI 에이전트의 코드를 읽고 동작 과정을 정리한 뒤, 역할이 다른 여러 에이전트가 협업하는 구조로 확장하고 있습니다.",
+        en: "I read and document how an open-source AI agent works, then extend it so agents with different roles can collaborate."
       },
       bullets: {
         ko: [
-          "에이전트의 TypeScript 코드베이스를 분석해 작업 스케줄링·에이전트 루프·핵심 추상화가 사용자–서버–LLM 상호작용을 매개하는 방식을 추적.",
-          "에이전트를 연구 도구로 투입해 새로운 금융사기 패턴을 탐색하고 방어 로직 초안을 자동 생성 — 개발 속도를 크게 가속.",
-          "에이전트가 현실의 물리 입력(오타·모바일 타이핑 지연)을 무시해 취약한 로직을 만드는 신뢰성 결함을 발견, HITL(사람 검토) 방식을 도입.",
-          "CEO/CTO/코드리뷰어 등 역할 특화 에이전트로 확장해 멀티에이전트 오케스트레이션과 신뢰성을 연구 중."
+          "TypeScript 코드베이스에서 작업 스케줄링과 에이전트 루프가 사용자, 서버, LLM을 연결하는 과정을 따라가며 정리했습니다.",
+          "금융사기 패턴을 찾고 방어 로직의 초안을 만드는 연구 도구로 에이전트를 사용했습니다.",
+          "오타나 모바일 타이핑 지연 같은 실제 입력 조건을 에이전트가 놓치는 문제를 확인해 사람의 검토 단계를 추가했습니다.",
+          "기획, 개발, 코드 리뷰 역할을 나눈 멀티에이전트 구조를 실험하고 있습니다."
         ],
         en: [
-          "Traced how task scheduling, the agent loop, and core abstractions mediate user–server–LLM interaction in the agent's TypeScript codebase.",
-          "Deployed the agent as a research tool to discover new fraud patterns and auto-draft defense logic, sharply accelerating development.",
-          "Found a reliability gap — the agent ignored real-world input (typos, mobile typing latency) and produced insecure logic — and adopted human-in-the-loop review.",
-          "Extending toward role-specialized agents (CEO/CTO/code-reviewer) to study multi-agent orchestration and trustworthiness."
+          "Read the TypeScript codebase and documented how task scheduling and the agent loop connect the user, server, and LLM.",
+          "Used the agent as a research tool to find fraud patterns and prepare first drafts of defense logic.",
+          "Found that the agent missed practical input conditions such as typos and mobile typing delay, so I added a human review step.",
+          "Currently experimenting with a multi-agent setup that separates planning, development, and code-review roles."
         ]
       },
       tags: ["LLM Agents", "Multi-agent", "HITL", "TypeScript", "Agent harness"],
@@ -194,11 +194,11 @@ window.CONTENT = {
       featured: false,
       summary: {
         ko: "LLM이 단어·퀴즈·팟캐스트형 오디오를 생성하는 학습 앱. 실제 사용자 피드백을 받으며 운영, 아이디어부터 배포까지 전 과정을 경험.",
-        en: "A learning app where an LLM generates vocabulary, quizzes, and podcast-style audio. Operated with real user feedback, end to end."
+        en: "A vocabulary app where an LLM generates words, quizzes, and podcast-style audio. I built and released it, then updated it from user feedback."
       },
       bullets: {
         ko: ["Flutter + Supabase(Auth·DB)로 구축해 앱스토어에 출시·운영하며 DB 설계를 실전 적용."],
-        en: ["Built and shipped with Flutter + Supabase (Auth/DB), applying database design in production."]
+        en: ["Built the app with Flutter and Supabase, including authentication and database design, and released it on the App Store."]
       },
       tags: ["Flutter", "Supabase", "LLM"],
       link: ""
