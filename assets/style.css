@@ -367,6 +367,8 @@ section { padding: 3.2rem 0; border-bottom: 1px solid var(--border-soft); }
 .field-error { min-height: 1.15rem; color: var(--danger); font-size: .78rem; }
 .form-status { min-height: 1.4rem; color: var(--muted); }
 .form-status.success { color: var(--success); }
+.form-status.error { color: var(--danger); }
+.contact-form button:disabled { cursor: wait; opacity: .7; transform: none; }
 
 /* ----- 스크롤 탑 ---------------------------------------------------- */
 .back-to-top {

@@ -18,6 +18,7 @@
 
   const { STATE, STR, esc, t } = PF;
   const GITHUB_API = "https://api.github.com/users/dolphin1404/repos?sort=updated&per_page=100";
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzedbnp";
   const LANGUAGE = PF.LANG;
   const byId = (id) => document.getElementById(id);
 
@@ -35,7 +36,7 @@
       all: "전체",
       updated: "업데이트",
       contact: "연락",
-      contactIntro: "이름과 이메일, 메시지를 남겨 주세요. 현재 폼은 입력 내용만 확인하며 실제로 전송하지 않습니다.",
+      contactIntro: "이름과 이메일, 메시지를 남겨 주시면 이메일로 전달됩니다.",
       name: "이름",
       email: "이메일",
       message: "메시지",
@@ -43,9 +44,11 @@
       emailPlaceholder: "name@example.com",
       messagePlaceholder: "문의 내용을 입력해 주세요.",
       send: "보내기",
+      sending: "보내는 중...",
       required: "필수 입력 항목입니다.",
       invalidEmail: "올바른 이메일 형식을 입력해 주세요.",
-      success: "입력 내용을 모두 확인했습니다. 실제 메시지는 이메일로 보내 주세요.",
+      success: "메시지를 보냈습니다. 확인 후 답변드리겠습니다.",
+      sendError: "메시지를 보내지 못했습니다. 잠시 후 다시 시도하거나 이메일로 연락해 주세요.",
       profileAlt: "이규민의 GitHub 프로필 사진",
       backTop: "맨 위로 이동"
     },
@@ -62,7 +65,7 @@
       all: "All",
       updated: "Updated",
       contact: "Contact",
-      contactIntro: "Leave your name, email, and message. This form validates input but does not send it.",
+      contactIntro: "Leave your name, email, and message, and it will be delivered to my inbox.",
       name: "Name",
       email: "Email",
       message: "Message",
@@ -70,9 +73,11 @@
       emailPlaceholder: "name@example.com",
       messagePlaceholder: "Tell me what you would like to discuss.",
       send: "Send",
+      sending: "Sending...",
       required: "This field is required.",
       invalidEmail: "Enter a valid email address.",
-      success: "Everything looks good. Please use email to send the actual message.",
+      success: "Your message has been sent. I will get back to you soon.",
+      sendError: "The message could not be sent. Please try again later or contact me by email.",
       profileAlt: "GitHub profile photo of Kyumin Lee",
       backTop: "Back to top"
     }
@@ -264,7 +269,14 @@
         <p>${esc(COPY.contactIntro)}</p>
         <a href="mailto:${esc(CONTENT.meta.email)}">${esc(CONTENT.meta.email)}</a>
       </div>
-      <form id="contactForm" class="contact-form" novalidate>
+      <form
+        id="contactForm"
+        class="contact-form"
+        action="${esc(FORMSPREE_ENDPOINT)}"
+        method="POST"
+        novalidate
+      >
+        <input type="hidden" name="_subject" value="Portfolio contact" />
         ${formField({
           id: "name",
           label: COPY.name,
@@ -285,7 +297,7 @@
           placeholder: COPY.messagePlaceholder,
           textarea: true
         })}
-        <button class="btn btn-primary" type="submit">${esc(COPY.send)}</button>
+        <button class="btn btn-primary" id="contactSubmit" type="submit">${esc(COPY.send)}</button>
         <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
       </form>
     </div>
@@ -469,10 +481,28 @@
       input.setAttribute("aria-invalid", String(Boolean(error)));
       input.classList.toggle("invalid", Boolean(error));
     });
+    const form = byId("contactForm");
     const formStatus = byId("formStatus");
+    const submitButton = byId("contactSubmit");
+    const isSubmitting = STATE.form.status === "submitting";
+    form?.setAttribute("aria-busy", String(isSubmitting));
+    if (submitButton) {
+      submitButton.disabled = isSubmitting;
+      submitButton.textContent = isSubmitting ? COPY.sending : COPY.send;
+    }
     if (formStatus) {
-      formStatus.textContent = STATE.form.submitted ? COPY.success : "";
-      formStatus.classList.toggle("success", STATE.form.submitted);
+      formStatus.className = "form-status";
+      if (STATE.form.status === "success") {
+        formStatus.textContent = COPY.success;
+        formStatus.classList.add("success");
+      } else if (STATE.form.status === "error") {
+        formStatus.textContent = STATE.form.error || COPY.sendError;
+        formStatus.classList.add("error");
+      } else if (isSubmitting) {
+        formStatus.textContent = COPY.sending;
+      } else {
+        formStatus.textContent = "";
+      }
     }
   };
 
@@ -484,7 +514,8 @@
       const input = byId(name);
       input?.addEventListener("input", (event) => {
         STATE.form.values[name] = event.target.value;
-        STATE.form.submitted = false;
+        STATE.form.status = "idle";
+        STATE.form.error = null;
         if (Object.hasOwn(STATE.form.errors, name)) {
           const error = validateField(name, event.target.value);
           if (error) STATE.form.errors[name] = error;
@@ -494,19 +525,45 @@
       });
     });
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
+      if (STATE.form.status === "submitting") return;
+
       const errors = {};
       Object.entries(STATE.form.values).forEach(([name, value]) => {
         const error = validateField(name, value);
         if (error) errors[name] = error;
       });
       STATE.form.errors = errors;
-      STATE.form.submitted = Object.keys(errors).length === 0;
-      renderForm();
-      if (!STATE.form.submitted) {
+      if (Object.keys(errors).length) {
+        STATE.form.status = "idle";
+        STATE.form.error = null;
+        renderForm();
         byId(Object.keys(errors)[0])?.focus();
+        return;
       }
+
+      STATE.form.status = "submitting";
+      STATE.form.error = null;
+      renderForm();
+
+      try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(form)
+        });
+        if (!response.ok) throw new Error(COPY.sendError);
+
+        STATE.form.values = { name: "", email: "", message: "" };
+        STATE.form.errors = {};
+        STATE.form.status = "success";
+        form.reset();
+      } catch (_error) {
+        STATE.form.status = "error";
+        STATE.form.error = COPY.sendError;
+      }
+      renderForm();
     });
   };
 

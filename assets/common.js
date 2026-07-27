@@ -36,7 +36,8 @@
     form: {
       values: { name: "", email: "", message: "" },
       errors: {},
-      submitted: false
+      status: "idle",
+      error: null
     },
     scroll: {
       navActive: false,
