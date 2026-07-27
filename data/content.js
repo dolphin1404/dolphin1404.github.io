@@ -16,8 +16,8 @@ window.CONTENT = {
       en: "I like solving problems by building, shipping, and learning from the result."
     },
     summary: {
-      ko: "충북대학교 소프트웨어학부 4학년이며 AI Lab에서 학부연구생으로 활동하고 있습니다. LLM 에이전트와 온디바이스 AI를 공부하고, FastAPI와 WebSocket을 활용한 백엔드 개발을 주로 합니다. 만든 기능은 직접 배포하고 사용해 보면서 개선하는 과정을 좋아합니다.",
-      en: "I am a fourth-year Software student at Chungbuk National University and an undergraduate researcher in the AI Lab. I study LLM agents and on-device AI, and mainly build backends with FastAPI and WebSocket. I enjoy deploying what I make, trying it myself, and improving it from there."
+      ko: "LLM 에이전트와 온디바이스 AI를 공부하고, FastAPI와 WebSocket을 활용한 백엔드 개발을 주로 합니다. 만든 기능은 직접 배포하고 사용해 보면서 개선하는 과정을 좋아합니다.",
+      en: "I study LLM agents and on-device AI, and mainly build backends with FastAPI and WebSocket. I enjoy deploying what I make, trying it myself, and improving it from there."
     },
     location: { ko: "대한민국 경기도", en: "Gyeonggi-do, South Korea" },
     email: "kyumin1404@gmail.com",
@@ -45,8 +45,8 @@ window.CONTENT = {
       degree: { ko: "소프트웨어학부 · 공학사 (재학)", en: "B.S. in Software, School of Computer Science" },
       period: { ko: "2021.03 – 2027.02 (졸업 예정)", en: "Mar 2021 – Feb 2027 (expected)" },
       detail: {
-        ko: "학점 3.95 / 4.5 (백분율 93.5). 정보통신공학부로 입학한 뒤 소프트웨어학부로 전과했습니다.",
-        en: "GPA 3.95 / 4.50. Admitted to Information & Communication Engineering, then transferred to the School of Software."
+        ko: "정보통신공학부로 입학한 뒤 소프트웨어학부로 전과.",
+        en: "Admitted to Information & Communication Engineering, then transferred to the School of Computer Science."
       }
     },
     {
