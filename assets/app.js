@@ -47,7 +47,6 @@
       invalidEmail: "올바른 이메일 형식을 입력해 주세요.",
       success: "입력 내용을 모두 확인했습니다. 실제 메시지는 이메일로 보내 주세요.",
       profileAlt: "이규민의 GitHub 프로필 사진",
-      aboutLabel: "이규민 소개",
       backTop: "맨 위로 이동"
     },
     en: {
@@ -75,7 +74,6 @@
       invalidEmail: "Enter a valid email address.",
       success: "Everything looks good. Please use email to send the actual message.",
       profileAlt: "GitHub profile photo of Kyumin Lee",
-      aboutLabel: "About Kyumin Lee",
       backTop: "Back to top"
     }
   }[LANGUAGE];
@@ -118,31 +116,28 @@
 
     byId("hero").innerHTML = `
       <div class="wrap">
-        <div class="hero-term"><span class="accent">$</span> whoami</div>
-        <h1>${esc(t(meta.name))}</h1>
-        <div class="role">${esc(t(meta.role))}<span class="cursor" aria-hidden="true"></span></div>
-        <p class="tagline">${esc(t(meta.tagline))}</p>
-        <p class="summary">${esc(t(meta.summary))}</p>
-        <div class="hero-meta">${details.join("")}</div>
-        <div class="btn-row">${buttons.join("")}</div>
+        <div class="hero-layout">
+          <div class="hero-content">
+            <div class="hero-term"><span class="accent">$</span> whoami</div>
+            <h1>${esc(t(meta.name))}</h1>
+            <div class="role">${esc(t(meta.role))}<span class="cursor" aria-hidden="true"></span></div>
+            <p class="tagline">${esc(t(meta.tagline))}</p>
+            <p class="summary">${esc(t(meta.summary))}</p>
+            <div class="hero-meta">${details.join("")}</div>
+            <div class="btn-row">${buttons.join("")}</div>
+          </div>
+          <figure class="hero-profile">
+            <img
+              src="../images/profile.jpg"
+              alt="${esc(COPY.profileAlt)}"
+              width="320"
+              height="320"
+            />
+          </figure>
+        </div>
       </div>
     `;
   };
-
-  const buildAbout = () => section("about", "00", `
-    <div class="about-grid">
-      <img
-        class="profile-image"
-        src="../images/profile.jpg"
-        alt="${esc(COPY.profileAlt)}"
-        width="320"
-        height="320"
-      />
-      <article class="about-copy" aria-label="${esc(COPY.aboutLabel)}">
-        <p>${esc(t(CONTENT.meta.summary))}</p>
-      </article>
-    </div>
-  `);
 
   const buildEducation = () => {
     const cards = CONTENT.education.map(({ school, degree, period, detail }) => `
@@ -155,7 +150,7 @@
         <p class="tl-detail">${esc(t(detail))}</p>
       </article>
     `).join("");
-    return section("education", "01", `<div class="timeline">${cards}</div>`);
+    return section("education", "00", `<div class="timeline">${cards}</div>`);
   };
 
   const buildExperience = () => {
@@ -172,7 +167,7 @@
         </article>
       `;
     }).join("");
-    return section("experience", "02", `<div class="timeline">${cards}</div>`);
+    return section("experience", "01", `<div class="timeline">${cards}</div>`);
   };
 
   const buildFeaturedProjectCards = () => CONTENT.projects.map((project) => {
@@ -198,7 +193,7 @@
     `;
   }).join("");
 
-  const buildProjects = () => section("projects", "03", `
+  const buildProjects = () => section("projects", "02", `
     <div class="project-group">
       <h3 class="subsection-title">${esc(COPY.featured)}</h3>
       <div class="proj-grid">${buildFeaturedProjectCards()}</div>
@@ -226,7 +221,7 @@
         <div class="skill-tags">${(items || []).map((item) => `<span class="tag">${esc(item)}</span>`).join("")}</div>
       </article>
     `).join("");
-    return section("skills", "04", `<div class="skills-grid">${cards}</div>`);
+    return section("skills", "03", `<div class="skills-grid">${cards}</div>`);
   };
 
   const buildAwards = () => {
@@ -238,7 +233,7 @@
         ${t(note) ? `<p class="award-note">${esc(t(note))}</p>` : ""}
       </article>
     `).join("");
-    return section("awards", "05", `<div class="awards-list">${awards}</div>`);
+    return section("awards", "04", `<div class="awards-list">${awards}</div>`);
   };
 
   const formField = ({ id, label, type = "text", autocomplete, placeholder, textarea = false }) => {
@@ -263,7 +258,7 @@
     `;
   };
 
-  const buildContact = () => section("contact", "06", `
+  const buildContact = () => section("contact", "05", `
     <div class="contact-layout">
       <div class="contact-copy">
         <p>${esc(COPY.contactIntro)}</p>
@@ -556,7 +551,6 @@
     PF.buildNav(byId("nav"), CONTENT, { page: "home" });
     buildHero();
     byId("main").innerHTML = [
-      buildAbout(),
       buildEducation(),
       buildExperience(),
       buildProjects(),
