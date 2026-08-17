@@ -73,6 +73,22 @@ analytics:
   fathom:
     id: # fill in your Fathom Site ID
 
+# Google AdSense Settings
+# 1. https://adsense.google.com 승인 후 enabled: true 로 변경
+# 2. client 에 본인 게시자 ID(ca-pub-XXXXXXXXXXXXXXXX) 입력
+# 3. slots 에 각 광고 단위 슬롯 ID 입력 (공란일 경우 자동/반응형 광고로 동작)
+# 4. display_sample: true 로 두면 승인 전/개발 중 광고 슬롯 위치가 점선 가이드 박스로 표시됩니다.
+adsense:
+  enabled: false
+  client: "ca-pub-1175141923072458"
+  display_sample: true
+  slots:
+    post_top: ""     # 본문 상단 광고 단위 ID
+    post_bottom: ""  # 본문 하단 광고 단위 ID
+    in_article: ""   # 본문 중간(인아티클) 광고 단위 ID
+    in_feed: ""      # 홈 목록 피드 광고 단위 ID
+    sidebar: ""      # 우측 패널(TOC 하단) 광고 단위 ID
+
 # Page views settings
 pageviews:
   provider: # now only supports 'goatcounter'
@@ -155,7 +171,8 @@ pwa:
     # Usually its value is the `baseurl` of another website that
     # shares the same domain name as the current website.
     deny_paths:
-      # - "/example"  # URLs match `<SITE_URL>/example/*` will not be cached by the PWA
+      - "/ko"
+      - "/en"
 
 paginate: 10
 

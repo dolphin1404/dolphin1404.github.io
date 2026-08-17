@@ -1,0 +1,26 @@
+{% if site.adsense.enabled and site.adsense.client %}
+  <!-- Google AdSense - Sidebar / Panel -->
+  <section class="adsense-sidebar mt-4 mb-4">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="{{ site.adsense.client }}"
+         {% if site.adsense.slots.sidebar and site.adsense.slots.sidebar != "" %}
+         data-ad-slot="{{ site.adsense.slots.sidebar }}"
+         {% endif %}
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </section>
+{% elsif site.adsense.display_sample %}
+  <!-- AdSense Placeholder Guide (Visible during preview / setup) -->
+  <section class="adsense-placeholder-guide mt-4 mb-4 p-3 text-center rounded border border-secondary-subtle" style="background-color: var(--card-bg, rgba(125, 125, 125, 0.05)); border-style: dashed !important;">
+    <div class="small fw-semibold text-muted mb-1" style="font-size: 0.8rem;">
+      <i class="fa-solid fa-rectangle-ad me-1 text-primary"></i> AdSense 우측 패널
+    </div>
+    <div class="text-muted opacity-75" style="font-size: 0.75rem;">
+      목차(TOC) 하단 광고 영역
+    </div>
+  </section>
+{% endif %}
