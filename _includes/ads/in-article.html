@@ -1,0 +1,26 @@
+{% if site.adsense.enabled and site.adsense.client %}
+  <!-- Google AdSense - In-Article -->
+  <div class="adsense-wrapper adsense-in-article my-4 text-center">
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-ad-client="{{ site.adsense.client }}"
+         {% if site.adsense.slots.in_article and site.adsense.slots.in_article != "" %}
+         data-ad-slot="{{ site.adsense.slots.in_article }}"
+         {% endif %}></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+{% elsif site.adsense.display_sample %}
+  <!-- AdSense Placeholder Guide (Visible during preview / setup) -->
+  <div class="adsense-placeholder-guide my-4 p-3 text-center rounded border border-secondary-subtle" style="background-color: var(--card-bg, rgba(125, 125, 125, 0.05)); border-style: dashed !important;">
+    <div class="small fw-semibold text-muted mb-1">
+      <i class="fa-solid fa-rectangle-ad me-1 text-primary"></i> Google AdSense — 본문 중간 (In-Article) 광고 슬롯
+    </div>
+    <div class="small text-muted opacity-75" style="font-size: 0.8rem;">
+      글 작성 시 <code>{% raw %}{% include ads/in-article.html %}{% endraw %}</code> 태그로 원하는 곳에 넣을 수 있습니다.
+    </div>
+  </div>
+{% endif %}

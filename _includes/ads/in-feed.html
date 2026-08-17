@@ -1,0 +1,32 @@
+{% if site.adsense.enabled and site.adsense.client %}
+  <!-- Google AdSense - In-Feed (Home List) -->
+  <article class="card-wrapper card adsense-card my-3">
+    <div class="card-body p-3">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-format="fluid"
+           {% if site.adsense.slots.in_feed and site.adsense.slots.in_feed != "" %}
+           data-ad-layout-key="-fb+5w+4e-db+86"
+           data-ad-slot="{{ site.adsense.slots.in_feed }}"
+           {% else %}
+           data-ad-format="auto"
+           {% endif %}
+           data-ad-client="{{ site.adsense.client }}"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </article>
+{% elsif site.adsense.display_sample %}
+  <!-- AdSense Placeholder Guide (Visible during preview / setup) -->
+  <article class="card-wrapper card my-3 border border-secondary-subtle" style="border-style: dashed !important;">
+    <div class="card-body p-3 text-center">
+      <div class="small fw-semibold text-muted mb-1">
+        <i class="fa-solid fa-rectangle-ad me-1 text-primary"></i> Google AdSense — 피드 목록 광고 슬롯
+      </div>
+      <div class="small text-muted opacity-75" style="font-size: 0.8rem;">
+        포스트 목록 2번째 글 뒤에 자동 삽입됩니다. (<code>_config.yml</code> 연동)
+      </div>
+    </div>
+  </article>
+{% endif %}

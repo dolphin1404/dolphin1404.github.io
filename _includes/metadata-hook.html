@@ -1,15 +1,33 @@
-<!-- 커스텀 <head> 삽입 영역 (모든 페이지에 들어갑니다) -->
+<!-- 커스텀 <head> 삽입 영역 (모든 페이지에 공통 적용) -->
 
 <!-- ── Google AdSense ──────────────────────────────────────────────
-  1. https://adsense.google.com 가입 → 사이트(dolphin1404.github.io) 추가
-  2. 발급받은 코드의 ca-pub-XXXXXXXXXXXXXXXX 를 본인 게시자 ID로 바꾸고
-  3. 아래 주석(<!~~ ~~>)을 해제하세요. 심사 요청 시 이 코드가 확인됩니다.
-  4. 루트의 ads.txt 파일에도 같은 게시자 ID를 넣어야 합니다.
+  _config.yml 의 adsense 설정을 통해 제어됩니다.
+  adsense.enabled: true 및 adsense.client: ca-pub-XXXXXXXXXXXXXXXX 설정 시 자동 로드됩니다.
 ──────────────────────────────────────────────────────────────── -->
-<!--
+{% if site.adsense.client and site.adsense.client != "" %}
 <script
   async
-  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ site.adsense.client }}"
   crossorigin="anonymous"
 ></script>
--->
+{% endif %}
+
+<!-- ── 이전 포트폴리오 SPA 캐시 및 ServiceWorker 초기화 ───────────────
+  이전 사이트에서 등록되었던 ServiceWorker나 캐시로 인해 블로그 메인 대신
+  /ko/ 포트폴리오로 튀는 현상을 방지합니다.
+──────────────────────────────────────────────────────────────── -->
+<script>
+  (function() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (var i = 0; i < registrations.length; i++) {
+          var reg = registrations[i];
+          // 구버전 포트폴리오 sw.js 가 있는 경우 등록 해제
+          if (reg.scope && !reg.scope.includes('/assets/')) {
+            reg.update();
+          }
+        }
+      });
+    }
+  })();
+</script>
