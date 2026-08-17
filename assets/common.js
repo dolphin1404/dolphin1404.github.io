@@ -238,7 +238,7 @@
     });
     if (nav.blog) {
       links.push(
-        `<a href="blog.html"${page === "blog" ? ' class="active" aria-current="page"' : ""}>${esc(t(nav.blog))}</a>`
+        `<a href="/"${page === "blog" ? ' class="active" aria-current="page"' : ""}>${esc(t(nav.blog))}</a>`
       );
     }
 

@@ -310,7 +310,7 @@
     if (meta.github) {
       links.push(`<a href="${esc(meta.github)}" target="_blank" rel="noopener">${esc(STR.github)}</a>`);
     }
-    links.push(`<a href="blog.html">${esc(t(CONTENT.nav.blog))}</a>`);
+    links.push(`<a href="/">${esc(t(CONTENT.nav.blog))}</a>`);
 
     byId("footer").innerHTML = `
       <div class="wrap">
