@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (() => {
+      try {
+        const theme = localStorage.getItem("pf_theme")
+          || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (_error) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
+  <title>Blog — Kyumin Lee</title>
+  <meta name="description" content="Kyumin Lee's dev blog — notes from building projects." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Blog — Kyumin Lee" />
+  <link rel="alternate" hreflang="en" href="../en/blog.html" />
+  <link rel="alternate" hreflang="ko" href="../ko/blog.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <header id="nav" class="nav"></header>
+  <main id="blogmain"></main>
+  <footer id="footer" class="footer"></footer>
+
+  <script src="../assets/common.js" defer></script>
+  <script src="../data/content.js" defer></script>
+  <script src="../data/posts.js" defer></script>
+  <script src="../assets/blog.js" defer></script>
+  <script src="../assets/features.js" defer></script>
+</body>
+</html>
