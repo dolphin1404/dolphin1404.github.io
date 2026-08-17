@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function(){try{var t=localStorage.getItem("pf_theme")||((window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)?"light":"dark");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <meta name="robots" content="noindex" />
+  <title>관리자 편집기 — 포트폴리오</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="../assets/admin.css" />
+</head>
+<body>
+  <div class="admin-body">
+    <div class="toolbar">
+      <h1><span class="prompt">~/</span>admin</h1>
+      <button class="t-btn primary" id="btnExportContent">⤓ content.js</button>
+      <button class="t-btn primary" id="btnExportPosts">⤓ posts.js</button>
+      <button class="t-btn" id="btnImport">↥ 불러오기</button>
+      <button class="t-btn" id="btnPreviewKo">▷ 미리보기 KO</button>
+      <button class="t-btn" id="btnPreviewEn">▷ EN</button>
+      <button class="t-btn ghost" id="btnReset">↺ 원본 복원</button>
+      <span class="save-status" id="saveStatus"></span>
+      <input type="file" id="fileInput" accept=".js,text/javascript" style="display:none" />
+    </div>
+
+    <div class="banner">
+      <b>저장 방식:</b> 입력하는 즉시 브라우저에 자동 저장됩니다(작업 유실 방지).
+      배포에 반영하려면 <b>content.js / posts.js 를 내보내서</b> 같은 이름으로 덮어쓰고 커밋하세요.
+      <b>미리보기</b>는 저장 전 임시 내용으로 실제 사이트를 열어 확인합니다.
+    </div>
+
+    <div class="tabs" id="tabs"></div>
+    <div id="panes"></div>
+  </div>
+
+  <script>window.SITE_LANG = "ko";</script>
+  <script src="../assets/common.js"></script>
+  <script src="../data/content.js"></script>
+  <script src="../data/posts.js"></script>
+  <script src="../assets/admin.js"></script>
+  <script src="../assets/admin-deploy.js"></script>
+</body>
+</html>
