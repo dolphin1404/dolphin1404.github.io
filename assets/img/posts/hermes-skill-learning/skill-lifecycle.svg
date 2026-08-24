@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">Hermes skill lifecycle</title>
+  <desc id="desc">A minimal lifecycle diagram showing active, stale, and archived skill states.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0l10 5-10 5z" fill="#777"/></marker>
+    <style>.title{font:600 25px Pretendard,Arial,sans-serif;fill:#222}.sub{font:14px Pretendard,Arial,sans-serif;fill:#666}.label{font:600 19px Pretendard,Arial,sans-serif;fill:#222}.body{font:14px Pretendard,Arial,sans-serif;fill:#555}.mono{font:13px Pretendard,Arial,sans-serif;fill:#555}.box{fill:#fff;stroke:#777;stroke-width:1.3}.line{fill:none;stroke:#777;stroke-width:1.4;marker-end:url(#arrow)}.dash{fill:none;stroke:#999;stroke-width:1.2;stroke-dasharray:7 6}.accent{fill:#e65345;stroke:#bf3d33;stroke-width:1}.small{font:600 13px Pretendard,Arial,sans-serif;fill:#bf3d33}</style>
+  </defs>
+  <rect width="1200" height="600" fill="#fff"/>
+  <text x="60" y="58" class="title">Curator — Skill Lifecycle</text>
+  <text x="60" y="84" class="sub">Inactive skills are archived, not deleted. Activity can reactivate a stale skill.</text>
+
+  <rect x="55" y="120" width="1090" height="380" rx="12" class="dash"/>
+  <text x="75" y="150" class="sub">~/.hermes/skills/.usage.json</text>
+
+  <path d="M340 285H450" class="line"/><path d="M750 285H860" class="line"/>
+  <text x="395" y="265" text-anchor="middle" class="small">30 days inactive</text>
+  <text x="805" y="265" text-anchor="middle" class="small">90 days inactive</text>
+
+  <g transform="translate(90 205)">
+    <rect width="250" height="160" rx="7" class="box"/>
+    <circle cx="125" cy="38" r="17" class="accent"/>
+    <path d="M87 89h76M87 103h76M87 117h56" stroke="#777" stroke-width="3"/>
+    <text x="125" y="145" text-anchor="middle" class="label">ACTIVE</text>
+  </g>
+  <g transform="translate(450 205)">
+    <rect width="300" height="160" rx="7" class="box"/>
+    <circle cx="150" cy="38" r="17" fill="#aaa"/>
+    <path d="M112 89h76M112 103h76M112 117h56" stroke="#999" stroke-width="3"/>
+    <text x="150" y="145" text-anchor="middle" class="label">STALE</text>
+  </g>
+  <g transform="translate(860 205)">
+    <rect width="250" height="160" rx="7" class="box"/>
+    <path d="M82 50h86v67H82z" fill="#ddd" stroke="#777" stroke-width="1.3"/>
+    <path d="M72 38h106v18H72z" fill="#999"/>
+    <text x="125" y="145" text-anchor="middle" class="label">ARCHIVED</text>
+  </g>
+
+  <path d="M600 365V425H215V365" class="line"/>
+  <text x="407" y="449" text-anchor="middle" class="body">view · use · patch</text>
+  <text x="985" y="397" text-anchor="middle" class="mono">.archive/&lt;skill&gt;/</text>
+
+  <text x="600" y="526" text-anchor="middle" class="body">Pinned skills skip automatic transitions · LLM consolidation is OFF by default · Hub-installed skills are excluded</text>
+</svg>
