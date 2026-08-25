@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Hermes 백그라운드 리뷰 격리 경계</title>
+  <desc id="desc">foreground agent가 review thread를 만들고, runtime은 공유하지만 세션 저장과 비허용 도구는 차단하는 구조다.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="#777"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="#e65345"/>
+    </marker>
+    <style>
+      text{font-family:Pretendard,"Pretendard Variable","Noto Sans KR",Arial,sans-serif;fill:#222}
+      .title{font-size:27px;font-weight:700}
+      .section{font-size:14px;font-weight:700;letter-spacing:.12em;fill:#777}
+      .label{font-size:17px;font-weight:650}
+      .small{font-size:13px;font-weight:500;fill:#666}
+      .white{fill:#fff}
+      .box{fill:#fff;stroke:#777;stroke-width:1.35}
+      .soft{fill:#f7f7f7;stroke:#777;stroke-width:1.35}
+      .accent{fill:#e65345;stroke:#c84338;stroke-width:1.35}
+      .line{fill:none;stroke:#777;stroke-width:1.45;marker-end:url(#arrow)}
+      .learn{fill:none;stroke:#e65345;stroke-width:1.65;stroke-dasharray:7 5;marker-end:url(#arrow-red)}
+      .blocked{fill:none;stroke:#e65345;stroke-width:1.65;stroke-dasharray:7 5}
+    </style>
+  </defs>
+
+  <rect width="1200" height="700" fill="#fff"/>
+  <text x="60" y="56" class="title">Background Review — 격리 경계</text>
+
+  <text x="60" y="110" class="section">FOREGROUND</text>
+  <text x="360" y="110" class="section">REVIEW THREAD</text>
+  <text x="940" y="110" class="section">PERSISTENT STORES</text>
+
+  <rect x="60" y="140" width="230" height="70" rx="5" class="box"/>
+  <text x="175" y="170" text-anchor="middle" class="label">turn_finalizer</text>
+  <text x="175" y="194" text-anchor="middle" class="small">응답 + 임계값 확인</text>
+  <path d="M175 210V250" class="line"/>
+
+  <rect x="60" y="250" width="230" height="70" rx="5" class="box"/>
+  <text x="175" y="280" text-anchor="middle" class="label">prepare review run</text>
+  <text x="175" y="304" text-anchor="middle" class="small">중복 review 차단</text>
+  <path d="M175 320V360" class="line"/>
+
+  <rect x="60" y="360" width="230" height="70" rx="5" class="soft"/>
+  <text x="175" y="390" text-anchor="middle" class="label">bg-review Thread</text>
+  <text x="175" y="414" text-anchor="middle" class="small">daemon + profile context</text>
+
+  <path d="M290 395H325V185H360" class="line"/>
+  <rect x="360" y="140" width="500" height="90" rx="5" class="soft"/>
+  <text x="610" y="174" text-anchor="middle" class="label">Inherited Runtime</text>
+  <text x="610" y="200" text-anchor="middle" class="small">model · provider · credentials · cached prompt</text>
+
+  <path d="M610 230V270" class="line"/>
+  <rect x="360" y="270" width="500" height="90" rx="5" class="box"/>
+  <text x="610" y="304" text-anchor="middle" class="label">Review AIAgent</text>
+  <text x="610" y="330" text-anchor="middle" class="small">conversation snapshot · max_iterations=16</text>
+
+  <path d="M477 360V400" class="line"/>
+  <rect x="360" y="400" width="235" height="105" rx="5" class="soft"/>
+  <text x="477" y="433" text-anchor="middle" class="label">Allowed</text>
+  <text x="477" y="460" text-anchor="middle" class="small">skills_list · skill_view</text>
+  <text x="477" y="484" text-anchor="middle" class="small">skill_manage · memory*</text>
+
+  <rect x="625" y="400" width="235" height="105" rx="5" class="accent"/>
+  <text x="742" y="433" text-anchor="middle" class="label white">Disabled</text>
+  <text x="742" y="460" text-anchor="middle" class="small white">session DB · JSON persistence</text>
+  <text x="742" y="484" text-anchor="middle" class="small white">MCP refresh · recursive nudge</text>
+
+  <rect x="940" y="140" width="200" height="80" rx="5" class="box"/>
+  <text x="1040" y="174" text-anchor="middle" class="label">state.db</text>
+  <text x="1040" y="198" text-anchor="middle" class="small">review write 없음</text>
+  <path d="M860 315H900V180H920" class="blocked"/>
+  <line x1="920" y1="168" x2="920" y2="192" stroke="#e65345" stroke-width="2"/>
+  <text x="894" y="164" text-anchor="end" class="small">차단</text>
+
+  <rect x="940" y="300" width="200" height="80" rx="5" class="soft"/>
+  <text x="1040" y="334" text-anchor="middle" class="label">MEMORY.md</text>
+  <text x="1040" y="358" text-anchor="middle" class="small">memory enabled일 때</text>
+
+  <rect x="940" y="440" width="200" height="80" rx="5" class="soft"/>
+  <text x="1040" y="474" text-anchor="middle" class="label">SKILL.md</text>
+  <text x="1040" y="498" text-anchor="middle" class="small">guarded write</text>
+
+  <path d="M595 452H610V550H900V340H940" class="line"/>
+  <path d="M900 480H940" class="line"/>
+
+  <rect x="60" y="570" width="230" height="70" rx="5" class="box"/>
+  <text x="175" y="600" text-anchor="middle" class="label">New live turn</text>
+  <text x="175" y="624" text-anchor="middle" class="small">foreground 우선</text>
+  <path d="M290 605H360" class="learn"/>
+  <text x="325" y="589" text-anchor="middle" class="small">cancel ≤ 2 s</text>
+</svg>

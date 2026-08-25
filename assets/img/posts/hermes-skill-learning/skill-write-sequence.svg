@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">skill_manage guarded write UML sequence</title>
+  <desc id="desc">리뷰 LLM의 create 또는 patch 요청이 ownership, validation, filesystem, state update 순서로 처리되는 UML 시퀀스다.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="#777"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="#e65345"/>
+    </marker>
+    <style>
+      text{font-family:Pretendard,"Pretendard Variable","Noto Sans KR",Arial,sans-serif;fill:#222}
+      .title{font-size:27px;font-weight:700}
+      .section{font-size:14px;font-weight:700;letter-spacing:.12em;fill:#777}
+      .label{font-size:16px;font-weight:650}
+      .small{font-size:13px;font-weight:500;fill:#666}
+      .white{fill:#fff}
+      .box{fill:#fff;stroke:#777;stroke-width:1.35}
+      .soft{fill:#f7f7f7;stroke:#777;stroke-width:1.35}
+      .accent{fill:#e65345;stroke:#c84338;stroke-width:1.35}
+      .line{fill:none;stroke:#777;stroke-width:1.45;marker-end:url(#arrow)}
+      .learn{fill:none;stroke:#e65345;stroke-width:1.65;stroke-dasharray:7 5;marker-end:url(#arrow-red)}
+      .return{fill:none;stroke:#777;stroke-width:1.35;stroke-dasharray:6 5;marker-end:url(#arrow)}
+      .lifeline{stroke:#aaa;stroke-width:1.15;stroke-dasharray:6 6}
+      .activation{fill:#f7f7f7;stroke:#777;stroke-width:1.1}
+      .mask{fill:#fff}
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="#fff"/>
+  <text x="60" y="56" class="title">skill_manage — Guarded Write Sequence</text>
+
+  <rect x="60" y="100" width="150" height="60" rx="5" class="box"/>
+  <rect x="250" y="100" width="150" height="60" rx="5" class="soft"/>
+  <rect x="440" y="100" width="150" height="60" rx="5" class="soft"/>
+  <rect x="630" y="100" width="150" height="60" rx="5" class="soft"/>
+  <rect x="820" y="100" width="150" height="60" rx="5" class="soft"/>
+  <rect x="1010" y="100" width="150" height="60" rx="5" class="box"/>
+
+  <text x="135" y="136" text-anchor="middle" class="label">Review LLM</text>
+  <text x="325" y="136" text-anchor="middle" class="label">skill_manage</text>
+  <text x="515" y="127" text-anchor="middle" class="label">Ownership</text>
+  <text x="515" y="148" text-anchor="middle" class="small">fresh-read guard</text>
+  <text x="705" y="136" text-anchor="middle" class="label">Validator</text>
+  <text x="895" y="136" text-anchor="middle" class="label">Filesystem</text>
+  <text x="1085" y="127" text-anchor="middle" class="label">Ledger · Usage</text>
+  <text x="1085" y="148" text-anchor="middle" class="small">prompt cache</text>
+
+  <line x1="135" y1="160" x2="135" y2="720" class="lifeline"/>
+  <line x1="325" y1="160" x2="325" y2="720" class="lifeline"/>
+  <line x1="515" y1="160" x2="515" y2="720" class="lifeline"/>
+  <line x1="705" y1="160" x2="705" y2="720" class="lifeline"/>
+  <line x1="895" y1="160" x2="895" y2="720" class="lifeline"/>
+  <line x1="1085" y1="160" x2="1085" y2="720" class="lifeline"/>
+
+  <rect x="317" y="190" width="16" height="500" class="activation"/>
+  <rect x="507" y="250" width="16" height="110" class="activation"/>
+  <rect x="697" y="390" width="16" height="90" class="activation"/>
+  <rect x="887" y="520" width="16" height="90" class="activation"/>
+  <rect x="1077" y="630" width="16" height="60" class="activation"/>
+
+  <path d="M135 210H317" class="line"/>
+  <rect x="170" y="181" width="120" height="22" class="mask"/>
+  <text x="230" y="197" text-anchor="middle" class="small">1 · create | patch</text>
+
+  <path d="M333 270H507" class="line"/>
+  <rect x="365" y="241" width="110" height="22" class="mask"/>
+  <text x="420" y="257" text-anchor="middle" class="small">2 · preflight</text>
+
+  <path d="M507 340H333" class="return"/>
+  <rect x="360" y="311" width="120" height="22" class="mask"/>
+  <text x="420" y="327" text-anchor="middle" class="small">3 · allow | refuse</text>
+
+  <path d="M333 410H697" class="line"/>
+  <rect x="455" y="381" width="120" height="22" class="mask"/>
+  <text x="515" y="397" text-anchor="middle" class="small">4 · schema + size</text>
+
+  <path d="M697 460H333" class="return"/>
+  <rect x="462" y="431" width="106" height="22" class="mask"/>
+  <text x="515" y="447" text-anchor="middle" class="small">5 · valid | error</text>
+
+  <path d="M333 540H887" class="line"/>
+  <rect x="545" y="511" width="130" height="22" class="mask"/>
+  <text x="610" y="527" text-anchor="middle" class="small">6 · atomic write</text>
+
+  <path d="M887 590H333" class="learn"/>
+  <rect x="545" y="561" width="130" height="22" class="mask"/>
+  <text x="610" y="577" text-anchor="middle" class="small">7 · block: rollback</text>
+
+  <path d="M333 650H1077" class="line"/>
+  <rect x="626" y="621" width="158" height="22" class="mask"/>
+  <text x="705" y="637" text-anchor="middle" class="small">8 · ledger + cache</text>
+
+  <path d="M317 690H135" class="return"/>
+  <rect x="178" y="661" width="96" height="22" class="mask"/>
+  <text x="226" y="677" text-anchor="middle" class="small">9 · result JSON</text>
+</svg>
