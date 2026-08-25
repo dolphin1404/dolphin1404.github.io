@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Hermes Agent 스킬 학습 흐름</title>
+  <desc id="desc">사용자 요청이 AIAgent를 거쳐 응답되고, 턴 종료 후 백그라운드 리뷰가 메모리와 스킬을 저장해 다음 시스템 프롬프트에 반영되는 흐름이다.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="#777"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="#e65345"/>
+    </marker>
+    <style>
+      text{font-family:Pretendard,"Pretendard Variable","Noto Sans KR",Arial,sans-serif;fill:#222}
+      .title{font-size:27px;font-weight:700}
+      .section{font-size:14px;font-weight:700;letter-spacing:.12em;fill:#777}
+      .label{font-size:17px;font-weight:650}
+      .small{font-size:13px;font-weight:500;fill:#666}
+      .white{fill:#fff}
+      .box{fill:#fff;stroke:#777;stroke-width:1.35}
+      .soft{fill:#f7f7f7;stroke:#777;stroke-width:1.35}
+      .accent{fill:#e65345;stroke:#c84338;stroke-width:1.35}
+      .line{fill:none;stroke:#777;stroke-width:1.45;marker-end:url(#arrow)}
+      .learn{fill:none;stroke:#e65345;stroke-width:1.65;marker-end:url(#arrow-red)}
+    </style>
+  </defs>
+
+  <rect width="1200" height="700" fill="#fff"/>
+  <text x="60" y="56" class="title">Hermes Agent — 스킬 학습 흐름</text>
+
+  <!-- Current turn -->
+  <text x="60" y="110" class="section">CURRENT TURN</text>
+
+  <rect x="60" y="140" width="190" height="70" rx="5" class="box"/>
+  <text x="155" y="182" text-anchor="middle" class="label">사용자 요청</text>
+
+  <path d="M250 175H310" class="line"/>
+
+  <rect x="310" y="120" width="470" height="110" rx="5" class="box"/>
+  <text x="545" y="152" text-anchor="middle" class="label">AIAgent</text>
+  <line x1="330" y1="170" x2="760" y2="170" stroke="#ddd"/>
+  <text x="390" y="201" text-anchor="middle" class="small">Prompt Builder</text>
+  <text x="545" y="201" text-anchor="middle" class="small">Provider Resolution</text>
+  <text x="700" y="201" text-anchor="middle" class="small">Tool Dispatch</text>
+
+  <path d="M780 175H840" class="line"/>
+
+  <rect x="840" y="140" width="190" height="70" rx="5" class="accent"/>
+  <text x="935" y="182" text-anchor="middle" class="label white">사용자 응답</text>
+
+  <path d="M545 230V270" class="line"/>
+  <rect x="425" y="270" width="240" height="72" rx="5" class="soft"/>
+  <text x="545" y="300" text-anchor="middle" class="label">Session Storage</text>
+  <text x="545" y="324" text-anchor="middle" class="small">SQLite + FTS5</text>
+
+  <!-- Post-turn review -->
+  <text x="60" y="410" class="section">AFTER THE TURN</text>
+
+  <path d="M935 210V385H190V450" class="learn"/>
+  <rect x="60" y="450" width="260" height="76" rx="5" class="box"/>
+  <text x="190" y="495" text-anchor="middle" class="label">백그라운드 리뷰</text>
+
+  <path d="M320 488H380" class="learn"/>
+  <path d="M380 488V458H430" class="learn"/>
+  <path d="M380 488V552H430" class="learn"/>
+
+  <rect x="430" y="422" width="280" height="72" rx="5" class="soft"/>
+  <text x="570" y="452" text-anchor="middle" class="label">Memory</text>
+  <text x="570" y="476" text-anchor="middle" class="small">MEMORY.md · USER.md</text>
+
+  <rect x="430" y="516" width="280" height="72" rx="5" class="soft"/>
+  <text x="570" y="546" text-anchor="middle" class="label">Skill</text>
+  <text x="570" y="570" text-anchor="middle" class="small">SKILL.md</text>
+
+  <!-- Reuse -->
+  <text x="810" y="410" class="section">NEXT CONTEXT</text>
+
+  <path d="M710 458H810" class="line"/>
+  <text x="760" y="446" text-anchor="middle" class="small">frozen snapshot</text>
+  <path d="M710 552H810" class="line"/>
+  <text x="760" y="540" text-anchor="middle" class="small">skill_view</text>
+
+  <rect x="810" y="450" width="320" height="90" rx="5" class="accent"/>
+  <text x="970" y="489" text-anchor="middle" class="label white">다음 시스템 프롬프트</text>
+  <text x="970" y="516" text-anchor="middle" class="small white">기억 + 필요한 절차</text>
+</svg>

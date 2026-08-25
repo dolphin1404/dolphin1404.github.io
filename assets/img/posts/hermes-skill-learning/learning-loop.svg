@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Hermes skill learning loop</title>
+  <desc id="desc">A minimal technical diagram showing a task, a review trigger, a background reviewer, skill storage, and reuse in the next session.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0l10 5-10 5z" fill="#777"/></marker>
+    <style>
+      .title{font:600 25px Pretendard,Arial,sans-serif;fill:#222}.sub{font:14px Pretendard,Arial,sans-serif;fill:#666}.label{font:600 17px Pretendard,Arial,sans-serif;fill:#222}.body{font:14px Pretendard,Arial,sans-serif;fill:#555}.mono{font:13px Pretendard,Arial,sans-serif;fill:#555}.box{fill:#fff;stroke:#777;stroke-width:1.4}.boundary{fill:none;stroke:#999;stroke-width:1.2;stroke-dasharray:7 6}.line{fill:none;stroke:#777;stroke-width:1.4;marker-end:url(#arrow)}.accent{fill:#e65345;stroke:#bf3d33;stroke-width:1}.icon{fill:#777}.paper{fill:#fff;stroke:#777;stroke-width:1.3}
+    </style>
+  </defs>
+  <rect width="1200" height="630" fill="#fff"/>
+  <text x="60" y="58" class="title">Hermes Agent — Skill Learning Loop</text>
+  <text x="60" y="84" class="sub">Experience is stored as an external procedure. Model weights do not change.</text>
+
+  <rect x="50" y="125" width="1100" height="350" rx="14" class="box"/>
+  <text x="68" y="153" class="sub">Foreground conversation</text>
+
+  <path d="M255 292H360" class="line"/><path d="M545 292H650" class="line"/><path d="M835 292H940" class="line"/>
+
+  <g transform="translate(105 190)">
+    <rect x="0" y="0" width="150" height="205" rx="7" class="box"/>
+    <circle cx="75" cy="52" r="25" class="icon"/>
+    <path d="M37 112c3-31 73-31 76 0v14H37z" class="icon"/>
+    <text x="75" y="156" text-anchor="middle" class="label">Task</text>
+    <text x="75" y="181" text-anchor="middle" class="body">Tool calls</text>
+  </g>
+
+  <g transform="translate(360 190)">
+    <rect x="0" y="0" width="185" height="205" rx="7" class="box"/>
+    <circle cx="92" cy="57" r="34" class="accent"/>
+    <text x="92" y="67" text-anchor="middle" font-family="Pretendard,Arial,sans-serif" font-size="30" font-weight="700" fill="#fff">10</text>
+    <text x="92" y="156" text-anchor="middle" class="label">Review trigger</text>
+    <text x="92" y="181" text-anchor="middle" class="mono">_iters_since_skill</text>
+  </g>
+
+  <g transform="translate(650 168)">
+    <rect x="0" y="0" width="185" height="249" rx="7" class="boundary"/>
+    <text x="16" y="25" class="sub">Background thread</text>
+    <circle cx="92" cy="81" r="24" class="icon"/>
+    <path d="M57 135c2-28 68-28 70 0v12H57z" class="icon"/>
+    <circle cx="132" cy="66" r="12" class="accent"/>
+    <text x="92" y="190" text-anchor="middle" class="label">Review agent</text>
+    <text x="92" y="215" text-anchor="middle" class="body">Reusable and verified?</text>
+  </g>
+
+  <g transform="translate(940 190)">
+    <rect x="0" y="0" width="160" height="205" rx="7" class="box"/>
+    <path d="M45 28h56l20 20v84H45z" class="paper"/>
+    <path d="M101 28v20h20" fill="none" stroke="#777" stroke-width="1.3"/>
+    <path d="M60 68h45M60 82h45M60 96h34" stroke="#e65345" stroke-width="3"/>
+    <text x="80" y="156" text-anchor="middle" class="label">SKILL.md</text>
+    <text x="80" y="181" text-anchor="middle" class="body">Atomic write</text>
+  </g>
+
+  <path d="M1020 395V520H180V397" class="line"/>
+  <rect x="428" y="493" width="345" height="56" rx="5" fill="#fff" stroke="#999"/>
+  <text x="600" y="517" text-anchor="middle" class="label">Next session</text>
+  <text x="600" y="538" text-anchor="middle" class="mono">available skills → skill_view()</text>
+  <text x="600" y="595" text-anchor="middle" class="sub">Main components: conversation_loop.py · turn_finalizer.py · background_review.py · skill_manager_tool.py</text>
+</svg>
