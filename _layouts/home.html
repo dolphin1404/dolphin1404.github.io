@@ -139,10 +139,6 @@ layout: default
       </a>
     </article>
 
-    <!-- In-Feed AdSense: 2번째 포스트 뒤 또는 1개만 있을 때 마지막에 노출 -->
-    {% if forloop.index == 2 or forloop.last and forloop.index == 1 %}
-      {% include ads/in-feed.html %}
-    {% endif %}
   {% endfor %}
 </div>
 <!-- #post-list -->

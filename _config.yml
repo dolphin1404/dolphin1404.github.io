@@ -74,14 +74,13 @@ analytics:
     id: # fill in your Fathom Site ID
 
 # Google AdSense Settings
-# 1. https://adsense.google.com 승인 후 enabled: true 로 변경
-# 2. client 에 본인 게시자 ID(ca-pub-XXXXXXXXXXXXXXXX) 입력
-# 3. slots 에 각 광고 단위 슬롯 ID 입력 (공란일 경우 자동/반응형 광고로 동작)
-# 4. display_sample: true 로 두면 승인 전/개발 중 광고 슬롯 위치가 점선 가이드 박스로 표시됩니다.
+# 사이트 검토 중에는 수동 광고 단위를 렌더링하지 않습니다.
+# client 값은 사이트 소유권 확인용 로더에 사용되므로 유지합니다.
+# 승인 후 실제 슬롯 ID를 발급받아 입력한 다음 enabled를 true로 변경하세요.
 adsense:
-  enabled: true
+  enabled: false
   client: "ca-pub-1175141923072458"
-  display_sample: true
+  display_sample: false
   slots:
     post_top: ""     # 본문 상단 광고 단위 ID
     post_bottom: ""  # 본문 하단 광고 단위 ID
@@ -135,14 +134,14 @@ actions:
 
 comments:
   # Global switch for the post-comment system. Keeping it empty means disabled.
-  provider: # [disqus | utterances | giscus]
+  provider: utterances # [disqus | utterances | giscus]
   # The provider options are as follows:
   disqus:
     shortname: # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
   # utterances settings › https://utteranc.es/
   utterances:
-    repo: # <gh-username>/<repo>
-    issue_term: # < url | pathname | title | ...>
+    repo: dolphin1404/blog-comment # <gh-username>/<repo>
+    issue_term: pathname # < url | pathname | title | ...>
   # Giscus options › https://giscus.app
   giscus:
     repo: # <gh-username>/<repo>

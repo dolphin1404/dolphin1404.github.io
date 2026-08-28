@@ -1,8 +1,8 @@
 <!-- 커스텀 <head> 삽입 영역 (모든 페이지에 공통 적용) -->
 
 <!-- ── Google AdSense ──────────────────────────────────────────────
-  _config.yml 의 adsense 설정을 통해 제어됩니다.
-  adsense.enabled: true 및 adsense.client: ca-pub-XXXXXXXXXXXXXXXX 설정 시 자동 로드됩니다.
+  사이트 소유권 확인용 로더입니다. 수동 광고 단위 노출 여부와 분리되어 있습니다.
+  광고 단위는 _config.yml의 adsense.enabled와 각 레이아웃에서 별도로 제어합니다.
 ──────────────────────────────────────────────────────────────── -->
 {% if site.adsense.client and site.adsense.client != "" %}
 <script
