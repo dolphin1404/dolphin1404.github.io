@@ -52,7 +52,7 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}nav a{d
 <h2 id="outside">외부 서비스와 데이터 전달</h2>
 <ul>
 <li><strong>Supabase:</strong> 계정·단어장·메모·이용량·구독·신고 등 서비스 데이터와 서버 기능을 관리합니다. NAMU_APP 프로젝트의 DB 리전은 일본 도쿄(<code>ap-northeast-1</code>)로 구성되어 있습니다.</li>
-<li><strong>OpenAI API:</strong> AI 학습 기능을 요청하면 해당 기능의 입력을 서버를 통해 OpenAI API로 전달합니다. 입력에는 기능에 따라 학습 단어, 기존·거절 단어, 관심사·언어·수준 또는 첨삭을 요청한 에세이가 포함됩니다.</li>
+<li><strong>OpenAI API:</strong> AI 학습 기능을 요청하면 해당 기능의 입력을 서버를 통해 OpenAI API로 전달합니다. 입력에는 기능에 따라 학습 단어, 기존·거절 단어, 관심사·언어·수준 또는 첨삭을 요청한 에세이가 포함됩니다. 부정 사용 방지를 위해 서비스 계정 ID에서 계산한 가명 안전 식별자도 함께 전달합니다.</li>
 <li><strong>음성 합성 연동:</strong> 팟캐스트 대본의 SSML 텍스트와 선택한 음성·언어·속도 설정을 음성 생성 서버에 전달합니다.</li>
 <li><strong>Google AdMob·UMP:</strong> 광고 제공과 광고 관련 동의 상태 확인에 사용합니다.</li>
 <li><strong>Google Play:</strong> 결제와 구독 관리 및 구매 검증에 사용합니다. 구매 연결을 위해 서비스 계정 ID에서 계산한 식별자가 사용됩니다.</li>
